@@ -7,90 +7,104 @@
 |___/|_|_|_|_|_\___||___/|_||_\___|_|_|
 ```
 
-> The ultimate self-hosted CTF & pentesting web app. All your tools, references, scripts, writeups, and OSINT in one dark-themed dashboard.
+> A native desktop CTF & pentesting app. All your tools, references, scripts, writeups, and OSINT — no browser tabs, no self-hosting. Just install and hack.
 
 ---
 
 ## What is SlimeShell?
 
-SlimeShell is a self-hosted web application for CTF players and pentesters. Instead of switching between 20 browser tabs during a CTF, everything lives in one place:
+SlimeShell is a **desktop application** for CTF players and pentesters. Built with Tauri (Rust backend + React frontend), it gives you native performance, direct file system access, and a built-in terminal — all in a single window.
 
+### Core Tools
 - **Encoding Playground** — chain encode/decode like a mini CyberChef
 - **Reverse Shell Generator** — one-click shells in bash/python/php/nc/powershell
 - **JWT Debugger** — decode, edit, and verify JWTs
-- **OSINT & Recon** — Shodan, WHOIS, DNS, CVE search
+- **OSINT & Recon** — Shodan, WHOIS, DNS, CVE search (no CORS — native HTTP)
 - **File Analyzer** — magic bytes, entropy maps, strings extraction
 - **Network Map Builder** — visualize infrastructure from nmap scans
-- **Built-in Terminal** — never leave the app
+- **Built-in Terminal** — native PTY, not a web emulator
 - **Pentest Report Generator** — auto-generate PDF/Markdown reports
-- **VPN Manager** — manage HTB/THM/OffSec VPN connections
+- **VPN Manager** — manage HTB/THM/OffSec VPN connections natively
+- **Flipper Zero** — serial port communication, no browser WebSerial hacks
 - **Collab Mode** — real-time team collaboration during CTFs
 - **30+ more tools** — hash gen, subnet calc, regex tester, diff tool, wordlist manager, esoteric language interpreter, and more
 
-## Design
+## Why Desktop?
 
-All 30 screens are designed in Paper Design (29 pages + 1 design system reference). The design follows a consistent dark theme with mint green accents, JetBrains Mono for code, and Space Grotesk for headings.
-
-See [`DESIGN-SYSTEM.md`](./DESIGN-SYSTEM.md) for the complete visual spec.
+| | Desktop (Tauri) | Web (Next.js) |
+|---|---|---|
+| Terminal | Native PTY | WebSocket + node-pty |
+| File access | Direct FS | API routes |
+| VPN control | Native process mgmt | API routes |
+| Flipper Zero | Native serial ports | WebSerial (limited) |
+| OSINT APIs | Native HTTP (no CORS) | Server proxy needed |
+| Offline | Always works | Need to self-host |
+| Binary size | ~15MB | N/A |
+| Memory | System WebView | Full browser |
 
 ## Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | Next.js 14+ (App Router) |
-| Language | JavaScript (NOT TypeScript) |
+| App Framework | Tauri 2.0 (Rust) |
+| Frontend | Vite + React (JavaScript) |
 | Styling | Tailwind CSS |
 | State | Zustand |
-| Database | SQLite (via better-sqlite3) |
-| Terminal | xterm.js + node-pty |
+| Database | SQLite (tauri-plugin-sql) |
+| Terminal | xterm.js + portable-pty (Rust) |
 | Code Editor | Monaco Editor / CodeMirror 6 |
-| Markdown | react-markdown + remark-gfm |
-| Charts | recharts |
 | Icons | Lucide React |
 | Fonts | JetBrains Mono + Space Grotesk |
-| Package Manager | pnpm |
 
 ## Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router (29 pages)
-├── components/
-│   ├── layout/             # Sidebar, TopBar, CommandPalette
-│   ├── ui/                 # Card, Badge, Button, Input, CodeBlock, etc.
-│   └── features/           # EncodingChain, RevShellGen, JWTDebugger, etc.
-├── lib/                    # Pure logic (encoding, hashing, subnet calc, etc.)
-├── store/                  # Zustand stores
-├── data/                   # Static JSON (ports, shells, payloads, references)
-└── styles/                 # Tailwind + custom CSS
+slimeshell/
+├── src-tauri/              # Rust backend (Tauri)
+│   └── src/
+│       ├── commands/       # FS, terminal, VPN, OSINT, serial, network
+│       ├── db.rs           # SQLite
+│       └── models.rs       # Data structs
+├── src/                    # React frontend (Vite)
+│   ├── pages/              # 29 page components
+│   ├── components/
+│   │   ├── layout/         # Sidebar, TopBar, CommandPalette
+│   │   ├── ui/             # Card, Badge, Button, Input, CodeBlock...
+│   │   └── features/       # EncodingChain, RevShellGen, JWTDebugger...
+│   ├── hooks/              # useBackend (Tauri invoke abstraction)
+│   ├── lib/                # Client-side utils (encoding, hashing, etc.)
+│   ├── store/              # Zustand stores
+│   └── data/               # Static JSON (ports, shells, payloads)
+├── tailwind.config.js
+└── package.json
 ```
 
 ## Key Docs
 
 | File | Description |
 |------|-------------|
-| [`SLIMESHELL-PLAN.md`](./SLIMESHELL-PLAN.md) | Complete feature spec, architecture, data models, API integrations, and phased build plan |
+| [`SLIMESHELL-PLAN.md`](./SLIMESHELL-PLAN.md) | Complete feature spec, architecture, data models, API integrations, and 7-phase build plan |
 | [`DESIGN-SYSTEM.md`](./DESIGN-SYSTEM.md) | Color palette, typography, component library, spacing tokens, Tailwind config |
 | [`AGENT-PROMPT.md`](./AGENT-PROMPT.md) | Ready-to-use prompt for cloud agents to build the project |
 
+## Design
+
+30 screens designed in Paper Design (29 pages + 1 design system reference). Dark theme, mint green accents, JetBrains Mono for code, Space Grotesk for headings.
+
 ## Build Phases
 
-1. **Foundation** — Layout, sidebar, dashboard, command palette
+1. **Foundation** — Tauri setup, layout, sidebar, dashboard, command palette, SQLite, FS commands
 2. **Core Tools** — Encoding, revshell, utilities, references, payloads
 3. **Content Management** — Scripts, writeups, notes/wiki, wordlists
 4. **CTF Features** — CTF tracking, CTFtime, timer, scoreboard, profile/stats
-5. **Advanced Tools** — Terminal, OSINT, reports, JWT, file analyzer, HTTP builder
-6. **Infrastructure** — VPN manager, Flipper Zero, network map, bookmarks
-7. **Polish** — Collab mode, settings, esoteric langs, themes, plugins
+5. **Advanced Tools** — Terminal (PTY), OSINT, reports, JWT, file analyzer, HTTP builder
+6. **Native Integrations** — VPN manager, Flipper Zero, network map, bookmarks
+7. **Polish** — Collab mode, settings, esoteric langs, themes, auto-updater, future web mode
 
-## Design Principles
+## Future: Web Version
 
-- **Everything in one place** — no tab switching
-- **Fast** — tools should feel instant
-- **Offline-first** — encoding, hashing, and crypto tools run client-side
-- **Beautiful but functional** — follow the 30-screen design exactly
-- **Hackable** — extensible with plugins and custom tools
+The `useBackend` hook abstracts Tauri's `invoke()` calls. A future web version can swap these for HTTP `fetch()` calls to an Axum API server, reusing the same React components.
 
 ---
 
-*Created by [MrGreenSlime](https://github.com/MrGreenSlime)*
+*Created by [MrGreenSlime](https://github.com/L-ubu)*

@@ -46,28 +46,45 @@ SlimeShell is a self-hosted web application for CTF players and pentesters. It c
 
 ## Tech Stack
 
-### Recommended Stack
+### Desktop App — Tauri 2 + React
+SlimeShell is a **native desktop app** built with Tauri. No browser tab, no self-hosting headaches — just install and run. The Rust backend gives native access to the file system, process spawning, serial ports, and SQLite without any API routes.
+
 | Layer | Technology | Why |
 |-------|-----------|-----|
-| **Framework** | Next.js 14+ (App Router) | SSR, API routes, file-based routing, React ecosystem |
-| **Language** | JavaScript (NOT TypeScript) | Creator's preference — keep it JS |
+| **App Framework** | Tauri 2.0 | Native desktop app, tiny binary (~15MB), Rust backend |
+| **Frontend** | Vite + React | Fast dev, client-side by default, no SSR bloat |
+| **Language (UI)** | JavaScript (NOT TypeScript) | Creator's preference — keep it JS |
+| **Language (Backend)** | Rust | Tauri's native layer — handles FS, processes, serial, DB |
 | **Styling** | Tailwind CSS | Matches the design system, utility-first, dark mode native |
 | **State** | Zustand | Lightweight, no boilerplate, perfect for tool state |
-| **Database** | SQLite (via better-sqlite3 or Prisma) | Self-hosted, no external DB needed, fast |
-| **Auth** | Optional — single-user or simple PIN | This is a personal tool, not a SaaS |
-| **Terminal** | xterm.js | Web-based terminal emulator |
+| **Database** | SQLite (via tauri-plugin-sql / rusqlite) | Native, fast, no external DB needed |
+| **Terminal** | xterm.js + portable-pty (Rust) | PTY spawning via Rust IPC, rendered with xterm.js |
 | **Code Editor** | Monaco Editor or CodeMirror 6 | For script editing, payload editing |
 | **Markdown** | react-markdown + remark-gfm | For notes/wiki/writeups |
 | **Charts** | recharts or visx | For heatmaps, progress bars, stats |
 | **Icons** | Lucide React | Clean, consistent, matches the design |
-| **Fonts** | JetBrains Mono + Space Grotesk | From Google Fonts — used in all designs |
+| **Fonts** | JetBrains Mono + Space Grotesk | Bundled with the app |
 | **Package Manager** | pnpm | Fast, disk-efficient |
+| **Serial (Flipper)** | tauri-plugin-serialplugin | Native serial port access |
+| **HTTP (OSINT)** | reqwest (Rust) | No CORS issues, native HTTP client |
 
-### Alternative Stack (lighter)
-If building as a pure SPA without a backend:
-- Vite + React
-- localStorage / IndexedDB for persistence
-- No SSR needed
+### Why Tauri over Next.js / Electron
+- **No SSR needed** — this is a private tool, not a public website
+- **Native file access** — read/write scripts, wordlists, notes directly. No API routes
+- **Native process spawning** — terminal (PTY), VPN (openvpn), nmap, etc.
+- **Tiny binary** — ~15MB vs Electron's 200MB+
+- **Low memory** — uses system WebView, not bundled Chromium
+- **Offline by default** — perfect for a hacking tool
+- **Serial ports** — Flipper Zero communication without browser WebSerial hacks
+
+### Future: Web Version
+The architecture supports a future limited web version:
+- The Rust backend commands can be wrapped with an Axum HTTP API
+- The React frontend already works in a browser — just swap `invoke()` for `fetch()`
+- Strategy: build a `useBackend()` hook that abstracts the IPC layer
+  - Desktop mode: calls `invoke("command_name", { args })`
+  - Web mode: calls `fetch("/api/command_name", { body: args })`
+- This lets the same React components work in both modes
 
 ---
 
@@ -153,85 +170,175 @@ The sidebar is consistent across ALL pages:
 
 ## App Architecture
 
+### Tauri Project Structure
 ```
-src/
-├── app/                          # Next.js App Router
-│   ├── layout.js                 # Root layout with sidebar
-│   ├── page.js                   # Dashboard
-│   ├── tools/page.js
-│   ├── references/page.js
-│   ├── scripts/page.js
-│   ├── flipper/page.js
-│   ├── ctfs/page.js
-│   ├── writeups/page.js
-│   ├── payloads/page.js
-│   ├── encoding/page.js
-│   ├── revshell/page.js
-│   ├── osint/page.js
-│   ├── terminal/page.js
-│   ├── utilities/page.js
-│   ├── wordlists/page.js
-│   ├── ctftime/page.js
-│   ├── reports/page.js
-│   ├── profile/page.js
-│   ├── notes/page.js
-│   ├── bookmarks/page.js
-│   ├── settings/page.js
-│   ├── jwt/page.js
-│   ├── file-analyzer/page.js
-│   ├── network-map/page.js
-│   ├── vpn/page.js
-│   ├── collab/page.js
-│   └── api/                      # API routes
-│       ├── scripts/route.js
-│       ├── wordlists/route.js
-│       ├── ctfs/route.js
-│       └── ...
-├── components/
-│   ├── layout/
-│   │   ├── Sidebar.js
-│   │   ├── TopBar.js
-│   │   └── CommandPalette.js
-│   ├── ui/
-│   │   ├── Card.js
-│   │   ├── Badge.js
-│   │   ├── Button.js
-│   │   ├── Input.js
-│   │   ├── CodeBlock.js
-│   │   ├── CopyButton.js
-│   │   ├── ProgressBar.js
-│   │   └── Heatmap.js
-│   └── features/
-│       ├── EncodingChain.js
-│       ├── RevShellGenerator.js
-│       ├── HashGenerator.js
-│       ├── SubnetCalculator.js
-│       ├── JWTDebugger.js
-│       ├── ChallengeTimer.js
-│       └── ...
-├── lib/
-│   ├── encoding.js               # Base64, Hex, URL, ROT13, etc.
-│   ├── hashing.js                # MD5, SHA1, SHA256, SHA512
-│   ├── revshells.js              # Shell template generators
-│   ├── subnet.js                 # CIDR calculations
-│   ├── cvss.js                   # CVSS score calculator
-│   ├── jwt.js                    # JWT decode/encode
-│   ├── flags.js                  # Flag format wrappers
-│   └── esoteric.js               # Brainfuck, Ook!, etc.
-├── store/
-│   ├── useAppStore.js            # Global app state
-│   ├── useTimerStore.js          # Challenge timers
-│   ├── useClipboardStore.js      # Clipboard history
-│   └── useProfileStore.js        # XP, level, stats
-├── data/
-│   ├── ports.json                # Common ports reference
-│   ├── shells.json               # Reverse shell templates
-│   ├── payloads.json             # Payload library
-│   ├── references.json           # Cheatsheets
-│   └── esoteric-examples.json    # Brainfuck examples etc.
-└── styles/
-    └── globals.css               # Tailwind + custom CSS vars
+slimeshell/
+├── src-tauri/                     # Rust backend (Tauri)
+│   ├── Cargo.toml                 # Rust dependencies
+│   ├── tauri.conf.json            # Tauri config (window, permissions, plugins)
+│   ├── capabilities/              # Tauri 2 permission capabilities
+│   └── src/
+│       ├── main.rs                # Tauri entry point
+│       ├── lib.rs                 # Command registration
+│       ├── commands/              # Tauri invoke commands (called from JS)
+│       │   ├── fs.rs              # File read/write (scripts, notes, writeups, wordlists)
+│       │   ├── terminal.rs        # PTY spawning and management
+│       │   ├── vpn.rs             # OpenVPN process management
+│       │   ├── network.rs         # nmap parsing, ping, network scanning
+│       │   ├── flipper.rs         # Serial port communication
+│       │   ├── osint.rs           # HTTP proxy for Shodan, WHOIS, DNS (no CORS)
+│       │   └── system.rs          # tun0 IP detection, system info
+│       ├── db.rs                  # SQLite setup and migrations
+│       └── models.rs              # Rust structs for DB models
+├── src/                           # React frontend (Vite)
+│   ├── main.jsx                   # React entry point
+│   ├── App.jsx                    # Root component with router
+│   ├── pages/                     # Page components (one per route)
+│   │   ├── Dashboard.jsx
+│   │   ├── Tools.jsx
+│   │   ├── References.jsx
+│   │   ├── Scripts.jsx
+│   │   ├── FlipperZero.jsx
+│   │   ├── CTFs.jsx
+│   │   ├── Writeups.jsx
+│   │   ├── Payloads.jsx
+│   │   ├── Encoding.jsx
+│   │   ├── RevShell.jsx
+│   │   ├── Osint.jsx
+│   │   ├── Terminal.jsx
+│   │   ├── Utilities.jsx
+│   │   ├── Wordlists.jsx
+│   │   ├── CTFtime.jsx
+│   │   ├── Reports.jsx
+│   │   ├── Profile.jsx
+│   │   ├── Notes.jsx
+│   │   ├── Bookmarks.jsx
+│   │   ├── Settings.jsx
+│   │   ├── JWT.jsx
+│   │   ├── FileAnalyzer.jsx
+│   │   ├── NetworkMap.jsx
+│   │   ├── VPN.jsx
+│   │   ├── Collab.jsx
+│   │   ├── HTTP.jsx
+│   │   ├── Esoteric.jsx
+│   │   ├── Regex.jsx
+│   │   └── Diff.jsx
+│   ├── components/
+│   │   ├── layout/
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── TopBar.jsx
+│   │   │   └── CommandPalette.jsx
+│   │   ├── ui/
+│   │   │   ├── Card.jsx
+│   │   │   ├── Badge.jsx
+│   │   │   ├── Button.jsx
+│   │   │   ├── Input.jsx
+│   │   │   ├── CodeBlock.jsx
+│   │   │   ├── CopyButton.jsx
+│   │   │   ├── ProgressBar.jsx
+│   │   │   ├── Toggle.jsx
+│   │   │   ├── Tabs.jsx
+│   │   │   ├── FilterChips.jsx
+│   │   │   └── Heatmap.jsx
+│   │   └── features/
+│   │       ├── EncodingChain.jsx
+│   │       ├── RevShellGenerator.jsx
+│   │       ├── HashGenerator.jsx
+│   │       ├── SubnetCalculator.jsx
+│   │       ├── JWTDebugger.jsx
+│   │       ├── ChallengeTimer.jsx
+│   │       └── ...
+│   ├── hooks/
+│   │   └── useBackend.js          # Abstraction: invoke() now, fetch() for future web
+│   ├── lib/
+│   │   ├── encoding.js            # Base64, Hex, URL, ROT13 (client-side)
+│   │   ├── hashing.js             # MD5, SHA1, SHA256, SHA512 (client-side)
+│   │   ├── revshells.js           # Shell template generators (client-side)
+│   │   ├── subnet.js              # CIDR calculations (client-side)
+│   │   ├── cvss.js                # CVSS score calculator (client-side)
+│   │   ├── jwt.js                 # JWT decode/encode (client-side)
+│   │   ├── flags.js               # Flag format wrappers (client-side)
+│   │   └── esoteric.js            # Brainfuck, Ook!, etc. (client-side)
+│   ├── store/
+│   │   ├── useAppStore.js         # Global app state (Zustand)
+│   │   ├── useTimerStore.js       # Challenge timers
+│   │   ├── useClipboardStore.js   # Clipboard history
+│   │   └── useProfileStore.js     # XP, level, stats
+│   ├── data/
+│   │   ├── ports.json             # Common ports reference
+│   │   ├── shells.json            # Reverse shell templates
+│   │   ├── payloads.json          # Payload library
+│   │   ├── references.json        # Cheatsheets
+│   │   └── esoteric-examples.json # Brainfuck examples etc.
+│   └── styles/
+│       └── globals.css            # Tailwind + Google Fonts + CSS vars
+├── index.html                     # Vite entry HTML
+├── vite.config.js                 # Vite config (with @tauri-apps/api)
+├── tailwind.config.js             # Tailwind with SlimeShell design tokens
+├── package.json
+└── pnpm-lock.yaml
 ```
+
+### Frontend ↔ Backend Communication
+Instead of API routes, use Tauri's `invoke()` to call Rust commands:
+
+```js
+// Frontend: call a Rust command
+import { invoke } from '@tauri-apps/api/core';
+
+// Read a script file
+const content = await invoke('read_file', { path: '/scripts/exploit.py' });
+
+// Spawn a terminal
+await invoke('spawn_terminal', { shell: 'zsh' });
+
+// Query Shodan (Rust makes the HTTP call — no CORS)
+const results = await invoke('shodan_search', { query: '10.10.10.0/24' });
+
+// Save to SQLite
+await invoke('save_ctf', { ctf: { name: 'HTB Cyber Apocalypse', ... } });
+```
+
+### useBackend Hook (Future Web Compatibility)
+```js
+// hooks/useBackend.js
+import { invoke } from '@tauri-apps/api/core';
+
+const IS_TAURI = '__TAURI_INTERNALS__' in window;
+
+export function useBackend() {
+  const call = async (command, args = {}) => {
+    if (IS_TAURI) {
+      return invoke(command, args);
+    }
+    // Future: web mode falls back to HTTP
+    const res = await fetch(`/api/${command}`, {
+      method: 'POST',
+      body: JSON.stringify(args),
+    });
+    return res.json();
+  };
+
+  return { call };
+}
+```
+
+### What Runs Where
+| Feature | Where | Why |
+|---------|-------|-----|
+| Encoding/decoding | Frontend (JS) | Pure computation, instant |
+| Hashing | Frontend (JS) | Pure computation, instant |
+| JWT decode/encode | Frontend (JS) | Pure computation, instant |
+| Reverse shell templates | Frontend (JS) | String templates, instant |
+| Subnet calculator | Frontend (JS) | Math, instant |
+| Regex tester | Frontend (JS) | Native RegExp, instant |
+| File read/write | Backend (Rust) | Native FS access |
+| Terminal | Backend (Rust) | PTY spawning via portable-pty |
+| VPN management | Backend (Rust) | Process spawning (openvpn) |
+| Flipper Zero | Backend (Rust) | Serial port access |
+| OSINT (Shodan, WHOIS) | Backend (Rust) | HTTP client (reqwest), no CORS |
+| SQLite queries | Backend (Rust) | Native DB access |
+| Network scanning | Backend (Rust) | Process spawning (nmap) |
 
 ---
 
@@ -511,7 +618,7 @@ Built-in web terminal using xterm.js.
 - Copy/paste support
 - Links clickable
 
-**Implementation**: Use `node-pty` on the backend + xterm.js on the frontend, connected via WebSocket.
+**Implementation**: Use `portable-pty` crate in Rust backend + xterm.js on the frontend, connected via Tauri IPC events (not WebSocket — Tauri events are faster and native).
 
 ---
 
@@ -755,7 +862,7 @@ Manage VPN connections for HTB/THM/labs.
 - **Connection Log**: Recent connect/disconnect events
 - **Multi-VPN**: Support multiple simultaneous connections
 
-**Implementation**: Use `openvpn` CLI via `child_process` on the server.
+**Implementation**: Use `std::process::Command` in Rust to spawn/manage openvpn processes. Read tun0 IP via system commands. Tauri IPC events for connection status updates.
 
 ---
 
@@ -1185,13 +1292,18 @@ Parse and search through log files.
 ### Phase 1 — Foundation (Week 1-2)
 Get the app running with core layout and navigation.
 
-- [ ] Next.js project setup with App Router
+- [ ] Tauri 2 project init (`pnpm create tauri-app` with Vite + React + JavaScript)
 - [ ] Tailwind config with SlimeShell color palette and fonts
+- [ ] Bundle JetBrains Mono + Space Grotesk fonts
+- [ ] React Router setup with all 29 routes
 - [ ] Sidebar component with all navigation items
 - [ ] Top bar component
+- [ ] Shared UI components (Card, Button, Badge, Input, CodeBlock, CopyButton, Toggle, Tabs)
 - [ ] Dashboard page (stats cards, quick tools grid)
-- [ ] Command Palette (Ctrl+K)
-- [ ] Basic data persistence (SQLite or localStorage)
+- [ ] Command Palette (Cmd+K) using `cmdk` library
+- [ ] Rust: SQLite setup with migrations (tauri-plugin-sql)
+- [ ] Rust: basic file system commands (read_file, write_file, list_dir)
+- [ ] useBackend hook for Tauri invoke abstraction
 
 ### Phase 2 — Core Tools (Week 3-4)
 Build the most-used tool pages.
@@ -1222,34 +1334,40 @@ Competition tracking and gamification.
 ### Phase 5 — Advanced Tools (Week 9-10)
 Deeper technical tools.
 
-- [ ] Terminal (xterm.js + node-pty)
-- [ ] OSINT & Recon (Shodan, WHOIS, DNS, CVE)
-- [ ] Report Generator (PDF/MD export)
-- [ ] JWT Debugger
-- [ ] File Analyzer (drop zone, magic bytes, strings, entropy)
-- [ ] HTTP Request Builder
+- [ ] Rust: PTY spawning commands (portable-pty crate)
+- [ ] Terminal page (xterm.js frontend + Rust PTY backend via IPC events)
+- [ ] Rust: OSINT proxy commands (reqwest HTTP client for Shodan, WHOIS, DNS)
+- [ ] OSINT & Recon page
+- [ ] Report Generator (PDF export via printpdf or browser print)
+- [ ] JWT Debugger (client-side)
+- [ ] File Analyzer (client-side FileReader + Rust for deeper analysis)
+- [ ] HTTP Request Builder (Rust reqwest for actual requests — no CORS)
 
-### Phase 6 — Infrastructure & Integrations (Week 11-12)
-System integrations.
+### Phase 6 — Native Integrations (Week 11-12)
+Leverage Tauri's native capabilities.
 
-- [ ] VPN Manager
-- [ ] Flipper Zero integration
-- [ ] Network Map Builder
-- [ ] Docker Lab Manager
-- [ ] Bookmarks
+- [ ] Rust: VPN process management (spawn/kill openvpn, read tun0 IP)
+- [ ] VPN Manager page
+- [ ] Rust: Serial port commands (tauri-plugin-serialplugin for Flipper Zero)
+- [ ] Flipper Zero integration page
+- [ ] Network Map Builder (import nmap XML via Rust FS)
+- [ ] Bookmarks page
 
 ### Phase 7 — Polish & Social (Week 13+)
-Final features and team play.
+Final features and future web prep.
 
-- [ ] Collab Mode (real-time)
-- [ ] Notification Center
-- [ ] Esoteric Language Interpreter
+- [ ] Collab Mode (WebSocket via Rust backend or external service)
+- [ ] Notification Center (Tauri native notifications)
+- [ ] Esoteric Language Interpreter (client-side)
+- [ ] Regex Tester (client-side)
+- [ ] Diff Tool (client-side)
 - [ ] Theme Customizer
 - [ ] Clipboard History
+- [ ] Settings page (API key storage via Tauri secure store)
+- [ ] Keyboard shortcuts (Tauri global shortcuts)
 - [ ] Plugin System architecture
-- [ ] Settings page
-- [ ] Keyboard shortcuts
-- [ ] Mobile responsive (at least readable)
+- [ ] Tauri auto-updater setup
+- [ ] Future: Axum web server mode for remote access
 
 ---
 
