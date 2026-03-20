@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slime-base: #141820;
+  --color-slime-sidebar: #11151E;
+  --color-slime-card: #1A1F2E;
+  --color-slime-code: #0F1520;
+  --color-slime-terminal: #0B0E17;
+
+  --color-mint: #6EE7B7;
+  --color-mint-dark: #34D399;
+  --color-accent-rose: #FB7185;
+  --color-lavender: #A78BFA;
+  --color-gold: #FBBF24;
+  --color-accent-sky: #7DD3FC;
+  --color-accent-pink: #F472B6;
+
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #D1D5DB;
+  --color-text-muted: #9CA3AF;
+  --color-text-dim: #6B7280;
+  --color-text-faint: #4B5563;
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  src: url('/fonts/SpaceGrotesk-Variable.ttf') format('truetype');
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono[wght].ttf') format('truetype');
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+body {
+  background-color: #141820;
+  color: #D1D5DB;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 0;
+  padding: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #141820;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4B5563;
+}
