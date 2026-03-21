@@ -100,13 +100,18 @@ export default function FileAnalyzer() {
       {!fileLoaded ? (
         <Card>
           <div
+            role="button"
+            tabIndex={0}
+            aria-label="Drop file here to analyze or click to select"
             className="border-2 border-dashed border-white/[0.08] rounded-lg py-16 flex flex-col items-center justify-center
-              hover:border-mint/20 transition-colors cursor-pointer"
+              hover:border-mint/20 transition-colors cursor-pointer
+              focus-visible:ring-2 focus-visible:ring-mint focus:outline-none"
             onClick={() => setFileLoaded(true)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setFileLoaded(true) }}
           >
             <Upload size={40} className="text-text-dim mb-3" />
             <div className="font-heading font-semibold text-[14px] text-text-muted mb-1">Drop file here to analyze</div>
-            <div className="font-mono text-[10px] text-text-faint">or click to select a file</div>
+            <div className="font-mono text-[11px] text-text-faint">or click to select a file</div>
           </div>
         </Card>
       ) : (
@@ -123,9 +128,9 @@ export default function FileAnalyzer() {
                   <Badge color="rose">Suspicious</Badge>
                 </div>
                 <div className="flex items-center gap-4 mt-0.5">
-                  <span className="font-mono text-[10px] text-text-dim">{sampleFile.size}</span>
-                  <span className="font-mono text-[10px] text-text-dim">{sampleFile.type}</span>
-                  <span className="font-mono text-[10px] text-text-dim">Entropy: {sampleFile.entropy}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{sampleFile.size}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{sampleFile.type}</span>
+                  <span className="font-mono text-[11px] text-text-dim">Entropy: {sampleFile.entropy}</span>
                 </div>
               </div>
               <Button variant="secondary" size="small" onClick={() => setFileLoaded(false)}>New File</Button>
@@ -135,16 +140,16 @@ export default function FileAnalyzer() {
           <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
           {activeTab === 'overview' && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Card>
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Magic Bytes</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Magic Bytes</span>
                 <div className="bg-slime-code rounded-md p-3 border border-white/[0.04]">
                   <div className="font-mono text-[16px] text-mint font-bold tracking-wider">{sampleFile.magicBytes}</div>
-                  <div className="font-mono text-[10px] text-text-dim mt-1">{sampleFile.magicType}</div>
+                  <div className="font-mono text-[11px] text-text-dim mt-1">{sampleFile.magicType}</div>
                 </div>
               </Card>
               <Card>
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Hashes</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Hashes</span>
                 <div className="space-y-2">
                   {[
                     ['MD5', sampleFile.md5],
@@ -152,35 +157,35 @@ export default function FileAnalyzer() {
                     ['SHA256', sampleFile.sha256],
                   ].map(([label, hash]) => (
                     <div key={label}>
-                      <span className="font-mono text-[9px] text-text-faint">{label}</span>
-                      <div className="font-mono text-[10px] text-text-secondary truncate">{hash}</div>
+                      <span className="font-mono text-[11px] text-text-faint">{label}</span>
+                      <div className="font-mono text-[11px] text-text-secondary truncate">{hash}</div>
                     </div>
                   ))}
                 </div>
               </Card>
-              <Card className="col-span-2">
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Suspicious Indicators</span>
-                <div className="grid grid-cols-3 gap-2">
+              <Card className="col-span-1 md:col-span-2">
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Suspicious Indicators</span>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
                   <div className="bg-rose/5 border border-rose/10 rounded-md p-2.5">
                     <div className="flex items-center gap-1.5 mb-1">
                       <AlertTriangle size={12} className="text-rose" />
-                      <span className="font-mono text-[10px] text-rose font-semibold">Network Activity</span>
+                      <span className="font-mono text-[11px] text-rose font-semibold">Network Activity</span>
                     </div>
-                    <span className="font-mono text-[9px] text-text-dim">Contains socket/connect calls and IP address</span>
+                    <span className="font-mono text-[11px] text-text-dim">Contains socket/connect calls and IP address</span>
                   </div>
                   <div className="bg-rose/5 border border-rose/10 rounded-md p-2.5">
                     <div className="flex items-center gap-1.5 mb-1">
                       <AlertTriangle size={12} className="text-rose" />
-                      <span className="font-mono text-[10px] text-rose font-semibold">Shell Access</span>
+                      <span className="font-mono text-[11px] text-rose font-semibold">Shell Access</span>
                     </div>
-                    <span className="font-mono text-[9px] text-text-dim">References /bin/sh - possible reverse shell</span>
+                    <span className="font-mono text-[11px] text-text-dim">References /bin/sh - possible reverse shell</span>
                   </div>
                   <div className="bg-gold/5 border border-gold/10 rounded-md p-2.5">
                     <div className="flex items-center gap-1.5 mb-1">
                       <Info size={12} className="text-gold" />
-                      <span className="font-mono text-[10px] text-gold font-semibold">File Access</span>
+                      <span className="font-mono text-[11px] text-gold font-semibold">File Access</span>
                     </div>
-                    <span className="font-mono text-[9px] text-text-dim">Reads /etc/passwd and /etc/shadow</span>
+                    <span className="font-mono text-[11px] text-text-dim">Reads /etc/passwd and /etc/shadow</span>
                   </div>
                 </div>
               </Card>
@@ -189,9 +194,9 @@ export default function FileAnalyzer() {
 
           {activeTab === 'hex' && (
             <Card>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Hex Dump</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Hex Dump</span>
               <div className="bg-slime-code rounded-md border border-white/[0.04] p-3 overflow-auto">
-                <div className="font-mono text-[10px]">
+                <div className="font-mono text-[11px]">
                   <div className="flex items-center gap-4 mb-2 text-text-faint border-b border-white/[0.04] pb-1.5">
                     <span className="w-20">Offset</span>
                     <span className="flex-1">Hex</span>
@@ -212,7 +217,7 @@ export default function FileAnalyzer() {
           {activeTab === 'strings' && (
             <Card>
               <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">
                   Extracted Strings ({filteredStrings.length})
                 </span>
                 <div className="relative w-60">
@@ -221,16 +226,18 @@ export default function FileAnalyzer() {
                     value={stringFilter}
                     onChange={(e) => setStringFilter(e.target.value)}
                     placeholder="Filter strings..."
+                    aria-label="Filter extracted strings"
                     className="w-full bg-slime-code border border-white/[0.06] rounded-md pl-7 pr-3 py-1.5
                       font-mono text-[11px] text-text-primary placeholder:text-text-faint
-                      focus:outline-none focus:border-mint/15 transition-colors"
+                      focus:outline-none focus:border-mint/15
+                      focus-visible:ring-2 focus-visible:ring-mint transition-colors"
                   />
                 </div>
               </div>
               <div className="bg-slime-code rounded-md border border-white/[0.04] overflow-auto">
                 {filteredStrings.map((str, i) => (
-                  <div key={i} className="flex items-center gap-3 px-3 py-1.5 hover:bg-white/[0.02] transition-colors border-b border-white/[0.02] last:border-0">
-                    <span className="font-mono text-[10px] text-text-faint w-14">{str.offset}</span>
+                  <div key={i} className="flex items-center gap-3 px-3 py-2 hover:bg-white/[0.02] transition-colors border-b border-white/[0.02] last:border-0">
+                    <span className="font-mono text-[11px] text-text-faint w-14">{str.offset}</span>
                     <span className="font-mono text-[11px] text-text-secondary flex-1">{str.value}</span>
                     <Badge color={stringTypeColors[str.type]}>{str.type}</Badge>
                   </div>
@@ -241,7 +248,7 @@ export default function FileAnalyzer() {
 
           {activeTab === 'metadata' && (
             <Card>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">File Metadata</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">File Metadata</span>
               <div className="space-y-1">
                 {sampleMetadata.map((meta) => (
                   <div key={meta.key} className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-white/[0.02] transition-colors">

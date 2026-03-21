@@ -139,7 +139,7 @@ export default function Diff() {
   return (
     <div className="space-y-4 h-[calc(100vh-120px)] flex flex-col">
       {/* Controls */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-3">
           <Badge color="mint">+{stats.added} added</Badge>
           <Badge color="rose">-{stats.removed} removed</Badge>
@@ -157,31 +157,35 @@ export default function Diff() {
       </div>
 
       {/* Input Areas */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] font-semibold uppercase text-rose">Original</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-rose">Original</span>
             <CopyButton text={leftText} source="Diff Left" />
           </div>
           <textarea
             value={leftText}
             onChange={(e) => setLeftText(e.target.value)}
+            aria-label="Original text for diff comparison"
             className="w-full bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px]
-              text-text-secondary resize-none focus:outline-none focus:border-mint/15 h-[180px]"
+              text-text-secondary resize-none focus:outline-none focus:border-mint/15
+              focus-visible:ring-2 focus-visible:ring-mint min-h-[200px]"
             spellCheck={false}
             placeholder="Paste original text..."
           />
         </Card>
         <Card>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] font-semibold uppercase text-mint">Modified</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-mint">Modified</span>
             <CopyButton text={rightText} source="Diff Right" />
           </div>
           <textarea
             value={rightText}
             onChange={(e) => setRightText(e.target.value)}
+            aria-label="Modified text for diff comparison"
             className="w-full bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px]
-              text-text-secondary resize-none focus:outline-none focus:border-mint/15 h-[180px]"
+              text-text-secondary resize-none focus:outline-none focus:border-mint/15
+              focus-visible:ring-2 focus-visible:ring-mint min-h-[200px]"
             spellCheck={false}
             placeholder="Paste modified text..."
           />
@@ -190,7 +194,7 @@ export default function Diff() {
 
       {/* Diff View */}
       <Card className="flex-1 flex flex-col overflow-hidden">
-        <span className="font-mono text-[10px] font-semibold uppercase text-text-dim mb-2">Side-by-Side Diff</span>
+        <span className="font-mono text-[11px] font-semibold uppercase text-text-dim mb-2">Side-by-Side Diff</span>
         <div className="flex-1 overflow-auto">
           <div className="grid grid-cols-2 gap-0 font-mono text-[11px]">
             {diff.map((line, i) => (

@@ -66,7 +66,7 @@ export default function Settings() {
           <User size={16} className="text-mint" />
           <span className="font-heading font-semibold text-[14px] text-text-primary">Profile</span>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <Input
             label="Username"
             value={profile.username}
@@ -107,7 +107,7 @@ export default function Settings() {
             { key: 'ctftime', label: 'CTFtime API Key', configured: false },
           ].map((api) => (
             <div key={api.key}>
-              <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">
+              <label className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">
                 {api.label}
                 {api.configured ? (
                   <Badge color="mint" className="ml-2">Configured</Badge>
@@ -121,14 +121,18 @@ export default function Settings() {
                   value={apiKeys[api.key]}
                   onChange={(e) => setApiKeys({ ...apiKeys, [api.key]: e.target.value })}
                   placeholder="Enter API key..."
+                  aria-label={api.label}
                   className="flex-1 bg-slime-card border border-white/[0.06] rounded-lg px-3.5 py-2.5
                     font-mono text-[12px] text-text-primary placeholder:text-text-faint
-                    focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+                    focus:bg-slime-code focus:border-mint/15 focus:outline-none
+                    focus-visible:ring-2 focus-visible:ring-mint transition-colors"
                 />
                 <button
                   onClick={() => toggleKeyVisibility(api.key)}
+                  aria-label={showKeys[api.key] ? `Hide ${api.label}` : `Show ${api.label}`}
                   className="px-3 bg-slime-card border border-white/[0.06] rounded-lg
-                    text-text-dim hover:text-text-muted transition-colors cursor-pointer"
+                    text-text-dim hover:text-text-muted transition-colors cursor-pointer
+                    focus-visible:ring-2 focus-visible:ring-mint focus:outline-none"
                 >
                   {showKeys[api.key] ? <EyeOff size={14} /> : <Eye size={14} />}
                 </button>
@@ -147,12 +151,14 @@ export default function Settings() {
           <Palette size={16} className="text-lavender" />
           <span className="font-heading font-semibold text-[14px] text-text-primary">Theme</span>
         </div>
-        <div className="grid grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {themeOptions.map((theme) => (
             <button
               key={theme.id}
               onClick={() => setSelectedTheme(theme.id)}
+              aria-label={`Select ${theme.name} theme`}
               className={`rounded-lg p-3 text-left transition-all cursor-pointer
+                focus-visible:ring-2 focus-visible:ring-mint focus:outline-none
                 ${selectedTheme === theme.id
                   ? 'ring-2 ring-mint bg-slime-code'
                   : 'bg-slime-code hover:bg-white/[0.04]'
@@ -177,14 +183,16 @@ export default function Settings() {
           <Terminal size={16} className="text-sky-accent" />
           <span className="font-heading font-semibold text-[14px] text-text-primary">Terminal</span>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           <div>
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Font</label>
+            <label className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Font</label>
             <select
               value={terminalSettings.font}
               onChange={(e) => setTerminalSettings({ ...terminalSettings, font: e.target.value })}
+              aria-label="Terminal font"
               className="w-full bg-slime-card border border-white/[0.06] rounded-lg px-3.5 py-2.5
-                font-mono text-[12px] text-text-primary focus:outline-none focus:border-mint/15 cursor-pointer appearance-none"
+                font-mono text-[12px] text-text-primary focus:outline-none focus:border-mint/15
+                focus-visible:ring-2 focus-visible:ring-mint cursor-pointer appearance-none"
             >
               {terminalFonts.map((f) => (
                 <option key={f} value={f} className="bg-slime-card">{f}</option>
@@ -198,12 +206,14 @@ export default function Settings() {
             onChange={(e) => setTerminalSettings({ ...terminalSettings, fontSize: Number(e.target.value) })}
           />
           <div>
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Default Shell</label>
+            <label className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Default Shell</label>
             <select
               value={terminalSettings.defaultShell}
               onChange={(e) => setTerminalSettings({ ...terminalSettings, defaultShell: e.target.value })}
+              aria-label="Default shell"
               className="w-full bg-slime-card border border-white/[0.06] rounded-lg px-3.5 py-2.5
-                font-mono text-[12px] text-text-primary focus:outline-none focus:border-mint/15 cursor-pointer appearance-none"
+                font-mono text-[12px] text-text-primary focus:outline-none focus:border-mint/15
+                focus-visible:ring-2 focus-visible:ring-mint cursor-pointer appearance-none"
             >
               {shellOptions.map((s) => (
                 <option key={s} value={s} className="bg-slime-card">{s}</option>

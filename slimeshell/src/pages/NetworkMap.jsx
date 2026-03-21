@@ -87,23 +87,23 @@ export default function NetworkMap() {
   const nodeTypeLookup = Object.fromEntries(nodeTypes.map((t) => [t.type, t]))
 
   return (
-    <div className="flex gap-4 h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
       {/* Canvas */}
       <Card className="flex-1 flex flex-col min-w-0">
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Network Topology</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Network Topology</span>
           <div className="flex items-center gap-3">
             {Object.entries(statusColors).map(([status, color]) => (
               <div key={status} className="flex items-center gap-1">
                 <div className="w-2 h-2 rounded-full" style={{ backgroundColor: color }} />
-                <span className="font-mono text-[9px] text-text-faint capitalize">{status}</span>
+                <span className="font-mono text-[11px] text-text-faint capitalize">{status}</span>
               </div>
             ))}
           </div>
         </div>
         <div
           ref={canvasRef}
-          className="flex-1 bg-slime-code rounded-md border border-white/[0.04] relative overflow-hidden cursor-crosshair"
+          className="flex-1 bg-slime-code rounded-md border border-white/[0.04] relative overflow-hidden cursor-crosshair min-h-[400px]"
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseUp}
@@ -159,8 +159,8 @@ export default function NetworkMap() {
                   <Icon size={22} style={{ color: nt?.color || '#6EE7B7' }} />
                 </div>
                 <div className="mt-1 text-center">
-                  <div className="font-mono text-[9px] text-text-secondary whitespace-nowrap">{node.label}</div>
-                  <div className="font-mono text-[8px] text-text-faint">{node.ip}</div>
+                  <div className="font-mono text-[11px] text-text-secondary whitespace-nowrap">{node.label}</div>
+                  <div className="font-mono text-[10px] text-text-faint">{node.ip}</div>
                 </div>
                 <div
                   className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-slime-code"
@@ -173,9 +173,9 @@ export default function NetworkMap() {
       </Card>
 
       {/* Controls */}
-      <div className="w-[260px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-full md:w-[260px] flex-shrink-0 flex flex-col gap-3">
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Add Node</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Add Node</span>
           <div className="grid grid-cols-3 gap-1.5 mb-3">
             {nodeTypes.map((nt) => {
               const Icon = nt.icon
@@ -183,11 +183,13 @@ export default function NetworkMap() {
                 <button
                   key={nt.type}
                   onClick={() => setAddType(nt.type)}
+                  aria-label={`Select ${nt.label} node type`}
                   className={`flex flex-col items-center gap-1 p-2 rounded-md cursor-pointer transition-all
+                    focus-visible:ring-2 focus-visible:ring-mint focus:outline-none
                     ${addType === nt.type ? 'bg-mint/10 border border-mint/20' : 'bg-slime-code hover:bg-white/[0.04]'}`}
                 >
                   <Icon size={16} style={{ color: nt.color }} />
-                  <span className="font-mono text-[8px] text-text-dim">{nt.label}</span>
+                  <span className="font-mono text-[10px] text-text-dim">{nt.label}</span>
                 </button>
               )
             })}
@@ -200,18 +202,23 @@ export default function NetworkMap() {
         {selectedNodeData && (
           <Card>
             <div className="flex items-center justify-between mb-3">
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Node Details</span>
-              <button onClick={() => removeNode(selectedNodeData.id)} className="text-text-faint hover:text-rose cursor-pointer">
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Node Details</span>
+              <button
+                onClick={() => removeNode(selectedNodeData.id)}
+                aria-label="Remove selected node"
+                className="text-text-faint hover:text-rose cursor-pointer
+                  focus-visible:ring-2 focus-visible:ring-mint focus:outline-none rounded"
+              >
                 <Trash2 size={12} />
               </button>
             </div>
             <div className="space-y-2.5">
               <div>
-                <span className="font-mono text-[9px] text-text-faint">Label</span>
+                <span className="font-mono text-[11px] text-text-faint">Label</span>
                 <div className="font-mono text-[12px] text-text-primary">{selectedNodeData.label}</div>
               </div>
               <div>
-                <span className="font-mono text-[9px] text-text-faint">Type</span>
+                <span className="font-mono text-[11px] text-text-faint">Type</span>
                 <div className="flex items-center gap-1.5">
                   <Badge color={selectedNodeData.type === 'firewall' ? 'rose' : 'mint'}>
                     {selectedNodeData.type}
@@ -219,19 +226,19 @@ export default function NetworkMap() {
                 </div>
               </div>
               <div>
-                <span className="font-mono text-[9px] text-text-faint">IP Address</span>
+                <span className="font-mono text-[11px] text-text-faint">IP Address</span>
                 <div className="font-mono text-[12px] text-mint">{selectedNodeData.ip}</div>
               </div>
               <div>
-                <span className="font-mono text-[9px] text-text-faint">Status</span>
+                <span className="font-mono text-[11px] text-text-faint">Status</span>
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full" style={{ backgroundColor: statusColors[selectedNodeData.status] }} />
                   <span className="font-mono text-[11px] text-text-primary capitalize">{selectedNodeData.status}</span>
                 </div>
               </div>
               <div>
-                <span className="font-mono text-[9px] text-text-faint">Position</span>
-                <div className="font-mono text-[10px] text-text-dim">
+                <span className="font-mono text-[11px] text-text-faint">Position</span>
+                <div className="font-mono text-[11px] text-text-dim">
                   x: {Math.round(selectedNodeData.x)}, y: {Math.round(selectedNodeData.y)}
                 </div>
               </div>
@@ -240,19 +247,19 @@ export default function NetworkMap() {
         )}
 
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-2">Network Summary</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Network Summary</span>
           <div className="space-y-1.5">
             <div className="flex justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Nodes</span>
-              <span className="font-mono text-[10px] text-text-primary">{nodes.length}</span>
+              <span className="font-mono text-[11px] text-text-dim">Nodes</span>
+              <span className="font-mono text-[11px] text-text-primary">{nodes.length}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Connections</span>
-              <span className="font-mono text-[10px] text-text-primary">{connections.length}</span>
+              <span className="font-mono text-[11px] text-text-dim">Connections</span>
+              <span className="font-mono text-[11px] text-text-primary">{connections.length}</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Compromised</span>
-              <span className="font-mono text-[10px] text-gold">{nodes.filter((n) => n.status === 'compromised').length}</span>
+              <span className="font-mono text-[11px] text-text-dim">Compromised</span>
+              <span className="font-mono text-[11px] text-gold">{nodes.filter((n) => n.status === 'compromised').length}</span>
             </div>
           </div>
         </Card>
