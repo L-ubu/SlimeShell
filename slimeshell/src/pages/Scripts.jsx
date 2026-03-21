@@ -331,32 +331,33 @@ export default function Scripts() {
           </div>
         </div>
 
-      {/* Code Preview Panel */}
-      <Card className="flex-1 flex flex-col min-w-0">
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <FolderOpen size={16} className="text-mint" />
-            <span className="font-heading font-semibold text-[14px] text-text-primary">{selected.name}</span>
-            <Badge color={langColors[selected.lang]}>{selected.lang}</Badge>
+        {/* Code Preview Panel */}
+        <Card className="flex-1 flex flex-col min-w-0">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <FolderOpen size={16} className="text-mint" />
+              <span className="font-heading font-semibold text-[14px] text-text-primary">{selected.name}</span>
+              <Badge color={langColors[selected.lang]}>{selected.lang}</Badge>
+            </div>
+            <div className="flex items-center gap-2">
+              <CopyButton text={selected.code} source={selected.name} />
+              <Button variant="ghost" size="small" aria-label="Run script">
+                <Play size={12} /> Run
+              </Button>
+              <Button variant="destructive" size="small" aria-label="Delete script">
+                <Trash2 size={12} />
+              </Button>
+            </div>
           </div>
-          <div className="flex items-center gap-2">
-            <CopyButton text={selected.code} source={selected.name} />
-            <Button variant="ghost" size="small" aria-label="Run script">
-              <Play size={12} /> Run
-            </Button>
-            <Button variant="destructive" size="small" aria-label="Delete script">
-              <Trash2 size={12} />
-            </Button>
+          <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-y-auto">
+            <pre className="p-4">
+              <code className="font-mono text-[11px] text-mint leading-relaxed whitespace-pre">
+                {selected.code}
+              </code>
+            </pre>
           </div>
-        </div>
-        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-y-auto">
-          <pre className="p-4">
-            <code className="font-mono text-[11px] text-mint leading-relaxed whitespace-pre">
-              {selected.code}
-            </code>
-          </pre>
-        </div>
-      </Card>
+        </Card>
+      </div>
     </div>
   )
 }
