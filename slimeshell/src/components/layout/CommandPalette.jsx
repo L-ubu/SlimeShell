@@ -59,24 +59,25 @@ export default function CommandPalette() {
   })
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]">
-      <div className="fixed inset-0 bg-black/60" onClick={close} />
-      <div className="relative w-[560px] bg-slime-sidebar border border-white/[0.08] rounded-xl shadow-2xl overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh]" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div className="fixed inset-0 bg-black/60" onClick={close} aria-hidden="true" />
+      <div className="relative w-full max-w-[560px] mx-4 bg-slime-sidebar border border-white/[0.08] rounded-xl shadow-2xl overflow-hidden">
         <Command className="font-mono" shouldFilter={true}>
           <div className="flex items-center gap-2 px-4 py-3 border-b border-white/[0.06]">
-            <Search size={16} className="text-text-dim" />
+            <Search size={16} className="text-text-dim" aria-hidden="true" />
             <Command.Input
               autoFocus
               placeholder="Type a command or search..."
+              aria-label="Search commands"
               className="flex-1 bg-transparent border-none outline-none text-[13px] text-text-primary placeholder:text-text-faint"
             />
           </div>
-          <Command.List className="max-h-[320px] overflow-y-auto p-2">
-            <Command.Empty className="py-6 text-center text-text-dim text-[12px]">
+          <Command.List className="max-h-[360px] overflow-y-auto p-2">
+            <Command.Empty className="py-6 text-center text-text-dim text-[13px]">
               No results found.
             </Command.Empty>
             {Object.entries(groups).map(([group, items]) => (
-              <Command.Group key={group} heading={group} className="[&_[cmdk-group-heading]]:text-[10px] [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:text-text-dim [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5">
+              <Command.Group key={group} heading={group} className="[&_[cmdk-group-heading]]:text-[11px] [&_[cmdk-group-heading]]:font-mono [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:text-text-dim [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5">
                 {items.map((cmd) => {
                   const Icon = cmd.icon
                   return (
@@ -87,7 +88,7 @@ export default function CommandPalette() {
                         navigate(cmd.path)
                         close()
                       }}
-                      className="flex items-center gap-3 px-3 py-2 rounded-md cursor-pointer text-[13px] text-text-muted
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-md cursor-pointer text-[13px] text-text-muted
                         data-[selected=true]:bg-mint/[0.06] data-[selected=true]:text-mint transition-colors"
                     >
                       <Icon size={16} strokeWidth={1.8} />

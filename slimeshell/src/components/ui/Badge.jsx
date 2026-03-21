@@ -5,7 +5,7 @@ const colorMap = {
   gold: { bg: 'bg-gold/10', text: 'text-gold' },
   sky: { bg: 'bg-sky-accent/10', text: 'text-sky-accent' },
   pink: { bg: 'bg-pink-accent/10', text: 'text-pink-accent' },
-  muted: { bg: 'bg-text-muted/10', text: 'text-text-muted' },
+  muted: { bg: 'bg-white/[0.06]', text: 'text-text-muted' },
 }
 
 const categoryColors = {
@@ -26,8 +26,8 @@ export default function Badge({ children, color = 'mint', category, pill = false
   return (
     <span className={`
       inline-flex items-center ${style.bg} ${style.text}
-      font-mono font-normal leading-none
-      ${pill ? 'rounded-full text-[10px] px-2 py-1' : 'rounded-sm text-[9px] px-1.5 py-0.5'}
+      font-mono font-semibold leading-none whitespace-nowrap
+      ${pill ? 'rounded-full text-[11px] px-2.5 py-1' : 'rounded text-[10px] px-1.5 py-0.5'}
       ${className}
     `}>
       {children}
