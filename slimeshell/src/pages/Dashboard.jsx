@@ -69,24 +69,24 @@ const activeCTF = {
 
 export default function Dashboard() {
   return (
-    <div className="flex flex-col gap-3.5">
+    <div className="flex flex-col gap-5">
       {/* Stats Row */}
-      <div className="flex gap-3.5">
+      <div className="flex gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon
           const colors = accentColors[stat.accent]
           return (
             <Card key={stat.label} className="flex-1">
-              <div className="flex items-center gap-3.5">
+              <div className="flex items-center gap-4">
                 <div
-                  className="w-10 h-10 rounded-[10px] flex items-center justify-center flex-shrink-0"
+                  className="w-11 h-11 rounded-[10px] flex items-center justify-center flex-shrink-0"
                   style={{ background: colors.bg }}
                 >
                   <Icon size={20} className={colors.text} />
                 </div>
-                <div className="flex flex-col">
-                  <span className="font-heading font-bold text-[24px] text-text-primary leading-tight">{stat.value}</span>
-                  <span className="font-mono text-[10px] text-text-dim">{stat.label}</span>
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-heading font-bold text-[26px] text-text-primary leading-none">{stat.value}</span>
+                  <span className="font-mono text-[10px] text-text-dim tracking-wide">{stat.label}</span>
                 </div>
               </div>
             </Card>
@@ -96,39 +96,39 @@ export default function Dashboard() {
 
       {/* Active CTF */}
       <Card>
-        <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-rose"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose"></span>
             </span>
-            <span className="font-heading font-bold text-[14px] text-text-primary">
+            <span className="font-heading font-bold text-[15px] text-text-primary">
               Active CTF — {activeCTF.name}
             </span>
           </div>
           <div
-            className="rounded-full px-3 py-1 flex-shrink-0"
+            className="rounded-full px-4 py-1.5 flex-shrink-0"
             style={{ background: 'rgba(251,113,133,0.08)', border: '1px solid rgba(251,113,133,0.12)' }}
           >
             <span className="font-mono text-[10px] text-rose font-semibold">{activeCTF.timeLeft} left</span>
           </div>
         </div>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-8">
           <div className="flex-1">
-            <div className="flex items-center justify-between mb-1">
+            <div className="flex items-center justify-between mb-2">
               <span className="font-mono text-[10px] text-text-dim">Progress</span>
               <span className="font-mono text-[11px] text-mint font-medium">{activeCTF.progress} / {activeCTF.total} flags</span>
             </div>
             <ProgressBar value={activeCTF.progress} max={activeCTF.total} />
           </div>
-          <div className="flex gap-1.5 flex-shrink-0">
+          <div className="flex gap-2 flex-shrink-0">
             {activeCTF.categories.map((cat) => {
               const colors = accentColors[cat.color]
               return (
                 <span
                   key={cat.name}
-                  className={`rounded-[4px] px-2 py-1 font-mono text-[9px] font-semibold ${colors.text}`}
+                  className={`rounded-[6px] px-3 py-1.5 font-mono text-[10px] font-semibold ${colors.text}`}
                   style={{ background: colors.bg }}
                 >
                   {cat.name} x{cat.count}
@@ -140,16 +140,16 @@ export default function Dashboard() {
       </Card>
 
       {/* Quick Tools + Recent Scripts row */}
-      <div className="flex gap-3.5">
+      <div className="flex gap-4">
         {/* Quick Tools */}
         <Card className="flex-1">
-          <div className="flex items-center justify-between mb-4">
-            <span className="font-heading font-semibold text-[14px] text-text-primary">Quick Tools</span>
+          <div className="flex items-center justify-between mb-5">
+            <span className="font-heading font-semibold text-[15px] text-text-primary">Quick Tools</span>
             <Link to="/tools" className="flex items-center gap-1 font-mono text-[10px] text-text-dim hover:text-mint no-underline transition-colors">
               View all <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-3.5">
             {quickTools.map((tool) => {
               const Icon = tool.icon
               const colors = accentColors[tool.accent]
@@ -157,11 +157,11 @@ export default function Dashboard() {
                 <Link
                   key={tool.name}
                   to={tool.path}
-                  className="flex flex-col items-center gap-2 bg-slime-code border border-white/[0.04] rounded-lg no-underline hover:border-white/[0.08] transition-colors"
-                  style={{ width: 88, padding: '14px 8px' }}
+                  className="flex flex-col items-center gap-2.5 bg-slime-code border border-white/[0.04] rounded-xl no-underline hover:border-white/[0.08] transition-colors"
+                  style={{ width: 92, padding: '16px 8px' }}
                 >
                   <div
-                    className={`w-9 h-9 rounded-lg flex items-center justify-center ${colors.text}`}
+                    className={`w-10 h-10 rounded-[10px] flex items-center justify-center ${colors.text}`}
                     style={{ background: colors.bg }}
                   >
                     <Icon size={18} />
@@ -174,32 +174,32 @@ export default function Dashboard() {
         </Card>
 
         {/* Recent Scripts */}
-        <div className="w-[340px] flex-shrink-0">
+        <div className="w-[360px] flex-shrink-0">
           <Card className="h-full flex flex-col">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-heading font-semibold text-[14px] text-text-primary">Recent Scripts</span>
+            <div className="flex items-center justify-between mb-4">
+              <span className="font-heading font-semibold text-[15px] text-text-primary">Recent Scripts</span>
               <Link to="/scripts" className="flex items-center gap-1 font-mono text-[10px] text-text-dim hover:text-mint no-underline transition-colors">
                 View all <ArrowRight size={10} />
               </Link>
             </div>
-            <div className="flex flex-col gap-2 flex-1">
+            <div className="flex flex-col gap-2.5 flex-1">
               {recentScripts.map((script) => {
                 const colors = accentColors[script.color]
                 return (
                   <div
                     key={script.name}
-                    className="flex items-center gap-2.5 bg-slime-code border border-white/[0.04] rounded-lg"
-                    style={{ padding: '8px 12px' }}
+                    className="flex items-center gap-3 bg-slime-code border border-white/[0.04] rounded-xl"
+                    style={{ padding: '10px 14px' }}
                   >
                     <div
-                      className={`w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0 font-mono text-[10px] font-bold ${colors.text}`}
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 font-mono text-[10px] font-bold ${colors.text}`}
                       style={{ background: colors.bg }}
                     >
                       {script.lang}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-mono text-[11px] font-medium text-text-secondary truncate">{script.name}</div>
-                      <div className="font-mono text-[9px] text-text-faint">Modified {script.time}</div>
+                      <div className="font-mono text-[9px] text-text-faint mt-0.5">Modified {script.time}</div>
                     </div>
                     <span className="font-mono text-[9px] text-text-dim flex-shrink-0">{script.size}</span>
                   </div>
@@ -211,33 +211,30 @@ export default function Dashboard() {
       </div>
 
       {/* Bottom Row: Flipper Zero + Quick References */}
-      <div className="flex gap-3.5">
+      <div className="flex gap-4">
         {/* Flipper Zero Widget */}
-        <div className="w-[340px] flex-shrink-0">
+        <div className="w-[360px] flex-shrink-0">
           <Card className="h-full">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <span className="font-heading font-semibold text-[14px] text-text-primary">Flipper Zero</span>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2.5">
+                <span className="font-heading font-semibold text-[15px] text-text-primary">Flipper Zero</span>
                 <div className="w-2 h-2 rounded-full bg-mint"></div>
               </div>
               <span className="font-mono text-[10px] text-mint font-semibold">Connected</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 mb-3">
+            <div className="grid grid-cols-3 gap-3 mb-4">
               {[
                 { label: 'SubGHz', value: 78, accent: 'mint' },
                 { label: 'RFID', value: 42, accent: 'lavender' },
                 { label: 'NFC', value: 34, accent: 'gold' },
-              ].map((item) => {
-                const colors = accentColors[item.accent]
-                return (
-                  <div key={item.label} className="bg-slime-code rounded-lg p-3 text-center">
-                    <div className="font-heading font-bold text-[20px] text-text-primary leading-tight">{item.value}</div>
-                    <div className="font-mono text-[9px] text-text-dim mt-0.5">{item.label}</div>
-                  </div>
-                )
-              })}
+              ].map((item) => (
+                <div key={item.label} className="bg-slime-code rounded-xl p-4 text-center">
+                  <div className="font-heading font-bold text-[22px] text-text-primary leading-none">{item.value}</div>
+                  <div className="font-mono text-[9px] text-text-dim mt-1.5">{item.label}</div>
+                </div>
+              ))}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <ProgressBar value={72} max={100} className="flex-1" />
               <span className="font-mono text-[9px] text-text-dim">72% battery</span>
             </div>
@@ -246,21 +243,21 @@ export default function Dashboard() {
 
         {/* Quick References */}
         <Card className="flex-1">
-          <div className="flex items-center justify-between mb-3">
-            <span className="font-heading font-semibold text-[14px] text-text-primary">Quick References</span>
+          <div className="flex items-center justify-between mb-4">
+            <span className="font-heading font-semibold text-[15px] text-text-primary">Quick References</span>
             <Link to="/references" className="flex items-center gap-1 font-mono text-[10px] text-text-dim hover:text-mint no-underline transition-colors">
               View all <ArrowRight size={10} />
             </Link>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2.5">
             {quickRefs.map((ref) => {
               const colors = accentColors[ref.color]
               return (
                 <Link
                   key={ref.name}
                   to="/references"
-                  className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 font-mono text-[11px] no-underline hover:opacity-80 transition-opacity"
-                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.04)' }}
+                  className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-mono text-[11px] no-underline hover:opacity-80 transition-opacity"
+                  style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}
                 >
                   <span className={colors.text} style={{ fontWeight: 600 }}>{ref.name}</span>
                   <span className="text-text-faint text-[10px]">{ref.desc}</span>

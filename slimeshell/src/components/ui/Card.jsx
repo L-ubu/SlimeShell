@@ -7,7 +7,7 @@ export default function Card({ children, className = '', active = false, onClick
       onClick={onClick}
       {...(interactive ? { type: 'button' } : {})}
       className={`
-        rounded-[10px] py-4 px-5 text-left w-full
+        rounded-[12px] py-5 px-6 text-left w-full
         ${active
           ? 'bg-mint/[0.04] border border-mint/[0.12]'
           : 'bg-slime-card border border-white/[0.04]'

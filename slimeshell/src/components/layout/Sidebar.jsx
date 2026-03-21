@@ -35,8 +35,8 @@ export default function Sidebar() {
 
   return (
     <aside className="w-[220px] min-w-[220px] h-full bg-slime-sidebar flex flex-col border-r border-white/[0.04]">
-      <div className="px-5 pt-5 pb-5">
-        <Link to="/" className="flex items-center gap-2.5 no-underline" aria-label="SlimeShell home">
+      <div className="px-5 pt-6 pb-6">
+        <Link to="/" className="flex items-center gap-3 no-underline" aria-label="SlimeShell home">
           <div
             className="w-9 h-9 rounded-[10px] bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center flex-shrink-0"
             style={{ boxShadow: '0 0 12px rgba(110, 231, 183, 0.15)' }}
@@ -52,10 +52,10 @@ export default function Sidebar() {
         </Link>
       </div>
 
-      <nav className="flex-1 overflow-y-auto px-3 py-1 flex flex-col gap-px" aria-label="Main navigation">
+      <nav className="flex-1 overflow-y-auto px-3 py-1 flex flex-col gap-0.5" aria-label="Main navigation">
         {navItems.map((item, i) => {
           if (item.type === 'separator') {
-            return <div key={i} className="h-px bg-white/[0.04] my-2 mx-1" role="separator" />
+            return <div key={i} className="h-px bg-white/[0.04] my-3 mx-2" role="separator" />
           }
 
           const isActive = location.pathname === item.path
@@ -67,7 +67,7 @@ export default function Sidebar() {
               to={item.path}
               aria-current={isActive ? 'page' : undefined}
               className={`
-                flex items-center gap-2.5 px-3 py-[7px] rounded-lg text-[13px] font-heading
+                flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-heading
                 transition-all duration-150 no-underline group
                 focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-inset
                 ${isActive
@@ -94,8 +94,8 @@ export default function Sidebar() {
         })}
       </nav>
 
-      <div className="px-4 py-3 border-t border-white/[0.04]">
-        <div className="flex items-center gap-2.5">
+      <div className="px-4 py-4 border-t border-white/[0.04]">
+        <div className="flex items-center gap-3">
           <div className="w-8 h-8 rounded-full bg-gradient-to-br from-mint to-mint-dark flex items-center justify-center flex-shrink-0" aria-hidden="true">
             <span className="text-[11px] font-heading font-bold text-slime-terminal">L</span>
           </div>
