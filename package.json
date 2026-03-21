@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "scripts": {
+    "install": "cd slimeshell && pnpm install",
+    "dev": "cd slimeshell && pnpm dev",
+    "build": "cd slimeshell && pnpm build"
+  }
+}
