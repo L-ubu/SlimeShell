@@ -255,8 +255,8 @@ export default function Utilities() {
   }
 
   return (
-    <div className="max-w-4xl">
-      <Tabs tabs={tabs} activeTab={tab} onChange={setTab} className="mb-5" />
+    <div className="flex flex-col gap-3.5 max-w-4xl">
+      <Tabs tabs={tabs} activeTab={tab} onChange={setTab} />
       <Card>{content[tab]}</Card>
     </div>
   )

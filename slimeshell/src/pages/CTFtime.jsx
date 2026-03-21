@@ -60,7 +60,7 @@ export default function CTFtime() {
   }, [timerTarget])
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Challenge Timer */}
       <Card>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-3">

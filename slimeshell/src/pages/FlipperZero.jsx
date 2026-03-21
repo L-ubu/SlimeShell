@@ -50,7 +50,7 @@ export default function FlipperZero() {
   const [selectedModule, setSelectedModule] = useState(null)
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Device Info & Status */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         <Card className="sm:col-span-2">

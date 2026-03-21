@@ -88,7 +88,7 @@ export default function VPN() {
   const activeConn = connections.find((c) => c.status === 'connected')
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Active Connection Banner */}
       {activeConn && (
         <Card className="border-l-4 border-mint">

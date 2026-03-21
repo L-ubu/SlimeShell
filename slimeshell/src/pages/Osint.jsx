@@ -75,7 +75,7 @@ export default function Osint() {
   const [cveQuery, setCveQuery] = useState('fortinet')
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
       {activeTab === 'shodan' && (
