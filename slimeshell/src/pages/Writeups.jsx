@@ -204,27 +204,28 @@ export default function Writeups() {
   )
 
   return (
-    <div className="flex gap-4 h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
       {/* Writeup List */}
-      <div className="w-[350px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-full md:w-[350px] md:min-w-[350px] flex-shrink-0 flex flex-col gap-3">
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search writeups..."
+            aria-label="Search writeups"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] text-text-dim">{filtered.length} writeups</span>
-          <Button variant="ghost" size="small"><Plus size={12} /> New</Button>
+          <span className="font-mono text-[11px] text-text-dim">{filtered.length} writeups</span>
+          <Button variant="ghost" size="small" aria-label="New writeup"><Plus size={12} /> New</Button>
         </div>
 
-        <div className="flex-1 overflow-auto space-y-1">
+        <div className="flex-1 overflow-y-auto space-y-1">
           {filtered.map((writeup) => (
             <Card
               key={writeup.id}
@@ -234,21 +235,21 @@ export default function Writeups() {
               <div className="font-heading font-semibold text-[12px] text-text-primary mb-1 truncate">{writeup.title}</div>
               <div className="flex items-center gap-2 mb-1.5">
                 <Badge category={writeup.category}>{writeup.category}</Badge>
-                <span className="font-mono text-[9px] text-text-faint">{writeup.ctf}</span>
+                <span className="font-mono text-[11px] text-text-faint">{writeup.ctf}</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-1">
                   <Calendar size={10} className="text-text-faint" />
-                  <span className="font-mono text-[9px] text-text-faint">{writeup.date}</span>
+                  <span className="font-mono text-[11px] text-text-faint">{writeup.date}</span>
                 </div>
                 <div className="flex items-center gap-1">
                   <Eye size={10} className="text-text-faint" />
-                  <span className="font-mono text-[9px] text-text-faint">{writeup.views}</span>
+                  <span className="font-mono text-[11px] text-text-faint">{writeup.views}</span>
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 mt-1.5">
                 {writeup.tags.map((tag) => (
-                  <span key={tag} className="font-mono text-[8px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">{tag}</span>
+                  <span key={tag} className="font-mono text-[10px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">{tag}</span>
                 ))}
               </div>
             </Card>
@@ -263,12 +264,12 @@ export default function Writeups() {
             <h2 className="font-heading font-bold text-[16px] text-text-primary">{selected.title}</h2>
             <div className="flex items-center gap-2 mt-1">
               <Badge category={selected.category}>{selected.category}</Badge>
-              <span className="font-mono text-[10px] text-text-dim">{selected.ctf}</span>
-              <span className="font-mono text-[10px] text-text-faint">{selected.date}</span>
+              <span className="font-mono text-[11px] text-text-dim">{selected.ctf}</span>
+              <span className="font-mono text-[11px] text-text-faint">{selected.date}</span>
             </div>
           </div>
         </div>
-        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-auto p-5">
+        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-y-auto p-5">
           <div className="prose-invert max-w-none">
             {selected.content.split('\n').map((line, i) => {
               if (line.startsWith('# ')) return <h1 key={i} className="font-heading font-bold text-[20px] text-text-primary mt-4 mb-2">{line.slice(2)}</h1>

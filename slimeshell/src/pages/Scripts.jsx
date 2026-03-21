@@ -235,29 +235,30 @@ export default function Scripts() {
   )
 
   return (
-    <div className="flex gap-4 h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
       {/* File List Panel */}
-      <div className="w-[350px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-full md:w-[350px] md:min-w-[350px] flex-shrink-0 flex flex-col gap-3">
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search scripts..."
+            aria-label="Search scripts"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] text-text-dim">{filtered.length} scripts</span>
-          <Button variant="ghost" size="small">
+          <span className="font-mono text-[11px] text-text-dim">{filtered.length} scripts</span>
+          <Button variant="ghost" size="small" aria-label="New script">
             <Plus size={12} /> New
           </Button>
         </div>
 
-        <div className="flex-1 overflow-auto space-y-1">
+        <div className="flex-1 overflow-y-auto space-y-1">
           {filtered.map((script) => (
             <Card
               key={script.id}
@@ -270,8 +271,8 @@ export default function Scripts() {
                   <div className="font-mono text-[12px] text-text-primary truncate">{script.name}</div>
                   <div className="flex items-center gap-2 mt-0.5">
                     <Badge color={langColors[script.lang]}>{script.lang}</Badge>
-                    <span className="font-mono text-[9px] text-text-faint">{script.size}</span>
-                    <span className="font-mono text-[9px] text-text-faint">{script.modified}</span>
+                    <span className="font-mono text-[11px] text-text-faint">{script.size}</span>
+                    <span className="font-mono text-[11px] text-text-faint">{script.modified}</span>
                   </div>
                 </div>
               </div>
@@ -290,15 +291,15 @@ export default function Scripts() {
           </div>
           <div className="flex items-center gap-2">
             <CopyButton text={selected.code} source={selected.name} />
-            <Button variant="ghost" size="small">
+            <Button variant="ghost" size="small" aria-label="Run script">
               <Play size={12} /> Run
             </Button>
-            <Button variant="destructive" size="small">
+            <Button variant="destructive" size="small" aria-label="Delete script">
               <Trash2 size={12} />
             </Button>
           </div>
         </div>
-        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-auto">
+        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-y-auto">
           <pre className="p-4">
             <code className="font-mono text-[11px] text-mint leading-relaxed whitespace-pre">
               {selected.code}

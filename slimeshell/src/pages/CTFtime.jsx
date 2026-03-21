@@ -63,16 +63,16 @@ export default function CTFtime() {
     <div className="space-y-4">
       {/* Challenge Timer */}
       <Card>
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-3">
           <div>
-            <span className="font-mono text-[10px] font-semibold uppercase text-mint">Next CTF</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-mint">Next CTF</span>
             <h2 className="font-heading font-bold text-[18px] text-text-primary mt-0.5">PlaidCTF 2026</h2>
             <div className="flex items-center gap-2 mt-1">
               <Calendar size={12} className="text-text-dim" />
-              <span className="font-mono text-[10px] text-text-dim">Apr 12-14, 2026</span>
+              <span className="font-mono text-[11px] text-text-dim">Apr 12-14, 2026</span>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-3" aria-label="Countdown timer">
             {[
               { label: 'Days', value: timeLeft.days },
               { label: 'Hours', value: timeLeft.hours },
@@ -83,30 +83,30 @@ export default function CTFtime() {
                 <div className="font-heading font-bold text-[28px] text-mint leading-none">
                   {String(unit.value).padStart(2, '0')}
                 </div>
-                <div className="font-mono text-[9px] text-text-dim uppercase mt-1">{unit.label}</div>
+                <div className="font-mono text-[11px] text-text-dim uppercase mt-1">{unit.label}</div>
               </div>
             ))}
           </div>
         </div>
       </Card>
 
-      <div className="grid grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
         {/* Upcoming CTFs */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Upcoming CTFs</span>
-            <div className="space-y-1">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Upcoming CTFs</span>
+            <div className="space-y-1 overflow-y-auto">
               {upcomingCTFs.map((ctf) => (
-                <div key={ctf.id} className="flex items-center gap-3 py-2.5 px-2.5 rounded-md hover:bg-white/[0.02] transition-colors">
+                <div key={ctf.id} className="flex items-center gap-3 py-2 px-2.5 rounded-md hover:bg-white/[0.02] transition-colors">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
                       <span className="font-heading font-semibold text-[13px] text-text-secondary">{ctf.name}</span>
                       {ctf.registered && <Badge color="mint" pill>Registered</Badge>}
                     </div>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="font-mono text-[9px] text-text-faint">{ctf.organizer}</span>
-                      <span className="font-mono text-[9px] text-text-faint">·</span>
-                      <span className="font-mono text-[9px] text-text-faint">{ctf.date}</span>
+                      <span className="font-mono text-[11px] text-text-faint">{ctf.organizer}</span>
+                      <span className="font-mono text-[11px] text-text-faint">·</span>
+                      <span className="font-mono text-[11px] text-text-faint">{ctf.date}</span>
                     </div>
                   </div>
                   <Badge color={difficultyColors[ctf.difficulty]}>{ctf.difficulty}</Badge>
@@ -116,9 +116,13 @@ export default function CTFtime() {
                       <Star size={10} className="text-gold" />
                       <span className="font-mono text-[11px] text-gold">{ctf.weight}</span>
                     </div>
-                    <span className="font-mono text-[8px] text-text-faint">weight</span>
+                    <span className="font-mono text-[10px] text-text-faint">weight</span>
                   </div>
-                  <a href={ctf.url} className="text-text-dim hover:text-mint transition-colors">
+                  <a
+                    href={ctf.url}
+                    aria-label={`View ${ctf.name} details`}
+                    className="text-text-dim hover:text-mint transition-colors focus-visible:ring-2 focus-visible:ring-mint rounded"
+                  >
                     <ExternalLink size={14} />
                   </a>
                 </div>
@@ -130,10 +134,10 @@ export default function CTFtime() {
         {/* Team Scoreboard */}
         <Card>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Global Scoreboard</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Global Scoreboard</span>
             <Trophy size={14} className="text-gold" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 overflow-y-auto">
             {teamScoreboard.map((team) => (
               <div
                 key={team.rank}
@@ -151,7 +155,7 @@ export default function CTFtime() {
                   </span>
                 </div>
                 <Badge color="muted" pill>{team.country}</Badge>
-                <span className="font-mono text-[10px] text-text-muted w-16 text-right">{team.points}</span>
+                <span className="font-mono text-[11px] text-text-muted w-16 text-right">{team.points}</span>
               </div>
             ))}
           </div>

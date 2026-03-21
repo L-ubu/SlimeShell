@@ -84,30 +84,42 @@ export default function Terminal() {
     <div className={`flex flex-col ${isFullscreen ? 'fixed inset-0 z-50 bg-slime-base p-4' : 'h-[calc(100vh-120px)]'}`}>
       {/* Tab Bar */}
       <div className="flex items-center gap-0 bg-slime-card rounded-t-lg border border-white/[0.06] border-b-0">
-        <div className="flex items-center flex-1 overflow-x-auto">
+        <div className="flex items-center flex-1 overflow-x-auto" role="tablist" aria-label="Terminal tabs">
           {tabs.map((tab) => (
             <div
               key={tab.id}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              tabIndex={activeTab === tab.id ? 0 : -1}
               onClick={() => setActiveTab(tab.id)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setActiveTab(tab.id) }}
               className={`flex items-center gap-2 px-4 py-2.5 cursor-pointer border-b-2 transition-colors
+                focus-visible:ring-2 focus-visible:ring-mint
                 ${activeTab === tab.id
                   ? 'border-mint bg-slime-terminal text-mint'
                   : 'border-transparent text-text-dim hover:text-text-muted'
                 }`}
             >
               <span className="font-mono text-[11px]">{tab.name}</span>
-              <span className="font-mono text-[8px] text-text-faint">{tab.shell}</span>
+              <span className="font-mono text-[10px] text-text-faint">{tab.shell}</span>
               {tabs.length > 1 && (
                 <button
                   onClick={(e) => { e.stopPropagation(); closeTab(tab.id) }}
-                  className="text-text-faint hover:text-rose transition-colors cursor-pointer ml-1"
+                  aria-label={`Close ${tab.name}`}
+                  className="text-text-faint hover:text-rose transition-colors cursor-pointer ml-1
+                    focus-visible:ring-2 focus-visible:ring-mint rounded"
                 >
                   <X size={10} />
                 </button>
               )}
             </div>
           ))}
-          <button onClick={addTab} className="px-3 py-2.5 text-text-dim hover:text-mint transition-colors cursor-pointer">
+          <button
+            onClick={addTab}
+            aria-label="New terminal tab"
+            className="px-3 py-2.5 text-text-dim hover:text-mint transition-colors cursor-pointer
+              focus-visible:ring-2 focus-visible:ring-mint rounded"
+          >
             <Plus size={14} />
           </button>
         </div>
@@ -117,19 +129,25 @@ export default function Terminal() {
           <div className="relative">
             <button
               onClick={() => setShowShellSelect(!showShellSelect)}
-              className="flex items-center gap-1 px-2.5 py-1 bg-slime-code rounded-md font-mono text-[10px] text-text-muted
-                hover:text-text-secondary transition-colors cursor-pointer"
+              aria-label="Select shell type"
+              aria-expanded={showShellSelect}
+              className="flex items-center gap-1 px-2.5 py-1 bg-slime-code rounded-md font-mono text-[11px] text-text-muted
+                hover:text-text-secondary transition-colors cursor-pointer
+                focus-visible:ring-2 focus-visible:ring-mint"
             >
               {selectedShell} <ChevronDown size={10} />
             </button>
             {showShellSelect && (
-              <div className="absolute top-full right-0 mt-1 bg-slime-card border border-white/[0.08] rounded-md shadow-lg z-10">
+              <div className="absolute top-full right-0 mt-1 bg-slime-card border border-white/[0.08] rounded-md shadow-lg z-10" role="listbox" aria-label="Shell types">
                 {shellTypes.map((shell) => (
                   <button
                     key={shell}
+                    role="option"
+                    aria-selected={selectedShell === shell}
                     onClick={() => { setSelectedShell(shell); setShowShellSelect(false) }}
                     className="block w-full text-left px-3 py-1.5 font-mono text-[11px] text-text-muted
-                      hover:bg-white/[0.04] hover:text-mint transition-colors cursor-pointer"
+                      hover:bg-white/[0.04] hover:text-mint transition-colors cursor-pointer
+                      focus-visible:ring-2 focus-visible:ring-mint"
                   >
                     {shell}
                   </button>
@@ -140,7 +158,10 @@ export default function Terminal() {
 
           <button
             onClick={() => setIsFullscreen(!isFullscreen)}
-            className="text-text-dim hover:text-text-muted transition-colors cursor-pointer p-1"
+            aria-label={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+            aria-pressed={isFullscreen}
+            className="text-text-dim hover:text-text-muted transition-colors cursor-pointer p-1
+              focus-visible:ring-2 focus-visible:ring-mint rounded"
           >
             {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
           </button>
@@ -151,7 +172,7 @@ export default function Terminal() {
       <div
         ref={terminalRef}
         onClick={() => inputRef.current?.focus()}
-        className="flex-1 bg-slime-terminal border border-white/[0.06] border-t-0 rounded-b-lg overflow-auto p-4 cursor-text"
+        className="flex-1 bg-slime-terminal border border-white/[0.06] border-t-0 rounded-b-lg overflow-y-auto p-4 cursor-text"
       >
         <div className="font-mono text-[11px] leading-relaxed">
           {/* MOTD */}
@@ -175,6 +196,7 @@ export default function Terminal() {
               ref={inputRef}
               value={command}
               onChange={(e) => setCommand(e.target.value)}
+              aria-label="Terminal command input"
               className="flex-1 bg-transparent text-text-primary outline-none font-mono text-[11px] caret-mint"
               autoFocus
               spellCheck={false}

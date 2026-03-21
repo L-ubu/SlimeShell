@@ -185,27 +185,28 @@ export default function Notes() {
   }
 
   return (
-    <div className="flex gap-4 h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
       {/* Note List */}
-      <div className="w-[300px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-full md:w-[300px] md:min-w-[300px] flex-shrink-0 flex flex-col gap-3">
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search notes..."
+            aria-label="Search notes"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
 
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] text-text-dim">{filtered.length} notes</span>
-          <Button variant="ghost" size="small"><Plus size={12} /> New</Button>
+          <span className="font-mono text-[11px] text-text-dim">{filtered.length} notes</span>
+          <Button variant="ghost" size="small" aria-label="New note"><Plus size={12} /> New</Button>
         </div>
 
-        <div className="flex-1 overflow-auto space-y-1">
+        <div className="flex-1 overflow-y-auto space-y-1">
           {filtered.map((note) => (
             <Card
               key={note.id}
@@ -220,12 +221,12 @@ export default function Notes() {
                     <Badge category={note.category}>{note.category}</Badge>
                     <div className="flex items-center gap-1">
                       <Clock size={9} className="text-text-faint" />
-                      <span className="font-mono text-[8px] text-text-faint">{note.modified}</span>
+                      <span className="font-mono text-[10px] text-text-faint">{note.modified}</span>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1 mt-1">
                     {note.tags.map((tag) => (
-                      <span key={tag} className="font-mono text-[8px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">
+                      <span key={tag} className="font-mono text-[10px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">
                         #{tag}
                       </span>
                     ))}
@@ -246,14 +247,16 @@ export default function Notes() {
           </div>
           <div className="flex items-center gap-2">
             <Badge category={selected.category}>{selected.category}</Badge>
-            <span className="font-mono text-[9px] text-text-faint">{selected.modified}</span>
+            <span className="font-mono text-[11px] text-text-faint">{selected.modified}</span>
           </div>
         </div>
         <textarea
           value={editorContent}
           onChange={(e) => setEditorContent(e.target.value)}
+          aria-label={`Editor for ${selected.title}`}
           className="flex-1 bg-slime-code rounded-md border border-white/[0.04] p-4 font-mono text-[11px]
             text-text-secondary resize-none focus:outline-none focus:border-mint/15
+            focus-visible:ring-2 focus-visible:ring-mint
             leading-relaxed whitespace-pre-wrap"
           spellCheck={false}
         />
