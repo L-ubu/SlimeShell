@@ -101,22 +101,25 @@ export default function References() {
   const [tab, setTab] = useState('revshells')
 
   return (
-    <div className="max-w-5xl space-y-4">
+    <div className="max-w-6xl space-y-4">
       {/* Quick Links */}
-      <div className="flex flex-wrap gap-1.5 mb-2">
-        {quickLinks.map((link) => (
-          <a
-            key={link.name}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 bg-mint/[0.06] border border-mint/[0.1] rounded-md px-2.5 py-1.5
-              font-mono text-[10px] text-mint hover:bg-mint/[0.12] transition-colors no-underline"
-          >
-            {link.name} <ExternalLink size={10} />
-          </a>
-        ))}
-      </div>
+      <nav aria-label="Quick reference links">
+        <div className="flex flex-wrap gap-2 mb-2">
+          {quickLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 bg-mint/[0.06] border border-mint/[0.1] rounded-md px-2.5 py-1.5
+                font-mono text-[11px] text-mint hover:bg-mint/[0.12] focus-visible:ring-2 focus-visible:ring-mint transition-colors no-underline"
+              aria-label={`${link.name} (opens in new tab)`}
+            >
+              {link.name} <ExternalLink size={10} aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      </nav>
 
       <Tabs tabs={tabs} activeTab={tab} onChange={setTab} />
 

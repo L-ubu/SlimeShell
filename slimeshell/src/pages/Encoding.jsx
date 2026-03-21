@@ -45,20 +45,21 @@ export default function Encoding() {
   }, [steps, finalOutput])
 
   return (
-    <div className="space-y-4 max-w-4xl">
+    <div className="space-y-4 max-w-5xl">
       {/* Input */}
       <Card>
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[10px] font-semibold uppercase text-mint">Input</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-mint">Input</span>
           <CopyButton text={input} source="Encoding Input" />
         </div>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Enter text to encode/decode..."
+          aria-label="Encoding input text"
           className="w-full bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[12px] text-text-primary
-            placeholder:text-text-faint resize-none focus:outline-none focus:border-mint/15 min-h-[80px]"
-          rows={3}
+            placeholder:text-text-faint resize-none focus:outline-none focus:border-mint/15 focus-visible:ring-2 focus-visible:ring-mint min-h-[100px]"
+          rows={4}
         />
       </Card>
 
@@ -66,26 +67,31 @@ export default function Encoding() {
       {steps.map((step, i) => (
         <div key={step.id}>
           <div className="flex items-center justify-center py-1">
-            <ArrowDown size={16} className={STEP_COLORS[i % STEP_COLORS.length]} />
+            <ArrowDown size={16} className={STEP_COLORS[i % STEP_COLORS.length]} aria-hidden="true" />
             <select
               value={step.transform}
               onChange={(e) => updateStep(step.id, e.target.value)}
+              aria-label={`Transform type for step ${i + 1}`}
               className={`mx-2 bg-slime-code border ${STEP_BG[i % STEP_BG.length]} rounded-md px-3 py-1
-                font-mono text-[11px] ${STEP_COLORS[i % STEP_COLORS.length]} cursor-pointer focus:outline-none appearance-none`}
+                font-mono text-[11px] ${STEP_COLORS[i % STEP_COLORS.length]} cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-mint appearance-none`}
             >
               {transformList.map((t) => (
                 <option key={t.id} value={t.id} className="bg-slime-code text-text-primary">{t.label}</option>
               ))}
             </select>
             {steps.length > 1 && (
-              <button onClick={() => removeStep(step.id)} className="text-text-dim hover:text-rose transition-colors cursor-pointer p-1">
-                <Trash2 size={14} />
+              <button
+                onClick={() => removeStep(step.id)}
+                aria-label={`Remove step ${i + 1}`}
+                className="text-text-dim hover:text-rose focus-visible:ring-2 focus-visible:ring-mint rounded transition-colors cursor-pointer p-1"
+              >
+                <Trash2 size={14} aria-hidden="true" />
               </button>
             )}
           </div>
           <Card className={`border-l-2 ${STEP_BG[i % STEP_BG.length]}`}>
             <div className="flex items-center justify-between mb-1">
-              <span className={`font-mono text-[10px] font-semibold uppercase ${STEP_COLORS[i % STEP_COLORS.length]}`}>
+              <span className={`font-mono text-[11px] font-semibold uppercase ${STEP_COLORS[i % STEP_COLORS.length]}`}>
                 Step {i + 1}
               </span>
               <CopyButton text={results[i] || ''} source={`Encoding Step ${i + 1}`} />
@@ -100,19 +106,20 @@ export default function Encoding() {
       {/* Add Step */}
       <button
         onClick={addStep}
+        aria-label="Add encoding step"
         className="w-full border-2 border-dashed border-white/[0.08] rounded-lg py-3 text-text-dim font-mono text-[12px]
-          hover:border-mint/20 hover:text-mint transition-colors cursor-pointer flex items-center justify-center gap-2"
+          hover:border-mint/20 hover:text-mint focus-visible:ring-2 focus-visible:ring-mint transition-colors cursor-pointer flex items-center justify-center gap-2"
       >
-        <Plus size={16} /> Add Step
+        <Plus size={16} aria-hidden="true" /> Add Step
       </button>
 
       {/* Output */}
       <Card className="border-l-2 border-rose/20">
         <div className="flex items-center justify-between mb-2">
-          <span className="font-mono text-[10px] font-semibold uppercase text-rose">Output</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-rose">Output</span>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="small" onClick={reverseChain}>
-              <RotateCcw size={12} /> Reverse Chain
+            <Button variant="ghost" size="small" onClick={reverseChain} aria-label="Reverse encoding chain">
+              <RotateCcw size={12} aria-hidden="true" /> Reverse Chain
             </Button>
             <CopyButton text={finalOutput} source="Encoding Output" />
           </div>

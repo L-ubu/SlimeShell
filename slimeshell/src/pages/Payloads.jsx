@@ -42,32 +42,36 @@ export default function Payloads() {
   }, [search, activeCategory])
 
   return (
-    <div className="flex gap-5 h-full">
+    <div className="flex flex-col md:flex-row gap-5 h-full">
       {/* Categories */}
-      <div className="w-[260px] min-w-[260px]">
+      <div className="w-full md:w-[280px] md:min-w-[280px]">
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Categories</span>
-          <div className="space-y-0.5">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-md transition-all cursor-pointer text-left
-                  ${activeCategory === cat
-                    ? 'bg-mint/[0.06] border-l-[3px] border-mint text-mint'
-                    : 'border-l-[3px] border-transparent text-text-muted hover:bg-white/[0.02] hover:text-text-secondary'
-                  }
-                `}
-              >
-                <span className="font-heading font-semibold text-[13px]">{cat}</span>
-                <span className={`font-mono text-[10px] rounded-full px-1.5 py-0.5
-                  ${activeCategory === cat ? 'bg-mint/20 text-mint' : 'bg-white/[0.04] text-text-dim'}
-                `}>
-                  {categoryCounts[cat] || 0}
-                </span>
-              </button>
-            ))}
-          </div>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Categories</span>
+          <nav aria-label="Payload categories">
+            <div className="space-y-0.5">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  aria-pressed={activeCategory === cat}
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-md transition-all cursor-pointer text-left
+                    focus-visible:ring-2 focus-visible:ring-mint
+                    ${activeCategory === cat
+                      ? 'bg-mint/[0.06] border-l-[3px] border-mint text-mint'
+                      : 'border-l-[3px] border-transparent text-text-muted hover:bg-white/[0.02] hover:text-text-secondary'
+                    }
+                  `}
+                >
+                  <span className="font-heading font-semibold text-[13px]">{cat}</span>
+                  <span className={`font-mono text-[11px] rounded-full px-1.5 py-0.5
+                    ${activeCategory === cat ? 'bg-mint/20 text-mint' : 'bg-white/[0.04] text-text-dim'}
+                  `}>
+                    {categoryCounts[cat] || 0}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </nav>
         </Card>
       </div>
 
@@ -75,14 +79,15 @@ export default function Payloads() {
       <div className="flex-1 space-y-3 overflow-y-auto">
         <div className="flex items-center gap-3">
           <div className="relative flex-1">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" aria-hidden="true" />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search payloads..."
+              aria-label="Search payloads by title, content, or description"
               className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
                 font-mono text-[12px] text-text-primary placeholder:text-text-faint
-                focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+                focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
             />
           </div>
         </div>
@@ -95,7 +100,7 @@ export default function Payloads() {
                   <span className="font-heading font-semibold text-[13px] text-text-secondary">{p.title}</span>
                   <Badge color={categoryColors[p.category]}>{p.category}</Badge>
                 </div>
-                <p className="font-mono text-[10px] text-text-dim mb-2">{p.description}</p>
+                <p className="font-mono text-[11px] text-text-dim mb-2">{p.description}</p>
                 <pre className="bg-slime-code rounded-md p-3 font-mono text-[11px] text-text-secondary overflow-x-auto whitespace-pre-wrap break-all">
                   {p.payload}
                 </pre>
