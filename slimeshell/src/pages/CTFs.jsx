@@ -182,32 +182,30 @@ export default function CTFs() {
       </Card>
 
       {/* Completed CTFs */}
-      <Card>
-        <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Completed CTFs</span>
-        <div className="space-y-1 overflow-y-auto">
-          {completedCTFs.map((ctf) => (
-            <div key={ctf.name} className="flex items-center gap-3 py-2 px-2.5 rounded-md hover:bg-white/[0.02] transition-colors">
-              <Trophy size={16} className="text-gold flex-shrink-0" />
-              <div className="flex-1 min-w-0">
-                <div className="font-heading font-semibold text-[13px] text-text-secondary">{ctf.name}</div>
-                <div className="font-mono text-[11px] text-text-faint">{ctf.date} · {ctf.platform}</div>
+      <div>
+        <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Completed CTFs</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {completedCTFs.slice(0, 6).map((ctf) => (
+            <Card key={ctf.name}>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <Trophy size={16} className="text-gold flex-shrink-0" />
+                  <span className="font-heading font-semibold text-[13px] text-text-secondary">{ctf.name}</span>
+                </div>
+                <span className="font-heading font-bold text-[14px] text-mint">#{ctf.rank}</span>
               </div>
-              <div className="text-right mr-2">
-                <div className="font-heading font-bold text-[14px] text-mint">#{ctf.rank}</div>
-                <div className="font-mono text-[10px] text-text-faint">of {ctf.total}</div>
+              <div className="flex items-center gap-3 mb-2">
+                <ProgressBar value={ctf.solved} max={ctf.outOf} className="flex-1" />
+                <span className="font-mono text-[11px] text-mint">{ctf.solved}/{ctf.outOf}</span>
               </div>
-              <div className="text-right mr-2">
-                <div className="font-mono text-[11px] text-text-primary">{ctf.solved}/{ctf.outOf}</div>
-                <div className="font-mono text-[10px] text-text-faint">solved</div>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] text-text-faint">{ctf.date} · {ctf.platform}</span>
+                <span className="font-mono text-[10px] text-lavender">{ctf.points} pts</span>
               </div>
-              <div className="text-right">
-                <span className="font-mono text-[11px] text-lavender">{ctf.points} pts</span>
-              </div>
-              <ChevronRight size={14} className="text-text-faint" />
-            </div>
+            </Card>
           ))}
         </div>
-      </Card>
+      </div>
     </div>
   )
 }
