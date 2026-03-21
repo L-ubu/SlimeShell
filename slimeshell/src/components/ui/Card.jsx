@@ -7,10 +7,10 @@ export default function Card({ children, className = '', active = false, onClick
       onClick={onClick}
       {...(interactive ? { type: 'button' } : {})}
       className={`
-        rounded-lg p-4 text-left w-full
+        rounded-[10px] py-4 px-5 text-left w-full
         ${active
           ? 'bg-mint/[0.04] border border-mint/[0.12]'
-          : 'bg-slime-card border border-transparent'
+          : 'bg-slime-card border border-white/[0.04]'
         }
         ${interactive ? 'cursor-pointer hover:bg-white/[0.03] focus-visible:ring-2 focus-visible:ring-mint focus-visible:ring-offset-2 focus-visible:ring-offset-slime-base transition-colors' : ''}
         ${className}

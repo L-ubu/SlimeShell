@@ -16,10 +16,10 @@ export default function ProgressBar({ value, max = 100, color = 'mint', label, c
       aria-valuemin={0}
       aria-valuemax={max}
       aria-label={label || `${Math.round(pct)}% complete`}
-      className={`w-full h-1.5 bg-slime-card rounded-full overflow-hidden ${className}`}
+      className={`w-full h-1.5 bg-slime-code rounded-[3px] overflow-hidden ${className}`}
     >
       <div
-        className={`h-full rounded-full bg-gradient-to-r ${gradients[color] || gradients.mint} transition-all duration-500`}
+        className={`h-full rounded-[3px] bg-gradient-to-r ${gradients[color] || gradients.mint} transition-all duration-500`}
         style={{ width: `${pct}%` }}
       />
     </div>

@@ -70,7 +70,7 @@ export default function App() {
       <Sidebar />
       <div className="flex flex-col flex-1 min-w-0">
         <TopBar pageConfig={pageConfig} />
-        <main className="flex-1 overflow-auto p-5 px-7">
+        <main className="flex-1 overflow-auto px-7 pt-5 pb-5">
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/tools" element={<Tools />} />

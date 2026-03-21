@@ -15,8 +15,8 @@ const Input = forwardRef(function Input({ label, className = '', id, 'aria-label
         id={inputId}
         aria-label={ariaLabel || (!label ? undefined : undefined)}
         className="w-full bg-slime-card border border-white/[0.06] rounded-lg px-3.5 py-2.5
-          font-mono text-[13px] text-text-primary placeholder:text-text-faint
-          focus:bg-slime-code focus:border-mint/20 focus:outline-none focus:ring-1 focus:ring-mint/20 transition-colors"
+          font-mono text-[12px] text-text-primary placeholder:text-text-faint
+          focus:bg-slime-code focus:border-mint/15 focus:outline-none focus:ring-1 focus:ring-mint/15 transition-colors"
         {...props}
       />
     </div>
