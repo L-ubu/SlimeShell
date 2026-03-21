@@ -80,28 +80,29 @@ export default function Osint() {
 
       {activeTab === 'shodan' && (
         <div className="space-y-4">
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Input
               value={shodanQuery}
               onChange={(e) => setShodanQuery(e.target.value)}
               placeholder="Search Shodan (e.g., apache, nginx, port:8080)..."
+              aria-label="Shodan search query"
               className="flex-1"
             />
-            <Button variant="primary"><Search size={14} /> Search</Button>
+            <Button variant="primary" aria-label="Search Shodan"><Search size={14} /> Search</Button>
           </div>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">
               Results for "{shodanQuery}" — {sampleShodanResults.length} hosts
             </span>
-            <div className="space-y-1">
+            <div className="space-y-1 overflow-y-auto">
               {sampleShodanResults.map((r, i) => (
-                <div key={i} className="flex items-center gap-3 py-2.5 px-3 rounded-md hover:bg-white/[0.02] transition-colors">
+                <div key={i} className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-white/[0.02] transition-colors">
                   <Server size={14} className="text-text-dim flex-shrink-0" />
                   <span className="font-mono text-[12px] text-mint w-32">{r.ip}</span>
                   <Badge color="muted">{r.port}</Badge>
                   <span className="font-mono text-[11px] text-text-secondary flex-1">{r.service}</span>
-                  <span className="font-mono text-[10px] text-text-dim">{r.os}</span>
-                  <span className="font-mono text-[10px] text-text-dim">{r.org}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{r.os}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{r.org}</span>
                   <Badge color="muted" pill>{r.country}</Badge>
                   {r.vulns > 0 && (
                     <Badge color="rose">{r.vulns} vulns</Badge>
@@ -115,18 +116,19 @@ export default function Osint() {
 
       {activeTab === 'whois' && (
         <div className="space-y-4">
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Input
               value={whoisQuery}
               onChange={(e) => setWhoisQuery(e.target.value)}
               placeholder="Enter domain (e.g., example.com)..."
+              aria-label="WHOIS domain query"
               className="flex-1"
             />
-            <Button variant="primary"><Globe size={14} /> Lookup</Button>
+            <Button variant="primary" aria-label="Lookup WHOIS"><Globe size={14} /> Lookup</Button>
           </div>
-          <div className="grid grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <Card>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Domain Info</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Domain Info</span>
               <div className="space-y-2.5">
                 {[
                   ['Domain', sampleWhoisResult.domain],
@@ -137,14 +139,14 @@ export default function Osint() {
                   ['Status', sampleWhoisResult.status],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-text-dim">{label}</span>
+                    <span className="font-mono text-[11px] text-text-dim">{label}</span>
                     <span className="font-mono text-[11px] text-text-primary">{value}</span>
                   </div>
                 ))}
               </div>
             </Card>
             <Card>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Registrant</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Registrant</span>
               <div className="space-y-2.5 mb-4">
                 {[
                   ['Name', sampleWhoisResult.registrant.name],
@@ -153,12 +155,12 @@ export default function Osint() {
                   ['State', sampleWhoisResult.registrant.state],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-text-dim">{label}</span>
+                    <span className="font-mono text-[11px] text-text-dim">{label}</span>
                     <span className="font-mono text-[11px] text-text-primary">{value}</span>
                   </div>
                 ))}
               </div>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-2">Nameservers</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Nameservers</span>
               {sampleWhoisResult.nameservers.map((ns) => (
                 <div key={ns} className="font-mono text-[11px] text-mint py-0.5">{ns}</div>
               ))}
@@ -169,32 +171,33 @@ export default function Osint() {
 
       {activeTab === 'dns' && (
         <div className="space-y-4">
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Input
               value={dnsQuery}
               onChange={(e) => setDnsQuery(e.target.value)}
               placeholder="Enter domain (e.g., example.com)..."
+              aria-label="DNS domain query"
               className="flex-1"
             />
-            <Button variant="primary"><Search size={14} /> Resolve</Button>
+            <Button variant="primary" aria-label="Resolve DNS"><Search size={14} /> Resolve</Button>
           </div>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">
               DNS Records for {dnsQuery}
             </span>
-            <div className="space-y-1">
+            <div className="space-y-1 overflow-y-auto">
               <div className="flex items-center gap-3 py-1.5 px-3">
-                <span className="font-mono text-[9px] font-semibold uppercase text-text-faint w-14">Type</span>
-                <span className="font-mono text-[9px] font-semibold uppercase text-text-faint flex-1">Name</span>
-                <span className="font-mono text-[9px] font-semibold uppercase text-text-faint flex-[2]">Value</span>
-                <span className="font-mono text-[9px] font-semibold uppercase text-text-faint w-16 text-right">TTL</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-faint w-14">Type</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-faint flex-1">Name</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-faint flex-[2]">Value</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-faint w-16 text-right">TTL</span>
               </div>
               {sampleDnsRecords.map((record, i) => (
                 <div key={i} className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-white/[0.02] transition-colors">
                   <Badge color={typeColors[record.type] || 'muted'} className="w-14 justify-center">{record.type}</Badge>
                   <span className="font-mono text-[11px] text-text-secondary flex-1">{record.name}</span>
                   <span className="font-mono text-[11px] text-mint flex-[2] truncate">{record.value}</span>
-                  <span className="font-mono text-[10px] text-text-dim w-16 text-right">{record.ttl}s</span>
+                  <span className="font-mono text-[11px] text-text-dim w-16 text-right">{record.ttl}s</span>
                 </div>
               ))}
             </div>
@@ -204,22 +207,23 @@ export default function Osint() {
 
       {activeTab === 'cve' && (
         <div className="space-y-4">
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Input
               value={cveQuery}
               onChange={(e) => setCveQuery(e.target.value)}
               placeholder="Search CVEs (e.g., fortinet, log4j, apache)..."
+              aria-label="CVE search query"
               className="flex-1"
             />
-            <Button variant="primary"><Shield size={14} /> Search</Button>
+            <Button variant="primary" aria-label="Search CVEs"><Shield size={14} /> Search</Button>
           </div>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">
               CVE Results — {sampleCVEs.length} found
             </span>
-            <div className="space-y-2">
+            <div className="space-y-2 overflow-y-auto">
               {sampleCVEs.map((cve) => (
-                <div key={cve.id} className="bg-slime-code rounded-md p-3 hover:bg-white/[0.02] transition-colors">
+                <div key={cve.id} className="bg-slime-code rounded-md p-4 hover:bg-white/[0.02] transition-colors">
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-2">
                       <AlertTriangle size={14} className={`text-${severityColors[cve.severity] === 'rose' ? 'rose' : severityColors[cve.severity]}`} />
@@ -227,9 +231,9 @@ export default function Osint() {
                       <Badge color={severityColors[cve.severity]}>{cve.severity.toUpperCase()}</Badge>
                       <span className="font-mono text-[11px] text-gold font-bold">{cve.score}</span>
                     </div>
-                    <span className="font-mono text-[9px] text-text-faint">{cve.published}</span>
+                    <span className="font-mono text-[11px] text-text-faint">{cve.published}</span>
                   </div>
-                  <div className="font-mono text-[10px] text-text-dim mb-1">{cve.product}</div>
+                  <div className="font-mono text-[11px] text-text-dim mb-1">{cve.product}</div>
                   <div className="font-mono text-[11px] text-text-secondary">{cve.desc}</div>
                 </div>
               ))}

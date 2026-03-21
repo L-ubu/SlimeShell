@@ -65,7 +65,7 @@ export default function Profile() {
     <div className="space-y-4 max-w-5xl">
       {/* Profile Card */}
       <Card>
-        <div className="flex items-center gap-5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
           <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-mint/20 to-lavender/20 flex items-center justify-center border border-white/[0.06]">
             <User size={36} className="text-mint" />
           </div>
@@ -75,12 +75,12 @@ export default function Profile() {
               <Badge color="mint" pill>{profile.rank}</Badge>
             </div>
             <p className="font-mono text-[11px] text-text-muted mt-0.5">{profile.bio}</p>
-            <div className="flex items-center gap-4 mt-2">
-              <span className="font-mono text-[9px] text-text-faint">Joined {profile.joinDate}</span>
-              <span className="font-mono text-[9px] text-text-dim">
+            <div className="flex flex-wrap items-center gap-4 mt-2">
+              <span className="font-mono text-[11px] text-text-faint">Joined {profile.joinDate}</span>
+              <span className="font-mono text-[11px] text-text-dim">
                 GitHub: <span className="text-mint">{profile.socials.github}</span>
               </span>
-              <span className="font-mono text-[9px] text-text-dim">
+              <span className="font-mono text-[11px] text-text-dim">
                 HTB: <span className="text-mint">{profile.socials.htb}</span>
               </span>
             </div>
@@ -92,25 +92,25 @@ export default function Profile() {
             </div>
             <div className="mt-1">
               <ProgressBar value={profile.xp} max={profile.xpToNext} color="gold" />
-              <span className="font-mono text-[9px] text-text-faint">{profile.xp.toLocaleString()} / {profile.xpToNext.toLocaleString()} XP</span>
+              <span className="font-mono text-[11px] text-text-faint">{profile.xp.toLocaleString()} / {profile.xpToNext.toLocaleString()} XP</span>
             </div>
           </div>
         </div>
       </Card>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
             <Card key={stat.label}>
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">{stat.label}</span>
+                  <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">{stat.label}</span>
                   <div className={`font-heading font-bold text-[28px] ${stat.color} leading-tight mt-1`}>
                     {stat.value}
                   </div>
-                  <span className="font-mono text-[9px] text-text-faint">{stat.trend}</span>
+                  <span className="font-mono text-[11px] text-text-faint">{stat.trend}</span>
                 </div>
                 <Icon size={20} className="text-text-dim" strokeWidth={1.5} />
               </div>
@@ -122,25 +122,25 @@ export default function Profile() {
       {/* Activity Heatmap */}
       <Card>
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Activity Heatmap</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Activity Heatmap</span>
           <div className="flex items-center gap-1">
             <TrendingUp size={12} className="text-mint" />
-            <span className="font-mono text-[10px] text-mint">23 day streak</span>
+            <span className="font-mono text-[11px] text-mint">23 day streak</span>
           </div>
         </div>
         <Heatmap data={heatmapData} />
       </Card>
 
-      <div className="grid grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {/* Category Breakdown */}
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Category Breakdown</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Category Breakdown</span>
           <div className="space-y-3">
             {categoryBreakdown.map((cat) => (
               <div key={cat.name}>
                 <div className="flex items-center justify-between mb-1">
                   <span className="font-mono text-[11px] text-text-secondary">{cat.name}</span>
-                  <span className="font-mono text-[10px] text-text-dim">{cat.solved} solved</span>
+                  <span className="font-mono text-[11px] text-text-dim">{cat.solved} solved</span>
                 </div>
                 <ProgressBar value={cat.solved} max={cat.total} color={cat.color} />
               </div>
@@ -150,10 +150,10 @@ export default function Profile() {
 
         {/* Achievements */}
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">
             Achievements ({achievements.filter((a) => a.earned).length}/{achievements.length})
           </span>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {achievements.map((ach) => (
               <div
                 key={ach.name}
@@ -163,7 +163,7 @@ export default function Profile() {
                   <span className="text-[16px]">{ach.icon}</span>
                   <span className="font-heading font-semibold text-[12px] text-text-primary">{ach.name}</span>
                 </div>
-                <span className="font-mono text-[9px] text-text-dim">{ach.desc}</span>
+                <span className="font-mono text-[11px] text-text-dim">{ach.desc}</span>
               </div>
             ))}
           </div>

@@ -91,24 +91,25 @@ export default function Wordlists() {
   )
 
   return (
-    <div className="flex gap-4 h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
       {/* Wordlist List */}
-      <div className="w-[350px] flex-shrink-0 flex flex-col gap-3">
+      <div className="w-full md:w-[350px] md:min-w-[350px] flex-shrink-0 flex flex-col gap-3">
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search wordlists..."
+            aria-label="Search wordlists"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
 
-        <span className="font-mono text-[10px] text-text-dim">{filtered.length} wordlists</span>
+        <span className="font-mono text-[11px] text-text-dim">{filtered.length} wordlists</span>
 
-        <div className="flex-1 overflow-auto space-y-1">
+        <div className="flex-1 overflow-y-auto space-y-1">
           {filtered.map((wl) => (
             <Card key={wl.id} active={selected.id === wl.id} onClick={() => setSelected(wl)}>
               <div className="flex items-center gap-2.5">
@@ -117,7 +118,7 @@ export default function Wordlists() {
                   <div className="font-mono text-[12px] text-text-primary truncate">{wl.name}</div>
                   <div className="flex items-center gap-2 mt-0.5">
                     <Badge color={categoryColors[wl.category]}>{wl.category}</Badge>
-                    <span className="font-mono text-[9px] text-text-faint">{wl.size}</span>
+                    <span className="font-mono text-[11px] text-text-faint">{wl.size}</span>
                   </div>
                 </div>
               </div>
@@ -133,40 +134,40 @@ export default function Wordlists() {
             <h2 className="font-heading font-bold text-[16px] text-text-primary">{selected.name}</h2>
             <div className="flex items-center gap-2 mt-1">
               <Badge color={categoryColors[selected.category]}>{selected.category}</Badge>
-              <span className="font-mono text-[10px] text-text-dim">Source: {selected.source}</span>
+              <span className="font-mono text-[11px] text-text-dim">Source: {selected.source}</span>
             </div>
           </div>
-          <Button variant="ghost" size="small"><Download size={12} /> Download</Button>
+          <Button variant="ghost" size="small" aria-label="Download wordlist"><Download size={12} /> Download</Button>
         </div>
 
         <p className="font-mono text-[11px] text-text-secondary mb-4">{selected.description}</p>
 
-        <div className="grid grid-cols-3 gap-3 mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
           <div className="bg-slime-code rounded-md p-2.5">
             <div className="flex items-center gap-1.5 mb-1">
               <HardDrive size={12} className="text-text-dim" />
-              <span className="font-mono text-[9px] text-text-dim uppercase">File Size</span>
+              <span className="font-mono text-[11px] text-text-dim uppercase">File Size</span>
             </div>
             <span className="font-heading font-bold text-[18px] text-text-primary">{selected.size}</span>
           </div>
           <div className="bg-slime-code rounded-md p-2.5">
             <div className="flex items-center gap-1.5 mb-1">
               <Hash size={12} className="text-text-dim" />
-              <span className="font-mono text-[9px] text-text-dim uppercase">Lines</span>
+              <span className="font-mono text-[11px] text-text-dim uppercase">Lines</span>
             </div>
             <span className="font-heading font-bold text-[18px] text-lavender">{selected.lines.toLocaleString()}</span>
           </div>
           <div className="bg-slime-code rounded-md p-2.5">
             <div className="flex items-center gap-1.5 mb-1">
               <Eye size={12} className="text-text-dim" />
-              <span className="font-mono text-[9px] text-text-dim uppercase">Last Used</span>
+              <span className="font-mono text-[11px] text-text-dim uppercase">Last Used</span>
             </div>
             <span className="font-mono text-[12px] text-text-primary">{selected.lastUsed}</span>
           </div>
         </div>
 
-        <span className="font-mono text-[10px] font-semibold uppercase text-text-dim mb-2">Preview (first {selected.preview.length} entries)</span>
-        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-auto p-3">
+        <span className="font-mono text-[11px] font-semibold uppercase text-text-dim mb-2">Preview (first {selected.preview.length} entries)</span>
+        <div className="flex-1 bg-slime-code rounded-md border border-white/[0.04] overflow-y-auto p-3">
           <div className="font-mono text-[11px] leading-relaxed">
             {selected.preview.map((entry, i) => (
               <div key={i} className="flex items-center gap-2">

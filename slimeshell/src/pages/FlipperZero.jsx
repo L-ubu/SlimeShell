@@ -52,31 +52,31 @@ export default function FlipperZero() {
   return (
     <div className="space-y-4">
       {/* Device Info & Status */}
-      <div className="grid grid-cols-4 gap-3.5">
-        <Card className="col-span-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <Card className="sm:col-span-2">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-lg bg-mint/10 flex items-center justify-center">
               <Cpu size={20} className="text-mint" />
             </div>
             <div>
               <h3 className="font-heading font-bold text-[16px] text-text-primary">{deviceInfo.name}</h3>
-              <span className="font-mono text-[10px] text-text-dim">{deviceInfo.serial}</span>
+              <span className="font-mono text-[11px] text-text-dim">{deviceInfo.serial}</span>
             </div>
             <Badge color={deviceInfo.connected ? 'mint' : 'rose'} pill className="ml-auto">
               {deviceInfo.connected ? 'Connected' : 'Disconnected'}
             </Badge>
           </div>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             <div className="bg-slime-code rounded-md p-2.5">
-              <div className="font-mono text-[9px] text-text-dim uppercase">Firmware</div>
+              <div className="font-mono text-[11px] text-text-dim uppercase">Firmware</div>
               <div className="font-mono text-[12px] text-text-primary mt-0.5">{deviceInfo.firmware}</div>
             </div>
             <div className="bg-slime-code rounded-md p-2.5">
-              <div className="font-mono text-[9px] text-text-dim uppercase">Uptime</div>
+              <div className="font-mono text-[11px] text-text-dim uppercase">Uptime</div>
               <div className="font-mono text-[12px] text-mint mt-0.5">{deviceInfo.uptime}</div>
             </div>
             <div className="bg-slime-code rounded-md p-2.5">
-              <div className="font-mono text-[9px] text-text-dim uppercase">Battery</div>
+              <div className="font-mono text-[11px] text-text-dim uppercase">Battery</div>
               <div className="flex items-center gap-1.5 mt-0.5">
                 <Battery size={14} className={deviceInfo.battery > 20 ? 'text-mint' : 'text-rose'} />
                 <span className="font-mono text-[12px] text-text-primary">{deviceInfo.battery}%</span>
@@ -89,11 +89,11 @@ export default function FlipperZero() {
         <Card>
           <div className="flex items-start justify-between">
             <div>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Storage</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Storage</span>
               <div className="font-heading font-bold text-[28px] text-lavender leading-tight mt-1">
                 {deviceInfo.storage.used}<span className="text-text-faint text-[14px]">GB</span>
               </div>
-              <span className="font-mono text-[9px] text-text-faint">of {deviceInfo.storage.total} GB</span>
+              <span className="font-mono text-[11px] text-text-faint">of {deviceInfo.storage.total} GB</span>
             </div>
             <HardDrive size={20} className="text-text-dim" strokeWidth={1.5} />
           </div>
@@ -103,11 +103,11 @@ export default function FlipperZero() {
         <Card>
           <div className="flex items-start justify-between">
             <div>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Total Captures</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Total Captures</span>
               <div className="font-heading font-bold text-[28px] text-gold leading-tight mt-1">
                 {signalModules.reduce((sum, m) => sum + m.captures, 0)}
               </div>
-              <span className="font-mono text-[9px] text-text-faint">across {signalModules.length} modules</span>
+              <span className="font-mono text-[11px] text-text-faint">across {signalModules.length} modules</span>
             </div>
             <Signal size={20} className="text-text-dim" strokeWidth={1.5} />
           </div>
@@ -116,8 +116,8 @@ export default function FlipperZero() {
 
       {/* Signal Modules */}
       <div>
-        <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-2">Signal Modules</span>
-        <div className="grid grid-cols-5 gap-3">
+        <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Signal Modules</span>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
           {signalModules.map((mod) => {
             const Icon = mod.icon
             return (
@@ -131,10 +131,10 @@ export default function FlipperZero() {
                   <Badge color={statusColors[mod.status]}>{mod.status}</Badge>
                 </div>
                 <div className="font-heading font-semibold text-[13px] text-text-primary">{mod.name}</div>
-                <div className="font-mono text-[9px] text-text-dim mt-0.5">{mod.freq}</div>
+                <div className="font-mono text-[11px] text-text-dim mt-0.5">{mod.freq}</div>
                 <div className="mt-2 flex items-center justify-between">
                   <span className="font-heading font-bold text-[20px] text-text-primary">{mod.captures}</span>
-                  <span className="font-mono text-[8px] text-text-faint">{mod.lastUsed}</span>
+                  <span className="font-mono text-[10px] text-text-faint">{mod.lastUsed}</span>
                 </div>
               </Card>
             )
@@ -145,10 +145,10 @@ export default function FlipperZero() {
       {/* Recent Captures */}
       <Card>
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Recent Captures</span>
-          <span className="font-mono text-[10px] text-mint">{recentCaptures.length} files</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Recent Captures</span>
+          <span className="font-mono text-[11px] text-mint">{recentCaptures.length} files</span>
         </div>
-        <div className="space-y-1">
+        <div className="space-y-1 overflow-y-auto">
           {recentCaptures.map((capture) => (
             <div key={capture.id} className="flex items-center gap-3 py-2 px-2.5 rounded-md hover:bg-white/[0.02] transition-colors">
               <div className="w-7 h-7 rounded-md bg-slime-code flex items-center justify-center">
@@ -156,11 +156,11 @@ export default function FlipperZero() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="font-mono text-[11px] text-text-secondary truncate">{capture.name}</div>
-                <div className="font-mono text-[9px] text-text-faint">{capture.freq}</div>
+                <div className="font-mono text-[11px] text-text-faint">{capture.freq}</div>
               </div>
               <Badge color={moduleColors[capture.module]}>{capture.module}</Badge>
-              <span className="font-mono text-[9px] text-text-faint">{capture.size}</span>
-              <span className="font-mono text-[9px] text-text-faint">{capture.time}</span>
+              <span className="font-mono text-[11px] text-text-faint">{capture.size}</span>
+              <span className="font-mono text-[11px] text-text-faint">{capture.time}</span>
             </div>
           ))}
         </div>
