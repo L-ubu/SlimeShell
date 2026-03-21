@@ -59,7 +59,7 @@ export default function CTFs() {
   })
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Active CTF Header */}
       <Card>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-3 gap-2">

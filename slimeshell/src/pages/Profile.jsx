@@ -62,7 +62,7 @@ export default function Profile() {
   }, [])
 
   return (
-    <div className="space-y-4 max-w-5xl">
+    <div className="flex flex-col gap-3.5 max-w-5xl">
       {/* Profile Card */}
       <Card>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">

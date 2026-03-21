@@ -86,7 +86,7 @@ export default function Regex() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Pattern Input */}
       <Card>
         <div className="flex gap-3">

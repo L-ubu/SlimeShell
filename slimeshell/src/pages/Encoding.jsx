@@ -45,7 +45,7 @@ export default function Encoding() {
   }, [steps, finalOutput])
 
   return (
-    <div className="space-y-4 max-w-5xl">
+    <div className="flex flex-col gap-3.5 max-w-5xl">
       {/* Input */}
       <Card>
         <div className="flex items-center justify-between mb-2">

@@ -27,7 +27,7 @@ export default function RevShell() {
   const listenerCmd = `nc -lvnp ${port}`
 
   return (
-    <div className="flex flex-col md:flex-row flex-wrap gap-5 h-full">
+    <div className="flex flex-col md:flex-row flex-wrap gap-3.5 h-full">
       {/* Config Panel */}
       <div className="w-full md:w-[350px] md:min-w-[350px] space-y-4">
         <Card>

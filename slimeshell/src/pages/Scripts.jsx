@@ -235,7 +235,7 @@ export default function Scripts() {
   )
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 h-auto md:h-[calc(100vh-120px)]">
+    <div className="flex flex-col md:flex-row gap-3.5 h-auto md:h-[calc(100vh-120px)]">
       {/* File List Panel */}
       <div className="w-full md:w-[350px] md:min-w-[350px] flex-shrink-0 flex flex-col gap-3">
         <div className="relative">

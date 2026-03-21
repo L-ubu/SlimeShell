@@ -137,7 +137,7 @@ export default function Diff() {
   }
 
   return (
-    <div className="space-y-4 h-[calc(100vh-120px)] flex flex-col">
+    <div className="flex flex-col gap-3.5 h-[calc(100vh-120px)]">
       {/* Controls */}
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-3">

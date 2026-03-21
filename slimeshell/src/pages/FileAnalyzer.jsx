@@ -95,7 +95,7 @@ export default function FileAnalyzer() {
   )
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-col gap-3.5">
       {/* Drop Zone */}
       {!fileLoaded ? (
         <Card>

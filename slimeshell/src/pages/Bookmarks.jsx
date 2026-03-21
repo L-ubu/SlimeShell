@@ -78,7 +78,7 @@ export default function Bookmarks() {
   )
 
   return (
-    <div className="space-y-4 max-w-4xl">
+    <div className="flex flex-col gap-3.5 max-w-4xl">
       {/* Header */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
