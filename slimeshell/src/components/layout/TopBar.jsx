@@ -10,7 +10,7 @@ export default function TopBar({ pageConfig }) {
   return (
     <header
       className="flex items-center justify-between border-b border-white/[0.04] bg-slime-base"
-      style={{ paddingBlock: 14, paddingInline: 28 }}
+      style={{ paddingBlock: 16, paddingInline: 32 }}
     >
       <div className="flex items-center gap-5">
         <h2 className="font-heading font-bold text-[20px] text-text-secondary leading-none">
