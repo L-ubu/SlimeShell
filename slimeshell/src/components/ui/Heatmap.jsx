@@ -51,13 +51,13 @@ export default function Heatmap({ data = {}, className = '' }) {
         ))}
       </div>
       <div className="flex items-center justify-between mt-2">
-        <span className="font-mono text-[10px] text-text-dim">{totalActive} active days in {today.getFullYear()}</span>
+        <span className="font-mono text-[11px] text-text-dim">{totalActive} active days in {today.getFullYear()}</span>
         <div className="flex items-center gap-1">
-          <span className="font-mono text-[9px] text-text-faint">Less</span>
+          <span className="font-mono text-[10px] text-text-faint">Less</span>
           {INTENSITY_COLORS.map((color, i) => (
-            <div key={i} className="w-[10px] h-[10px] rounded-[2px]" style={{ backgroundColor: color }} />
+            <div key={i} className="w-[10px] h-[10px] rounded-[2px]" style={{ backgroundColor: color }} aria-hidden="true" />
           ))}
-          <span className="font-mono text-[9px] text-text-faint">More</span>
+          <span className="font-mono text-[10px] text-text-faint">More</span>
         </div>
       </div>
     </div>

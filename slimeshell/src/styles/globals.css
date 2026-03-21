@@ -83,6 +83,8 @@ html, body, #root {
 
 body {
   font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
   background: #141820;
   color: #E2E8F0;
   -webkit-font-smoothing: antialiased;
@@ -107,13 +109,30 @@ body {
   background: rgba(255, 255, 255, 0.15);
 }
 
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
 ::selection {
   background: rgba(110, 231, 183, 0.3);
   color: #E2E8F0;
 }
 
+/* Focus visible ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #6EE7B7;
+  outline-offset: 2px;
+}
+
 input, textarea, select {
   font-family: 'JetBrains Mono', monospace;
+}
+
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid rgba(110, 231, 183, 0.4);
+  outline-offset: -1px;
 }
 
 h1, h2, h3, h4, h5, h6 {
