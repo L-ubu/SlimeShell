@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slime-base: #141820;
+  --color-slime-sidebar: #11151E;
+  --color-slime-card: #1A1F2E;
+  --color-slime-code: #0F1520;
+  --color-slime-terminal: #0B0E17;
+
+  --color-mint: #6EE7B7;
+  --color-mint-dark: #34D399;
+  --color-rose: #FB7185;
+  --color-lavender: #A78BFA;
+  --color-gold: #FBBF24;
+  --color-sky-accent: #7DD3FC;
+  --color-pink-accent: #F472B6;
+
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #D1D5DB;
+  --color-text-muted: #9CA3AF;
+  --color-text-dim: #6B7280;
+  --color-text-faint: #4B5563;
+
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-lg: 8px;
+  --radius-md: 6px;
+  --radius-sm: 4px;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/SpaceGrotesk-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/SpaceGrotesk-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/SpaceGrotesk-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/JetBrainsMono-SemiBold.woff2') format('woff2');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  background: #141820;
+  color: #E2E8F0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
+}
+
+::selection {
+  background: rgba(110, 231, 183, 0.3);
+  color: #E2E8F0;
+}
+
+/* Focus visible ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid #6EE7B7;
+  outline-offset: 2px;
+}
+
+input, textarea, select {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid rgba(110, 231, 183, 0.4);
+  outline-offset: -1px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
