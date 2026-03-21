@@ -27,23 +27,25 @@ export default function RevShell() {
   const listenerCmd = `nc -lvnp ${port}`
 
   return (
-    <div className="flex gap-5 h-full">
+    <div className="flex flex-col md:flex-row flex-wrap gap-5 h-full">
       {/* Config Panel */}
-      <div className="w-[300px] min-w-[300px] space-y-4">
+      <div className="w-full md:w-[350px] md:min-w-[350px] space-y-4">
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Configuration</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Configuration</span>
 
-          <Input label="LHOST" value={ip} onChange={(e) => setIp(e.target.value)} placeholder="10.10.14.1" className="mb-3" />
-          <Input label="LPORT" value={port} onChange={(e) => setPort(e.target.value)} placeholder="4444" className="mb-3" />
+          <Input label="LHOST" value={ip} onChange={(e) => setIp(e.target.value)} placeholder="10.10.14.1" className="mb-3" aria-label="Listener host IP address" />
+          <Input label="LPORT" value={port} onChange={(e) => setPort(e.target.value)} placeholder="4444" className="mb-3" aria-label="Listener port number" />
 
-          <div className="mb-3">
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">OS Target</label>
-            <div className="flex gap-1.5">
+          <fieldset className="mb-3">
+            <legend className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">OS Target</legend>
+            <div className="flex gap-1.5" role="group" aria-label="Operating system target">
               {osOptions.map((o) => (
                 <button
                   key={o}
                   onClick={() => { setOs(o); setShell(shellOptions[o][0]) }}
+                  aria-pressed={os === o}
                   className={`flex-1 py-1.5 rounded-md font-mono text-[11px] transition-all cursor-pointer
+                    focus-visible:ring-2 focus-visible:ring-mint
                     ${os === o ? 'bg-mint/[0.08] border border-mint/15 text-mint' : 'bg-slime-code text-text-dim border border-transparent hover:text-text-muted'}
                   `}
                 >
@@ -51,16 +53,18 @@ export default function RevShell() {
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
 
-          <div className="mb-3">
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Shell</label>
-            <div className="flex flex-wrap gap-1.5">
+          <fieldset className="mb-3">
+            <legend className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Shell</legend>
+            <div className="flex flex-wrap gap-1.5" role="group" aria-label="Shell type">
               {shellOptions[os].map((s) => (
                 <button
                   key={s}
                   onClick={() => setShell(s)}
-                  className={`px-3 py-1.5 rounded-md font-mono text-[10px] transition-all cursor-pointer
+                  aria-pressed={shell === s}
+                  className={`px-3 py-1.5 rounded-md font-mono text-[11px] transition-all cursor-pointer
+                    focus-visible:ring-2 focus-visible:ring-mint
                     ${shell === s ? 'bg-mint/[0.08] border border-mint/15 text-mint' : 'bg-slime-code text-text-dim border border-transparent hover:text-text-muted'}
                   `}
                 >
@@ -68,16 +72,18 @@ export default function RevShell() {
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
 
-          <div>
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Encoding</label>
-            <div className="flex gap-1.5">
+          <fieldset>
+            <legend className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Encoding</legend>
+            <div className="flex gap-1.5" role="group" aria-label="Encoding type">
               {encodingOptions.map((e) => (
                 <button
                   key={e}
                   onClick={() => setEncoding(e)}
+                  aria-pressed={encoding === e}
                   className={`flex-1 py-1.5 rounded-md font-mono text-[11px] transition-all cursor-pointer
+                    focus-visible:ring-2 focus-visible:ring-mint
                     ${encoding === e ? 'bg-mint/[0.08] border border-mint/15 text-mint' : 'bg-slime-code text-text-dim border border-transparent hover:text-text-muted'}
                   `}
                 >
@@ -85,12 +91,12 @@ export default function RevShell() {
                 </button>
               ))}
             </div>
-          </div>
+          </fieldset>
         </Card>
 
         <Card>
           <div className="flex items-center justify-between mb-2">
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Listener Command</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Listener Command</span>
             <CopyButton text={listenerCmd} source="Listener" />
           </div>
           <pre className="bg-slime-code rounded-md p-3 font-mono text-[12px] text-mint">{listenerCmd}</pre>

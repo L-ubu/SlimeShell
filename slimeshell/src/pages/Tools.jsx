@@ -63,22 +63,23 @@ export default function Tools() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         <div className="relative flex-1 max-w-md">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" aria-hidden="true" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search tools..."
+            aria-label="Search tools by name or description"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
         <FilterChips options={categoryFilters} selected={filter} onChange={setFilter} />
       </div>
 
-      <div className="grid grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {filtered.map((tool) => {
           const Wrapper = tool.path ? Link : tool.url ? 'a' : 'div'
           const wrapperProps = tool.path
@@ -88,13 +89,18 @@ export default function Tools() {
               : {}
 
           return (
-            <Wrapper key={tool.name} {...wrapperProps} className="no-underline">
+            <Wrapper
+              key={tool.name}
+              {...wrapperProps}
+              className="no-underline focus-visible:ring-2 focus-visible:ring-mint rounded-lg"
+              aria-label={tool.url ? `${tool.name} (opens in new tab)` : tool.name}
+            >
               <Card className="h-full hover:bg-white/[0.03] transition-colors group cursor-pointer">
                 <div className="flex items-start justify-between mb-1">
                   <h3 className="font-heading font-semibold text-[13px] text-text-secondary group-hover:text-mint transition-colors">{tool.name}</h3>
-                  {tool.url && <ExternalLink size={12} className="text-text-faint" />}
+                  {tool.url && <ExternalLink size={12} className="text-text-faint" aria-hidden="true" />}
                 </div>
-                <p className="font-mono text-[10px] text-text-dim mb-2">{tool.desc}</p>
+                <p className="font-mono text-[11px] text-text-dim mb-2">{tool.desc}</p>
                 <div className="flex items-center gap-1.5">
                   <Badge color={tool.builtin ? 'mint' : 'muted'}>
                     {tool.builtin ? 'Built-in' : tool.external ? 'External' : 'Web'}

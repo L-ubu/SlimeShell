@@ -66,38 +66,38 @@ export default function Dashboard() {
   return (
     <div className="space-y-5">
       {/* Stats Row */}
-      <div className="grid grid-cols-4 gap-3.5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => {
           const Icon = stat.icon
           return (
             <Card key={stat.label}>
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">{stat.label}</span>
+                  <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">{stat.label}</span>
                   <div className={`font-heading font-bold text-[28px] ${stat.color} leading-tight mt-1`}>
                     {stat.value}
                   </div>
-                  <span className="font-mono text-[9px] text-text-faint">{stat.trend}</span>
+                  <span className="font-mono text-[10px] text-text-faint">{stat.trend}</span>
                 </div>
-                <Icon size={20} className="text-text-dim" strokeWidth={1.5} />
+                <Icon size={20} className="text-text-dim" strokeWidth={1.5} aria-hidden="true" />
               </div>
             </Card>
           )
         })}
       </div>
 
-      <div className="grid grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Active CTF */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <Card>
             <div className="flex items-center justify-between mb-3">
               <div>
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Active CTF</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Active CTF</span>
                 <h3 className="font-heading font-bold text-[16px] text-text-primary mt-0.5">{activeCTF.name}</h3>
               </div>
               <div className="text-right">
                 <Badge color="mint" pill>{activeCTF.platform}</Badge>
-                <div className="font-mono text-[10px] text-text-dim mt-1">{activeCTF.timeLeft} left</div>
+                <div className="font-mono text-[11px] text-text-dim mt-1">{activeCTF.timeLeft} left</div>
               </div>
             </div>
 
@@ -108,10 +108,10 @@ export default function Dashboard() {
               </span>
             </div>
 
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {activeCTF.categories.map((cat) => (
-                <div key={cat.name} className="bg-slime-code rounded-md p-2">
-                  <div className="font-mono text-[9px] text-text-dim uppercase">{cat.name}</div>
+                <div key={cat.name} className="bg-slime-code rounded-md p-4">
+                  <div className="font-mono text-[10px] text-text-dim uppercase">{cat.name}</div>
                   <div className="font-heading font-bold text-[16px] text-text-primary mt-0.5">
                     {cat.solved}<span className="text-text-faint text-[12px]">/{cat.total}</span>
                   </div>
@@ -125,60 +125,72 @@ export default function Dashboard() {
         {/* Recent Scripts */}
         <Card>
           <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Recent Scripts</span>
-            <Link to="/scripts" className="font-mono text-[10px] text-mint hover:text-mint-dark no-underline">View All</Link>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Recent Scripts</span>
+            <Link
+              to="/scripts"
+              className="font-mono text-[11px] text-mint hover:text-mint-dark focus-visible:ring-2 focus-visible:ring-mint rounded no-underline"
+              aria-label="View all scripts"
+            >
+              View All
+            </Link>
           </div>
-          <div className="space-y-1.5">
+          <div className="space-y-1.5 overflow-y-auto">
             {recentScripts.map((script) => (
-              <div key={script.name} className="flex items-center gap-2 py-1.5 px-2 rounded-md hover:bg-white/[0.02] transition-colors">
-                <FileText size={14} className="text-text-dim" />
+              <div key={script.name} className="flex items-center gap-2 py-2 px-2 rounded-md hover:bg-white/[0.02] transition-colors">
+                <FileText size={14} className="text-text-dim" aria-hidden="true" />
                 <span className="font-mono text-[11px] text-text-secondary flex-1 truncate">{script.name}</span>
                 <Badge color={langColors[script.lang]}>{script.lang}</Badge>
-                <span className="font-mono text-[8px] text-text-faint">{script.time}</span>
+                <span className="font-mono text-[10px] text-text-faint">{script.time}</span>
               </div>
             ))}
           </div>
         </Card>
       </div>
 
-      <div className="grid grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Quick Tools */}
-        <div className="col-span-2">
+        <div className="md:col-span-2">
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Quick Tools</span>
-            <div className="grid grid-cols-4 gap-2">
-              {quickTools.map((tool) => (
-                <Link
-                  key={tool.name}
-                  to={tool.path}
-                  className="bg-slime-code rounded-md p-3 hover:bg-white/[0.04] transition-colors no-underline group"
-                >
-                  <div className="font-heading font-semibold text-[13px] text-text-secondary group-hover:text-mint transition-colors">{tool.name}</div>
-                  <div className="font-mono text-[9px] text-text-dim mt-0.5">{tool.desc}</div>
-                </Link>
-              ))}
-            </div>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Quick Tools</span>
+            <nav aria-label="Quick tools">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {quickTools.map((tool) => (
+                  <Link
+                    key={tool.name}
+                    to={tool.path}
+                    className="bg-slime-code rounded-md p-4 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-mint transition-colors no-underline group"
+                    aria-label={`${tool.name} — ${tool.desc}`}
+                  >
+                    <div className="font-heading font-semibold text-[13px] text-text-secondary group-hover:text-mint transition-colors">{tool.name}</div>
+                    <div className="font-mono text-[10px] text-text-dim mt-0.5">{tool.desc}</div>
+                  </Link>
+                ))}
+              </div>
+            </nav>
           </Card>
         </div>
 
         {/* Quick References */}
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Quick References</span>
-          <div className="flex flex-wrap gap-1.5">
-            {quickRefs.map((ref) => (
-              <a
-                key={ref.name}
-                href={ref.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 bg-mint/[0.06] border border-mint/[0.1] rounded-md px-2.5 py-1.5
-                  font-mono text-[10px] text-mint hover:bg-mint/[0.12] transition-colors no-underline"
-              >
-                {ref.name}
-                <ExternalLink size={10} />
-              </a>
-            ))}
-          </div>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Quick References</span>
+          <nav aria-label="Quick references">
+            <div className="flex flex-wrap gap-2">
+              {quickRefs.map((ref) => (
+                <a
+                  key={ref.name}
+                  href={ref.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 bg-mint/[0.06] border border-mint/[0.1] rounded-md px-2.5 py-1.5
+                    font-mono text-[11px] text-mint hover:bg-mint/[0.12] focus-visible:ring-2 focus-visible:ring-mint transition-colors no-underline"
+                  aria-label={`${ref.name} (opens in new tab)`}
+                >
+                  {ref.name}
+                  <ExternalLink size={10} aria-hidden="true" />
+                </a>
+              ))}
+            </div>
+          </nav>
         </Card>
       </div>
     </div>
