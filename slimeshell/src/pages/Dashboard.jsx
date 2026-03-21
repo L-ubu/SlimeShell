@@ -1,196 +1,276 @@
-import { Flag, Code, Cpu, FileText, ExternalLink, Zap } from 'lucide-react'
+import {
+  Flag, Code, Cpu, Zap, FileText, ExternalLink,
+  Wifi, Radio, Nfc, Battery, Signal, Globe
+} from 'lucide-react'
 import Card from '../components/ui/Card.jsx'
 import Badge from '../components/ui/Badge.jsx'
 import ProgressBar from '../components/ui/ProgressBar.jsx'
 import { Link } from 'react-router-dom'
 
 const stats = [
-  { label: 'CTFs Completed', value: 47, icon: Flag, color: 'text-mint', trend: '+3 this month' },
-  { label: 'Flags Captured', value: 312, icon: Zap, color: 'text-lavender', trend: '+12 this week' },
-  { label: 'Scripts Saved', value: 89, icon: Code, color: 'text-gold', trend: '+5 new' },
-  { label: 'Flipper Portals', value: 154, icon: Cpu, color: 'text-sky-accent', trend: '2 recent' },
+  { label: 'CTFs Completed', value: 23, icon: Flag, accent: 'mint' },
+  { label: 'Flags Captured', value: 312, icon: Zap, accent: 'rose' },
+  { label: 'Scripts Saved', value: 89, icon: Code, accent: 'lavender' },
+  { label: 'Flipper Portals', value: 154, icon: Cpu, accent: 'gold' },
 ]
 
+const accentColors = {
+  mint: { bg: 'rgba(110,231,183,0.08)', text: 'text-mint' },
+  rose: { bg: 'rgba(251,113,133,0.08)', text: 'text-rose' },
+  lavender: { bg: 'rgba(167,139,250,0.08)', text: 'text-lavender' },
+  gold: { bg: 'rgba(251,191,36,0.08)', text: 'text-gold' },
+  sky: { bg: 'rgba(125,211,252,0.08)', text: 'text-sky-accent' },
+  pink: { bg: 'rgba(244,114,182,0.08)', text: 'text-pink-accent' },
+}
+
+const toolIcons = {
+  nmap: { label: 'nmap', accent: 'mint' },
+  burpsuite: { label: 'burpsuite', accent: 'rose' },
+  hashcat: { label: 'hashcat', accent: 'lavender' },
+  gobuster: { label: 'gobuster', accent: 'gold' },
+  wireshark: { label: 'wireshark', accent: 'sky' },
+  sqlmap: { label: 'sqlmap', accent: 'rose' },
+  metasploit: { label: 'metasploit', accent: 'lavender' },
+  john: { label: 'john', accent: 'gold' },
+}
+
 const quickTools = [
-  { name: 'Encoding', path: '/encoding', desc: 'Chain encode/decode' },
-  { name: 'Rev Shell', path: '/revshell', desc: 'Shell generator' },
-  { name: 'Hash Gen', path: '/utilities', desc: 'MD5/SHA/etc.' },
-  { name: 'Subnet Calc', path: '/utilities', desc: 'CIDR calculator' },
-  { name: 'JWT Debug', path: '/jwt', desc: 'Token debugger' },
-  { name: 'Payloads', path: '/payloads', desc: 'XSS/SQLi/SSTI' },
-  { name: 'OSINT', path: '/osint', desc: 'Shodan/WHOIS' },
-  { name: 'Terminal', path: '/terminal', desc: 'Built-in PTY' },
+  { name: 'nmap', path: '/tools', accent: 'mint', icon: Signal },
+  { name: 'burpsuite', path: '/tools', accent: 'rose', icon: Globe },
+  { name: 'hashcat', path: '/utilities', accent: 'lavender', icon: Code },
+  { name: 'gobuster', path: '/tools', accent: 'gold', icon: FileText },
+  { name: 'wireshark', path: '/tools', accent: 'sky', icon: Wifi },
+  { name: 'sqlmap', path: '/tools', accent: 'rose', icon: Zap },
+  { name: 'metasploit', path: '/tools', accent: 'lavender', icon: Flag },
+  { name: 'john', path: '/utilities', accent: 'gold', icon: Code },
 ]
 
 const recentScripts = [
-  { name: 'exploit_rce.py', lang: 'Python', time: '2 hours ago' },
-  { name: 'enum_suid.sh', lang: 'Bash', time: '5 hours ago' },
-  { name: 'sqli_union.py', lang: 'Python', time: '1 day ago' },
-  { name: 'port_scan.js', lang: 'JavaScript', time: '2 days ago' },
-  { name: 'rev_shell.php', lang: 'PHP', time: '3 days ago' },
+  { name: 'exploit_rce.py', lang: 'py', color: 'lavender', time: '2h ago', size: '2.4 KB' },
+  { name: 'enum_suid.sh', lang: 'sh', color: 'mint', time: '5h ago', size: '1.1 KB' },
+  { name: 'sqli_union.py', lang: 'py', color: 'lavender', time: '1d ago', size: '3.8 KB' },
+  { name: 'port_scan.js', lang: 'js', color: 'gold', time: '2d ago', size: '1.9 KB' },
+  { name: 'rev_shell.rb', lang: 'rb', color: 'rose', time: '3d ago', size: '0.6 KB' },
 ]
 
-const langColors = {
-  Python: 'lavender',
-  Bash: 'mint',
-  JavaScript: 'gold',
-  PHP: 'rose',
-  Ruby: 'rose',
-}
-
 const quickRefs = [
-  { name: 'GTFOBins', url: 'https://gtfobins.github.io' },
-  { name: 'PayloadsAllTheThings', url: 'https://github.com/swisskyrepo/PayloadsAllTheThings' },
-  { name: 'HackTricks', url: 'https://book.hacktricks.xyz' },
-  { name: 'RevShells', url: 'https://revshells.com' },
-  { name: 'CrackStation', url: 'https://crackstation.net' },
-  { name: 'ExploitDB', url: 'https://exploit-db.com' },
+  { name: 'GTFOBins', url: 'https://gtfobins.github.io', color: 'mint' },
+  { name: 'PayloadsAllTheThings', url: 'https://github.com/swisskyrepo/PayloadsAllTheThings', color: 'lavender' },
+  { name: 'HackTricks', url: 'https://book.hacktricks.xyz', color: 'rose' },
+  { name: 'RevShells', url: 'https://revshells.com', color: 'gold' },
+  { name: 'CrackStation', url: 'https://crackstation.net', color: 'sky' },
+  { name: 'ExploitDB', url: 'https://exploit-db.com', color: 'pink' },
 ]
 
 const activeCTF = {
-  name: 'HTB Cyber Apocalypse 2026',
-  platform: 'HTB',
-  progress: 18,
-  total: 24,
+  name: 'HTB Cyber Apocalypse',
+  progress: 7,
+  total: 12,
   timeLeft: '2d 14h 32m',
   categories: [
-    { name: 'Web', solved: 4, total: 5, color: 'mint' },
-    { name: 'Crypto', solved: 3, total: 5, color: 'lavender' },
-    { name: 'Pwn', solved: 3, total: 4, color: 'rose' },
-    { name: 'Rev', solved: 4, total: 5, color: 'sky' },
-    { name: 'Forensics', solved: 4, total: 5, color: 'gold' },
+    { name: 'Web', count: 3, color: 'mint' },
+    { name: 'Crypto', count: 2, color: 'lavender' },
+    { name: 'Pwn', count: 1, color: 'rose' },
+    { name: 'Rev', count: 1, color: 'sky' },
   ],
 }
 
 export default function Dashboard() {
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-3.5">
       {/* Stats Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="flex gap-3.5">
         {stats.map((stat) => {
           const Icon = stat.icon
+          const colors = accentColors[stat.accent]
           return (
-            <Card key={stat.label}>
-              <div className="flex items-start justify-between">
-                <div>
-                  <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">{stat.label}</span>
-                  <div className={`font-heading font-bold text-[28px] ${stat.color} leading-tight mt-1`}>
-                    {stat.value}
-                  </div>
-                  <span className="font-mono text-[10px] text-text-faint">{stat.trend}</span>
+            <Card key={stat.label} className="flex-1">
+              <div className="flex items-center gap-3.5">
+                <div
+                  className={`w-10 h-10 rounded-[10px] flex items-center justify-center flex-shrink-0`}
+                  style={{ background: colors.bg }}
+                >
+                  <Icon size={20} className={colors.text} />
                 </div>
-                <Icon size={20} className="text-text-dim" strokeWidth={1.5} aria-hidden="true" />
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-heading font-bold text-[22px] text-text-primary leading-tight">{stat.value}</span>
+                  <span className="font-mono text-[10px] text-text-dim">{stat.label}</span>
+                </div>
               </div>
             </Card>
           )
         })}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Active CTF + Recent Scripts row */}
+      <div className="flex gap-3.5">
         {/* Active CTF */}
-        <div className="md:col-span-2">
-          <Card>
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Active CTF</span>
-                <h3 className="font-heading font-bold text-[16px] text-text-primary mt-0.5">{activeCTF.name}</h3>
-              </div>
-              <div className="text-right">
-                <Badge color="mint" pill>{activeCTF.platform}</Badge>
-                <div className="font-mono text-[11px] text-text-dim mt-1">{activeCTF.timeLeft} left</div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3 mb-3">
-              <ProgressBar value={activeCTF.progress} max={activeCTF.total} />
-              <span className="font-mono text-[11px] text-mint whitespace-nowrap">
-                {activeCTF.progress}/{activeCTF.total}
+        <Card className="flex-1">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-rose"></span>
+              </span>
+              <span className="font-heading font-bold text-[15px] text-text-primary">
+                Active CTF — {activeCTF.name}
               </span>
             </div>
+            <div className="bg-rose/10 rounded-full px-3 py-1">
+              <span className="font-mono text-[10px] text-rose font-semibold">{activeCTF.timeLeft}</span>
+            </div>
+          </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-              {activeCTF.categories.map((cat) => (
-                <div key={cat.name} className="bg-slime-code rounded-md p-4">
-                  <div className="font-mono text-[10px] text-text-dim uppercase">{cat.name}</div>
-                  <div className="font-heading font-bold text-[16px] text-text-primary mt-0.5">
-                    {cat.solved}<span className="text-text-faint text-[12px]">/{cat.total}</span>
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="font-mono text-[10px] text-text-dim uppercase">Progress</span>
+            <span className="font-mono text-[11px] text-mint">{activeCTF.progress} / {activeCTF.total} flags</span>
+          </div>
+          <ProgressBar value={activeCTF.progress} max={activeCTF.total} className="mb-3" />
+
+          <div className="flex gap-2">
+            {activeCTF.categories.map((cat) => {
+              const colors = accentColors[cat.color]
+              return (
+                <span
+                  key={cat.name}
+                  className={`inline-flex items-center gap-1 rounded-[4px] px-2 py-1 font-mono text-[9px] font-semibold ${colors.text}`}
+                  style={{ background: colors.bg }}
+                >
+                  {cat.name} x{cat.count}
+                </span>
+              )
+            })}
+          </div>
+        </Card>
+
+        {/* Recent Scripts */}
+        <div className="w-[380px] flex-shrink-0">
+          <Card className="h-full">
+            <div className="flex items-center justify-between mb-3">
+              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Recent Scripts</span>
+              <Link
+                to="/scripts"
+                className="font-mono text-[10px] text-mint hover:text-mint-dark no-underline"
+              >
+                View All
+              </Link>
+            </div>
+            <div className="flex flex-col gap-2">
+              {recentScripts.map((script) => {
+                const colors = accentColors[script.color]
+                return (
+                  <div
+                    key={script.name}
+                    className="flex items-center gap-2.5 bg-slime-code border border-white/[0.04] rounded-lg"
+                    style={{ padding: '10px 12px' }}
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0 font-mono text-[10px] font-bold ${colors.text}`}
+                      style={{ background: colors.bg }}
+                    >
+                      {script.lang}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-mono text-[12px] font-medium text-text-secondary truncate">{script.name}</div>
+                      <div className="font-mono text-[9px] text-text-faint">Modified {script.time}</div>
+                    </div>
+                    <span className="font-mono text-[9px] text-text-dim">{script.size}</span>
                   </div>
-                  <ProgressBar value={cat.solved} max={cat.total} color={cat.color} className="mt-1" />
-                </div>
-              ))}
+                )
+              })}
             </div>
           </Card>
         </div>
+      </div>
 
-        {/* Recent Scripts */}
-        <Card>
-          <div className="flex items-center justify-between mb-3">
-            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Recent Scripts</span>
-            <Link
-              to="/scripts"
-              className="font-mono text-[11px] text-mint hover:text-mint-dark focus-visible:ring-2 focus-visible:ring-mint rounded no-underline"
-              aria-label="View all scripts"
-            >
-              View All
-            </Link>
-          </div>
-          <div className="space-y-1.5 overflow-y-auto">
-            {recentScripts.map((script) => (
-              <div key={script.name} className="flex items-center gap-2 py-2 px-2 rounded-md hover:bg-white/[0.02] transition-colors">
-                <FileText size={14} className="text-text-dim" aria-hidden="true" />
-                <span className="font-mono text-[11px] text-text-secondary flex-1 truncate">{script.name}</span>
-                <Badge color={langColors[script.lang]}>{script.lang}</Badge>
-                <span className="font-mono text-[10px] text-text-faint">{script.time}</span>
-              </div>
-            ))}
+      {/* Quick Tools + Quick References row */}
+      <div className="flex gap-3.5">
+        {/* Quick Tools */}
+        <Card className="flex-1">
+          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Quick Tools</span>
+          <div className="flex flex-wrap gap-2.5">
+            {quickTools.map((tool) => {
+              const Icon = tool.icon
+              const colors = accentColors[tool.accent]
+              return (
+                <Link
+                  key={tool.name}
+                  to={tool.path}
+                  className="flex flex-col items-center gap-2 bg-slime-code border border-white/[0.04] rounded-lg no-underline hover:bg-white/[0.04] transition-colors"
+                  style={{ width: 90, padding: '12px 8px' }}
+                >
+                  <div
+                    className={`w-8 h-8 rounded-lg flex items-center justify-center ${colors.text}`}
+                    style={{ background: colors.bg }}
+                  >
+                    <Icon size={16} />
+                  </div>
+                  <span className="font-mono text-[10px] font-medium text-text-muted">{tool.name}</span>
+                </Link>
+              )
+            })}
           </div>
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {/* Quick Tools */}
-        <div className="md:col-span-2">
-          <Card>
-            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Quick Tools</span>
-            <nav aria-label="Quick tools">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {quickTools.map((tool) => (
-                  <Link
-                    key={tool.name}
-                    to={tool.path}
-                    className="bg-slime-code rounded-md p-4 hover:bg-white/[0.04] focus-visible:ring-2 focus-visible:ring-mint transition-colors no-underline group"
-                    aria-label={`${tool.name} — ${tool.desc}`}
-                  >
-                    <div className="font-heading font-semibold text-[13px] text-text-secondary group-hover:text-mint transition-colors">{tool.name}</div>
-                    <div className="font-mono text-[10px] text-text-dim mt-0.5">{tool.desc}</div>
-                  </Link>
-                ))}
+      {/* Bottom Row: Flipper Zero + Quick References */}
+      <div className="flex gap-3.5">
+        {/* Flipper Zero Widget */}
+        <div className="w-[340px] flex-shrink-0">
+          <Card className="h-full">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-mint"></div>
+                <span className="font-heading font-semibold text-[13px] text-text-primary">Flipper Zero</span>
               </div>
-            </nav>
+              <Badge color="mint" pill>Connected</Badge>
+            </div>
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {[
+                { label: 'SubGHz', value: 47, icon: Radio, accent: 'mint' },
+                { label: 'RFID', value: 23, icon: Signal, accent: 'lavender' },
+                { label: 'NFC', value: 18, icon: Nfc, accent: 'gold' },
+              ].map((item) => {
+                const Icon = item.icon
+                const colors = accentColors[item.accent]
+                return (
+                  <div key={item.label} className="bg-slime-code rounded-lg p-2.5 text-center">
+                    <Icon size={14} className={`${colors.text} mx-auto mb-1`} />
+                    <div className="font-heading font-bold text-[16px] text-text-primary">{item.value}</div>
+                    <div className="font-mono text-[9px] text-text-dim">{item.label}</div>
+                  </div>
+                )
+              })}
+            </div>
+            <div className="flex items-center gap-2">
+              <Battery size={14} className="text-mint" />
+              <ProgressBar value={78} max={100} className="flex-1" />
+              <span className="font-mono text-[10px] text-text-dim">78%</span>
+            </div>
           </Card>
         </div>
 
         {/* Quick References */}
-        <Card>
-          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Quick References</span>
-          <nav aria-label="Quick references">
-            <div className="flex flex-wrap gap-2">
-              {quickRefs.map((ref) => (
+        <Card className="flex-1">
+          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Quick References</span>
+          <div className="flex flex-wrap gap-2">
+            {quickRefs.map((ref) => {
+              const colors = accentColors[ref.color]
+              return (
                 <a
                   key={ref.name}
                   href={ref.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 bg-mint/[0.06] border border-mint/[0.1] rounded-md px-2.5 py-1.5
-                    font-mono text-[11px] text-mint hover:bg-mint/[0.12] focus-visible:ring-2 focus-visible:ring-mint transition-colors no-underline"
-                  aria-label={`${ref.name} (opens in new tab)`}
+                  className={`inline-flex items-center gap-1.5 rounded-md px-3 py-2 font-mono text-[11px] ${colors.text} hover:opacity-80 transition-opacity no-underline`}
+                  style={{ background: colors.bg, border: '1px solid rgba(255,255,255,0.04)' }}
                 >
                   {ref.name}
-                  <ExternalLink size={10} aria-hidden="true" />
+                  <ExternalLink size={10} />
                 </a>
-              ))}
-            </div>
-          </nav>
+              )
+            })}
+          </div>
         </Card>
       </div>
     </div>

@@ -27,7 +27,7 @@ export default function Badge({ children, color = 'mint', category, pill = false
     <span className={`
       inline-flex items-center ${style.bg} ${style.text}
       font-mono font-semibold leading-none whitespace-nowrap
-      ${pill ? 'rounded-full text-[11px] px-2.5 py-1' : 'rounded text-[10px] px-1.5 py-0.5'}
+      ${pill ? 'rounded-[10px] text-[10px] px-2.5 py-1' : 'rounded-[4px] text-[9px] px-1.5 py-0.5'}
       ${className}
     `}>
       {children}
