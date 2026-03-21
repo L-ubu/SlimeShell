@@ -12,6 +12,9 @@ The React frontend structure (29 pages, routing, components) is fine. The visual
 
 You are FIXING **SlimeShell** — a native desktop CTF & pentesting app built with **Tauri 2 + React**. The frontend pages exist but look wrong. The Rust backend is empty.
 
+### IMPORTANT: Working Directory
+The actual app code lives in the `slimeshell/` subdirectory. All code edits, `pnpm` commands, and `cargo` commands must run from there. The repo root only contains documentation files.
+
 ### CRITICAL — Read These Files First (IN THIS ORDER)
 Before writing ANY code, read these files completely:
 1. `UI-FIX-GUIDE.md` — **THE MOST IMPORTANT FILE.** Contains pixel-perfect comparisons between the design and what was built, with exact fix instructions for every component
