@@ -45,19 +45,21 @@ export default function JWT() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 h-[calc(100vh-120px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-auto lg:h-[calc(100vh-120px)]">
       {/* Encoded Panel */}
       <Card className="flex flex-col">
         <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-[10px] font-semibold uppercase text-mint">Encoded</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-mint">Encoded</span>
           <CopyButton text={token} source="JWT Token" />
         </div>
         <textarea
           value={token}
           onChange={(e) => { setToken(e.target.value); setVerifyStatus('unverified') }}
           placeholder="Paste JWT token here..."
+          aria-label="JWT token input"
           className="flex-1 bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px]
-            text-text-secondary resize-none focus:outline-none focus:border-mint/15 whitespace-pre-wrap break-all"
+            text-text-secondary resize-none focus:outline-none focus:border-mint/15
+            focus-visible:ring-2 focus-visible:ring-mint whitespace-pre-wrap break-all min-h-[200px]"
           spellCheck={false}
         />
         {decoded && (
@@ -70,8 +72,8 @@ export default function JWT() {
             </div>
 
             <div className="mt-2 bg-slime-code rounded-md p-2.5 border border-white/[0.04]">
-              <div className="font-mono text-[9px] text-text-dim mb-1">Token Structure</div>
-              <div className="font-mono text-[10px]">
+              <div className="font-mono text-[11px] text-text-dim mb-1">Token Structure</div>
+              <div className="font-mono text-[11px]">
                 <span className="text-rose">{token.split('.')[0]?.substring(0, 20)}...</span>
                 <span className="text-text-faint">.</span>
                 <span className="text-lavender">{token.split('.')[1]?.substring(0, 20)}...</span>
@@ -85,14 +87,14 @@ export default function JWT() {
 
       {/* Decoded Panel */}
       <Card className="flex flex-col">
-        <span className="font-mono text-[10px] font-semibold uppercase text-lavender mb-3">Decoded</span>
+        <span className="font-mono text-[11px] font-semibold uppercase text-lavender mb-3">Decoded</span>
 
         {decoded ? (
-          <div className="flex-1 overflow-auto space-y-4">
+          <div className="flex-1 overflow-y-auto space-y-4">
             {/* Header */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-[10px] font-semibold uppercase text-rose">Header</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-rose">Header</span>
                 <CopyButton text={JSON.stringify(decoded.header, null, 2)} source="JWT Header" size="small" />
               </div>
               <pre className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px] text-rose overflow-auto">
@@ -103,7 +105,7 @@ export default function JWT() {
             {/* Payload */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <span className="font-mono text-[10px] font-semibold uppercase text-lavender">Payload</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-lavender">Payload</span>
                 <CopyButton text={JSON.stringify(decoded.payload, null, 2)} source="JWT Payload" size="small" />
               </div>
               <pre className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px] text-lavender overflow-auto">
@@ -114,36 +116,36 @@ export default function JWT() {
             {/* Claim Details */}
             {decoded.payload && (
               <div>
-                <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-1.5">Claims</span>
+                <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-1.5">Claims</span>
                 <div className="bg-slime-code rounded-md border border-white/[0.04] p-3 space-y-1.5">
                   {decoded.payload.sub && (
                     <div className="flex justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Subject (sub)</span>
-                      <span className="font-mono text-[10px] text-text-primary">{decoded.payload.sub}</span>
+                      <span className="font-mono text-[11px] text-text-dim">Subject (sub)</span>
+                      <span className="font-mono text-[11px] text-text-primary">{decoded.payload.sub}</span>
                     </div>
                   )}
                   {decoded.payload.iss && (
                     <div className="flex justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Issuer (iss)</span>
-                      <span className="font-mono text-[10px] text-text-primary">{decoded.payload.iss}</span>
+                      <span className="font-mono text-[11px] text-text-dim">Issuer (iss)</span>
+                      <span className="font-mono text-[11px] text-text-primary">{decoded.payload.iss}</span>
                     </div>
                   )}
                   {decoded.payload.aud && (
                     <div className="flex justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Audience (aud)</span>
-                      <span className="font-mono text-[10px] text-text-primary">{decoded.payload.aud}</span>
+                      <span className="font-mono text-[11px] text-text-dim">Audience (aud)</span>
+                      <span className="font-mono text-[11px] text-text-primary">{decoded.payload.aud}</span>
                     </div>
                   )}
                   {decoded.payload.iat && (
                     <div className="flex justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Issued At (iat)</span>
-                      <span className="font-mono text-[10px] text-text-primary">{formatDate(decoded.payload.iat)}</span>
+                      <span className="font-mono text-[11px] text-text-dim">Issued At (iat)</span>
+                      <span className="font-mono text-[11px] text-text-primary">{formatDate(decoded.payload.iat)}</span>
                     </div>
                   )}
                   {decoded.payload.exp && (
                     <div className="flex justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Expires (exp)</span>
-                      <span className={`font-mono text-[10px] ${isExpired ? 'text-rose' : 'text-mint'}`}>
+                      <span className="font-mono text-[11px] text-text-dim">Expires (exp)</span>
+                      <span className={`font-mono text-[11px] ${isExpired ? 'text-rose' : 'text-mint'}`}>
                         {formatDate(decoded.payload.exp)}
                       </span>
                     </div>
@@ -154,8 +156,8 @@ export default function JWT() {
 
             {/* Signature */}
             <div>
-              <span className="font-mono text-[10px] font-semibold uppercase text-sky-accent block mb-1.5">Signature</span>
-              <pre className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[10px] text-sky-accent break-all whitespace-pre-wrap">
+              <span className="font-mono text-[11px] font-semibold uppercase text-sky-accent block mb-1.5">Signature</span>
+              <pre className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px] text-sky-accent break-all whitespace-pre-wrap">
                 {decoded.signature}
               </pre>
             </div>
@@ -169,11 +171,11 @@ export default function JWT() {
 
       {/* Verify Panel */}
       <Card className="flex flex-col">
-        <span className="font-mono text-[10px] font-semibold uppercase text-sky-accent mb-3">Verify Signature</span>
+        <span className="font-mono text-[11px] font-semibold uppercase text-sky-accent mb-3">Verify Signature</span>
 
         <div className="space-y-4">
           <div>
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Algorithm</label>
+            <label className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Algorithm</label>
             <div className="bg-slime-code rounded-md border border-white/[0.04] px-3 py-2.5">
               <span className="font-mono text-[12px] text-text-primary">{decoded?.header?.alg || 'N/A'}</span>
             </div>
@@ -200,34 +202,34 @@ export default function JWT() {
               <>
                 <CheckCircle size={24} className="text-mint mx-auto mb-2" />
                 <div className="font-heading font-bold text-[14px] text-mint">Signature Valid</div>
-                <div className="font-mono text-[10px] text-text-dim mt-1">Token integrity verified</div>
+                <div className="font-mono text-[11px] text-text-dim mt-1">Token integrity verified</div>
               </>
             )}
             {verifyStatus === 'invalid' && (
               <>
                 <AlertTriangle size={24} className="text-rose mx-auto mb-2" />
                 <div className="font-heading font-bold text-[14px] text-rose">Invalid Signature</div>
-                <div className="font-mono text-[10px] text-text-dim mt-1">Secret key does not match</div>
+                <div className="font-mono text-[11px] text-text-dim mt-1">Secret key does not match</div>
               </>
             )}
             {verifyStatus === 'unverified' && (
               <>
                 <Lock size={24} className="text-text-dim mx-auto mb-2" />
                 <div className="font-heading font-bold text-[14px] text-text-muted">Not Verified</div>
-                <div className="font-mono text-[10px] text-text-dim mt-1">Enter secret and click verify</div>
+                <div className="font-mono text-[11px] text-text-dim mt-1">Enter secret and click verify</div>
               </>
             )}
           </div>
 
           {/* Security Notes */}
           <div className="bg-slime-code rounded-md border border-white/[0.04] p-3">
-            <span className="font-mono text-[9px] font-semibold uppercase text-text-dim block mb-2">Security Notes</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Security Notes</span>
             <div className="space-y-1">
-              <div className="font-mono text-[9px] text-text-faint">• Never expose JWT secrets client-side</div>
-              <div className="font-mono text-[9px] text-text-faint">• Use RS256 for production apps</div>
-              <div className="font-mono text-[9px] text-text-faint">• Set reasonable expiration times</div>
-              <div className="font-mono text-[9px] text-text-faint">• Validate 'alg' header server-side</div>
-              <div className="font-mono text-[9px] text-text-faint">• Check 'none' algorithm attacks</div>
+              <div className="font-mono text-[11px] text-text-faint">• Never expose JWT secrets client-side</div>
+              <div className="font-mono text-[11px] text-text-faint">• Use RS256 for production apps</div>
+              <div className="font-mono text-[11px] text-text-faint">• Set reasonable expiration times</div>
+              <div className="font-mono text-[11px] text-text-faint">• Validate 'alg' header server-side</div>
+              <div className="font-mono text-[11px] text-text-faint">• Check 'none' algorithm attacks</div>
             </div>
           </div>
         </div>

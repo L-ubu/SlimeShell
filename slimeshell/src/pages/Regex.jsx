@@ -91,24 +91,28 @@ export default function Regex() {
       <Card>
         <div className="flex gap-3">
           <div className="flex-1">
-            <label className="block font-mono text-[10px] font-semibold uppercase text-text-dim mb-1.5">Pattern</label>
+            <label className="block font-mono text-[11px] font-semibold uppercase text-text-dim mb-1.5">Pattern</label>
             <div className="flex items-center">
               <span className="font-mono text-[14px] text-text-faint mr-1">/</span>
               <input
                 value={pattern}
                 onChange={(e) => setPattern(e.target.value)}
                 placeholder="Enter regex pattern..."
+                aria-label="Regex pattern"
                 className="flex-1 bg-slime-code border border-white/[0.04] rounded-md px-3 py-2.5
                   font-mono text-[12px] text-mint placeholder:text-text-faint
-                  focus:outline-none focus:border-mint/15 transition-colors"
+                  focus:outline-none focus:border-mint/15
+                  focus-visible:ring-2 focus-visible:ring-mint transition-colors"
               />
               <span className="font-mono text-[14px] text-text-faint mx-1">/</span>
               <input
                 value={flags}
                 onChange={(e) => setFlags(e.target.value)}
+                aria-label="Regex flags"
                 className="w-16 bg-slime-code border border-white/[0.04] rounded-md px-2 py-2.5
                   font-mono text-[12px] text-lavender text-center
-                  focus:outline-none focus:border-mint/15"
+                  focus:outline-none focus:border-mint/15
+                  focus-visible:ring-2 focus-visible:ring-mint"
                 placeholder="flags"
               />
             </div>
@@ -121,7 +125,7 @@ export default function Regex() {
         {error && (
           <div className="mt-2 flex items-center gap-2 bg-rose/10 rounded-md px-3 py-2">
             <X size={12} className="text-rose" />
-            <span className="font-mono text-[10px] text-rose">{error}</span>
+            <span className="font-mono text-[11px] text-rose">{error}</span>
           </div>
         )}
 
@@ -129,7 +133,7 @@ export default function Regex() {
           <div className="mt-2 flex items-center gap-3">
             <div className="flex items-center gap-1">
               <Check size={12} className="text-mint" />
-              <span className="font-mono text-[10px] text-mint">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
+              <span className="font-mono text-[11px] text-mint">{matches.length} match{matches.length !== 1 ? 'es' : ''}</span>
             </div>
             {matches.length > 0 && (
               <div className="flex items-center gap-1 flex-wrap">
@@ -143,24 +147,26 @@ export default function Regex() {
         )}
       </Card>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Test String */}
-        <div className="col-span-2 space-y-4">
+        <div className="col-span-1 lg:col-span-2 space-y-4">
           <Card className="flex flex-col">
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim mb-2">Test String</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim mb-2">Test String</span>
             <textarea
               value={testString}
               onChange={(e) => setTestString(e.target.value)}
+              aria-label="Regex test string"
               className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px]
-                text-text-secondary resize-none focus:outline-none focus:border-mint/15 min-h-[150px]"
+                text-text-secondary resize-none focus:outline-none focus:border-mint/15
+                focus-visible:ring-2 focus-visible:ring-mint min-h-[200px]"
               spellCheck={false}
             />
           </Card>
 
           {/* Highlighted Output */}
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim mb-2 block">Match Highlighting</span>
-            <div className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px] whitespace-pre-wrap min-h-[150px]">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim mb-2 block">Match Highlighting</span>
+            <div className="bg-slime-code rounded-md border border-white/[0.04] p-3 font-mono text-[11px] whitespace-pre-wrap min-h-[150px] overflow-auto">
               {Array.isArray(highlightedText) ? highlightedText.map((part, i) => (
                 part.isMatch ? (
                   <mark key={i} className="bg-mint/20 text-mint rounded px-0.5">{part.text}</mark>
@@ -174,20 +180,20 @@ export default function Regex() {
           {/* Match Details */}
           {matches.length > 0 && (
             <Card>
-              <span className="font-mono text-[10px] font-semibold uppercase text-text-dim mb-2 block">Match Details</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-text-dim mb-2 block">Match Details</span>
               <div className="space-y-1">
                 <div className="flex items-center gap-3 px-2 py-1">
-                  <span className="font-mono text-[9px] text-text-faint w-8">#</span>
-                  <span className="font-mono text-[9px] text-text-faint flex-1">Match</span>
-                  <span className="font-mono text-[9px] text-text-faint w-16 text-right">Index</span>
-                  <span className="font-mono text-[9px] text-text-faint w-16 text-right">Length</span>
+                  <span className="font-mono text-[11px] text-text-faint w-8">#</span>
+                  <span className="font-mono text-[11px] text-text-faint flex-1">Match</span>
+                  <span className="font-mono text-[11px] text-text-faint w-16 text-right">Index</span>
+                  <span className="font-mono text-[11px] text-text-faint w-16 text-right">Length</span>
                 </div>
                 {matches.map((m, i) => (
-                  <div key={i} className="flex items-center gap-3 px-2 py-1.5 rounded-md hover:bg-white/[0.02]">
-                    <span className="font-mono text-[10px] text-text-dim w-8">{i + 1}</span>
-                    <span className="font-mono text-[10px] text-mint flex-1 truncate">{m.value}</span>
-                    <span className="font-mono text-[10px] text-text-dim w-16 text-right">{m.index}</span>
-                    <span className="font-mono text-[10px] text-text-dim w-16 text-right">{m.length}</span>
+                  <div key={i} className="flex items-center gap-3 px-2 py-2 rounded-md hover:bg-white/[0.02]">
+                    <span className="font-mono text-[11px] text-text-dim w-8">{i + 1}</span>
+                    <span className="font-mono text-[11px] text-mint flex-1 truncate">{m.value}</span>
+                    <span className="font-mono text-[11px] text-text-dim w-16 text-right">{m.index}</span>
+                    <span className="font-mono text-[11px] text-text-dim w-16 text-right">{m.length}</span>
                   </div>
                 ))}
               </div>
@@ -199,20 +205,22 @@ export default function Regex() {
         <Card className="h-fit">
           <div className="flex items-center gap-2 mb-3">
             <BookOpen size={14} className="text-text-dim" />
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Pattern Library</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Pattern Library</span>
           </div>
           <div className="space-y-1.5">
             {commonPatterns.map((p) => (
               <button
                 key={p.name}
                 onClick={() => loadPattern(p)}
-                className="w-full text-left bg-slime-code rounded-md p-2 hover:bg-white/[0.04] transition-colors cursor-pointer"
+                aria-label={`Load ${p.name} pattern`}
+                className="w-full text-left bg-slime-code rounded-md p-2 hover:bg-white/[0.04] transition-colors cursor-pointer
+                  focus-visible:ring-2 focus-visible:ring-mint focus:outline-none"
               >
                 <div className="flex items-center gap-2 mb-0.5">
-                  <span className="font-mono text-[10px] text-text-secondary">{p.name}</span>
+                  <span className="font-mono text-[11px] text-text-secondary">{p.name}</span>
                   <Badge color={categoryColors[p.category]}>{p.category}</Badge>
                 </div>
-                <div className="font-mono text-[9px] text-text-faint truncate">{p.pattern}</div>
+                <div className="font-mono text-[11px] text-text-faint truncate">{p.pattern}</div>
               </button>
             ))}
           </div>

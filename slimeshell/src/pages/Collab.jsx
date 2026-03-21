@@ -62,20 +62,20 @@ export default function Collab() {
   }
 
   return (
-    <div className="grid grid-cols-3 gap-4 h-[calc(100vh-120px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-auto lg:h-[calc(100vh-120px)]">
       {/* Left Column: Scoreboard + Assignments */}
-      <div className="flex flex-col gap-4 overflow-auto">
+      <div className="flex flex-col gap-4 overflow-y-auto">
         {/* Team Scoreboard */}
         <Card>
           <div className="flex items-center gap-2 mb-3">
             <Trophy size={14} className="text-gold" />
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Live Scoreboard</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Live Scoreboard</span>
           </div>
           <div className="space-y-1">
             {scoreboard.map((team) => (
               <div
                 key={team.rank}
-                className={`flex items-center gap-2 py-1.5 px-2 rounded-md transition-colors
+                className={`flex items-center gap-2 py-2 px-2 rounded-md transition-colors
                   ${team.isUs ? 'bg-mint/[0.06] border border-mint/[0.12]' : 'hover:bg-white/[0.02]'}`}
               >
                 <span className={`font-heading font-bold text-[13px] w-5 text-center ${
@@ -84,8 +84,8 @@ export default function Collab() {
                 <span className={`font-mono text-[11px] flex-1 ${team.isUs ? 'text-mint font-semibold' : 'text-text-secondary'}`}>
                   {team.team}
                 </span>
-                <span className="font-mono text-[10px] text-text-muted">{team.solved} solved</span>
-                <span className="font-mono text-[10px] text-lavender w-14 text-right">{team.points}</span>
+                <span className="font-mono text-[11px] text-text-muted">{team.solved} solved</span>
+                <span className="font-mono text-[11px] text-lavender w-14 text-right">{team.points}</span>
               </div>
             ))}
           </div>
@@ -95,7 +95,7 @@ export default function Collab() {
         <Card>
           <div className="flex items-center gap-2 mb-3">
             <Target size={14} className="text-mint" />
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Assignments</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Assignments</span>
           </div>
           <div className="space-y-2">
             {challengeAssignments.map((ch) => (
@@ -106,9 +106,9 @@ export default function Collab() {
                 </div>
                 <div className="flex items-center gap-2 mb-1.5">
                   <User size={10} className="text-text-faint" />
-                  <span className="font-mono text-[9px] text-text-dim">{ch.assignedTo}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{ch.assignedTo}</span>
                   <Badge color={assignmentStatusColors[ch.status]}>{ch.status}</Badge>
-                  <span className="font-mono text-[9px] text-gold ml-auto">{ch.points} pts</span>
+                  <span className="font-mono text-[11px] text-gold ml-auto">{ch.points} pts</span>
                 </div>
                 {ch.progress > 0 && (
                   <div className="w-full h-1 bg-slime-card rounded-full overflow-hidden">
@@ -125,21 +125,21 @@ export default function Collab() {
       </div>
 
       {/* Center: Chat Panel */}
-      <Card className="flex flex-col">
+      <Card className="flex flex-col min-h-[400px]">
         <div className="flex items-center gap-2 mb-3">
           <MessageSquare size={14} className="text-mint" />
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Team Chat</span>
-          <span className="font-mono text-[9px] text-text-faint ml-auto">{messages.length} messages</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Team Chat</span>
+          <span className="font-mono text-[11px] text-text-faint ml-auto">{messages.length} messages</span>
         </div>
 
-        <div className="flex-1 overflow-auto space-y-3 mb-3">
+        <div className="flex-1 overflow-y-auto space-y-3 mb-3">
           {messages.map((msg) => (
             <div key={msg.id} className="flex items-start gap-2">
               <span className="text-[16px] flex-shrink-0 mt-0.5">{msg.avatar}</span>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-mint font-semibold">{msg.user}</span>
-                  <span className="font-mono text-[8px] text-text-faint">{msg.time}</span>
+                  <span className="font-mono text-[11px] text-mint font-semibold">{msg.user}</span>
+                  <span className="font-mono text-[10px] text-text-faint">{msg.time}</span>
                 </div>
                 <p className="font-mono text-[11px] text-text-secondary leading-relaxed mt-0.5">{msg.message}</p>
               </div>
@@ -152,11 +152,13 @@ export default function Collab() {
             value={chatInput}
             onChange={(e) => setChatInput(e.target.value)}
             placeholder="Message team..."
+            aria-label="Team chat message"
             className="flex-1 bg-slime-code border border-white/[0.06] rounded-lg px-3 py-2
               font-mono text-[11px] text-text-primary placeholder:text-text-faint
-              focus:outline-none focus:border-mint/15 transition-colors"
+              focus:outline-none focus:border-mint/15
+              focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
-          <Button variant="primary" size="small" type="submit"><Send size={12} /></Button>
+          <Button variant="primary" size="small" type="submit" aria-label="Send message"><Send size={12} /></Button>
         </form>
       </Card>
 
@@ -165,7 +167,7 @@ export default function Collab() {
         <Card>
           <div className="flex items-center gap-2 mb-3">
             <Users size={14} className="text-lavender" />
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">
               Team Members ({teamMembers.filter((m) => m.status === 'online').length}/{teamMembers.length} online)
             </span>
           </div>
@@ -184,11 +186,11 @@ export default function Collab() {
                     <span className="font-mono text-[11px] text-text-primary font-semibold">{member.name}</span>
                     {member.role === 'Captain' && <Badge color="gold">Captain</Badge>}
                   </div>
-                  <span className="font-mono text-[9px] text-text-dim">{member.specialty}</span>
+                  <span className="font-mono text-[11px] text-text-dim">{member.specialty}</span>
                 </div>
                 <div className="text-right">
                   <div className="font-mono text-[11px] text-lavender">{member.points}</div>
-                  <div className="font-mono text-[8px] text-text-faint">pts</div>
+                  <div className="font-mono text-[10px] text-text-faint">pts</div>
                 </div>
               </div>
             ))}
@@ -197,24 +199,24 @@ export default function Collab() {
 
         {/* Quick Stats */}
         <Card>
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-3">Team Stats</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Team Stats</span>
           <div className="space-y-2.5">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Total Points</span>
+              <span className="font-mono text-[11px] text-text-dim">Total Points</span>
               <span className="font-heading font-bold text-[16px] text-mint">
                 {teamMembers.reduce((s, m) => s + m.points, 0)}
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Rank</span>
+              <span className="font-mono text-[11px] text-text-dim">Rank</span>
               <span className="font-heading font-bold text-[16px] text-gold">#3</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-text-dim">Challenges Solved</span>
+              <span className="font-mono text-[11px] text-text-dim">Challenges Solved</span>
               <span className="font-heading font-bold text-[16px] text-lavender">18</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[10px] text-text-dim">In Progress</span>
+              <span className="font-mono text-[11px] text-text-dim">In Progress</span>
               <span className="font-heading font-bold text-[16px] text-text-primary">
                 {challengeAssignments.filter((c) => c.status === 'working').length}
               </span>

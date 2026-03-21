@@ -87,14 +87,16 @@ export default function Bookmarks() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search bookmarks..."
+            aria-label="Search bookmarks"
             className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
               font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none transition-colors"
+              focus:bg-slime-code focus:border-mint/15 focus:outline-none
+              focus-visible:ring-2 focus-visible:ring-mint transition-colors"
           />
         </div>
         <div className="flex items-center gap-2">
-          <span className="font-mono text-[10px] text-text-dim">{totalBookmarks} bookmarks</span>
-          <span className="font-mono text-[10px] text-gold">★ {starredCount}</span>
+          <span className="font-mono text-[11px] text-text-dim">{totalBookmarks} bookmarks</span>
+          <span className="font-mono text-[11px] text-gold">★ {starredCount}</span>
         </div>
         <Button variant="ghost" size="small"><Plus size={12} /> Add</Button>
       </div>
@@ -109,7 +111,9 @@ export default function Bookmarks() {
           <Card key={folder.id}>
             <button
               onClick={() => toggleFolder(folder.id)}
-              className="flex items-center gap-2 w-full text-left cursor-pointer mb-2"
+              aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${folder.name}`}
+              className="flex items-center gap-2 w-full text-left cursor-pointer mb-2
+                focus-visible:ring-2 focus-visible:ring-mint focus:outline-none rounded-md"
             >
               <FolderOpen size={16} className={`text-${folder.color === 'sky' ? 'sky-accent' : folder.color}`} />
               <span className="font-heading font-semibold text-[14px] text-text-primary flex-1">{folder.name}</span>
@@ -121,7 +125,7 @@ export default function Bookmarks() {
                 {filteredBookmarks.map((bm) => (
                   <div
                     key={bm.id}
-                    className="flex items-center gap-3 py-2.5 px-3 rounded-md hover:bg-white/[0.02] transition-colors group"
+                    className="flex items-center gap-3 py-2 px-3 rounded-md hover:bg-white/[0.02] transition-colors group"
                   >
                     <Bookmark size={14} className="text-text-dim flex-shrink-0" />
                     <div className="flex-1 min-w-0">
@@ -131,12 +135,12 @@ export default function Bookmarks() {
                         </span>
                         {bm.starred && <Star size={10} className="text-gold fill-gold" />}
                       </div>
-                      <div className="font-mono text-[9px] text-text-faint truncate">{bm.url}</div>
-                      <div className="font-mono text-[10px] text-text-dim mt-0.5">{bm.desc}</div>
+                      <div className="font-mono text-[11px] text-text-faint truncate">{bm.url}</div>
+                      <div className="font-mono text-[11px] text-text-dim mt-0.5">{bm.desc}</div>
                     </div>
                     <div className="flex flex-wrap gap-1">
                       {bm.tags.map((tag) => (
-                        <span key={tag} className="font-mono text-[8px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">
+                        <span key={tag} className="font-mono text-[10px] text-text-dim bg-white/[0.04] rounded px-1.5 py-0.5">
                           {tag}
                         </span>
                       ))}
@@ -145,7 +149,9 @@ export default function Bookmarks() {
                       href={bm.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-text-faint hover:text-mint transition-colors"
+                      aria-label={`Open ${bm.title} in new tab`}
+                      className="text-text-faint hover:text-mint transition-colors
+                        focus-visible:ring-2 focus-visible:ring-mint focus:outline-none rounded"
                     >
                       <ExternalLink size={12} />
                     </a>

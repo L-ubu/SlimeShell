@@ -101,14 +101,14 @@ export default function VPN() {
                 <h3 className="font-heading font-bold text-[16px] text-text-primary">VPN Active</h3>
                 <Badge color="mint" pill>Protected</Badge>
               </div>
-              <div className="flex items-center gap-4 mt-0.5">
-                <span className="font-mono text-[10px] text-text-dim">
+              <div className="flex items-center gap-4 mt-0.5 flex-wrap">
+                <span className="font-mono text-[11px] text-text-dim">
                   IP: <span className="text-mint">{activeConn.ip}</span>
                 </span>
-                <span className="font-mono text-[10px] text-text-dim">
+                <span className="font-mono text-[11px] text-text-dim">
                   Server: <span className="text-text-secondary">{activeConn.server}</span>
                 </span>
-                <span className="font-mono text-[10px] text-text-dim">
+                <span className="font-mono text-[11px] text-text-dim">
                   Latency: <span className="text-text-secondary">{activeConn.latency}</span>
                 </span>
               </div>
@@ -118,7 +118,7 @@ export default function VPN() {
                 <Clock size={12} className="text-text-dim" />
                 <span className="font-mono text-[12px] text-text-primary">{activeConn.uptime}</span>
               </div>
-              <div className="font-mono text-[9px] text-text-faint">uptime</div>
+              <div className="font-mono text-[11px] text-text-faint">uptime</div>
             </div>
           </div>
         </Card>
@@ -126,31 +126,31 @@ export default function VPN() {
 
       {/* Stats */}
       {activeConn && (
-        <div className="grid grid-cols-4 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">VPN IP</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">VPN IP</span>
             <div className="font-heading font-bold text-[18px] text-mint mt-1">{activeConn.ip}</div>
           </Card>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Location</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Location</span>
             <div className="flex items-center gap-1.5 mt-1">
               <MapPin size={14} className="text-lavender" />
               <span className="font-heading font-semibold text-[14px] text-text-primary">{activeConn.location}</span>
             </div>
           </Card>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Traffic In</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Traffic In</span>
             <div className="font-heading font-bold text-[18px] text-sky-accent mt-1">{activeConn.bytesIn}</div>
           </Card>
           <Card>
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Traffic Out</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Traffic Out</span>
             <div className="font-heading font-bold text-[18px] text-gold mt-1">{activeConn.bytesOut}</div>
           </Card>
         </div>
       )}
 
       {/* Connection Cards */}
-      <div className="grid grid-cols-2 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {connections.map((conn) => {
           const config = statusConfig[conn.status]
           const StatusIcon = config.icon
@@ -166,39 +166,39 @@ export default function VPN() {
 
               <div className="space-y-2 mb-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-text-dim">Provider</span>
-                  <span className="font-mono text-[10px] text-text-secondary">{conn.provider}</span>
+                  <span className="font-mono text-[11px] text-text-dim">Provider</span>
+                  <span className="font-mono text-[11px] text-text-secondary">{conn.provider}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-text-dim">Server</span>
-                  <span className="font-mono text-[10px] text-text-secondary truncate ml-4">{conn.server}</span>
+                  <span className="font-mono text-[11px] text-text-dim">Server</span>
+                  <span className="font-mono text-[11px] text-text-secondary truncate ml-4">{conn.server}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-text-dim">Protocol</span>
+                  <span className="font-mono text-[11px] text-text-dim">Protocol</span>
                   <Badge color="muted">{conn.protocol}</Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-text-dim">Location</span>
+                  <span className="font-mono text-[11px] text-text-dim">Location</span>
                   <div className="flex items-center gap-1">
                     <MapPin size={10} className="text-text-faint" />
-                    <span className="font-mono text-[10px] text-text-secondary">{conn.location}</span>
+                    <span className="font-mono text-[11px] text-text-secondary">{conn.location}</span>
                   </div>
                 </div>
                 {conn.status === 'connected' && (
                   <>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">IP Address</span>
-                      <span className="font-mono text-[10px] text-mint">{conn.ip}</span>
+                      <span className="font-mono text-[11px] text-text-dim">IP Address</span>
+                      <span className="font-mono text-[11px] text-mint">{conn.ip}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Uptime</span>
-                      <span className="font-mono text-[10px] text-text-primary">{conn.uptime}</span>
+                      <span className="font-mono text-[11px] text-text-dim">Uptime</span>
+                      <span className="font-mono text-[11px] text-text-primary">{conn.uptime}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-[10px] text-text-dim">Traffic</span>
+                      <span className="font-mono text-[11px] text-text-dim">Traffic</span>
                       <div className="flex items-center gap-1">
                         <ArrowUpDown size={10} className="text-text-faint" />
-                        <span className="font-mono text-[9px] text-text-secondary">↓{conn.bytesIn} ↑{conn.bytesOut}</span>
+                        <span className="font-mono text-[11px] text-text-secondary">↓{conn.bytesIn} ↑{conn.bytesOut}</span>
                       </div>
                     </div>
                   </>

@@ -150,12 +150,12 @@ export default function Esoteric() {
     <div className="space-y-4">
       <Tabs tabs={languages} activeTab={activeLang} onChange={handleLangChange} />
 
-      <div className="grid grid-cols-3 gap-4 h-[calc(100vh-200px)]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-auto lg:h-[calc(100vh-200px)]">
         {/* Code Input */}
-        <Card className="col-span-2 flex flex-col">
+        <Card className="col-span-1 lg:col-span-2 flex flex-col">
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-[10px] font-semibold uppercase text-mint">Code</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-mint">Code</span>
               <Badge color="lavender">{activeLang}</Badge>
             </div>
             <div className="flex items-center gap-2">
@@ -171,8 +171,10 @@ export default function Esoteric() {
           <textarea
             value={code}
             onChange={(e) => setCode(e.target.value)}
+            aria-label={`${activeLang} code editor`}
             className="flex-1 bg-slime-code rounded-md border border-white/[0.04] p-4 font-mono text-[12px]
-              text-mint resize-none focus:outline-none focus:border-mint/15 whitespace-pre-wrap"
+              text-mint resize-none focus:outline-none focus:border-mint/15
+              focus-visible:ring-2 focus-visible:ring-mint whitespace-pre-wrap min-h-[200px]"
             spellCheck={false}
             placeholder={`Enter ${activeLang} code...`}
           />
@@ -180,7 +182,7 @@ export default function Esoteric() {
           {/* Output */}
           <div className="mt-3">
             <div className="flex items-center justify-between mb-1.5">
-              <span className="font-mono text-[10px] font-semibold uppercase text-lavender">Output</span>
+              <span className="font-mono text-[11px] font-semibold uppercase text-lavender">Output</span>
               {output && <CopyButton text={output} source="Output" size="small" />}
             </div>
             <div className="bg-slime-terminal rounded-md border border-white/[0.04] p-3 min-h-[80px]">
@@ -192,46 +194,46 @@ export default function Esoteric() {
         </Card>
 
         {/* Language Info */}
-        <Card className="flex flex-col overflow-auto">
+        <Card className="flex flex-col overflow-y-auto">
           <div className="flex items-center gap-2 mb-3">
             <Info size={14} className="text-text-dim" />
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim">Language Reference</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim">Language Reference</span>
           </div>
 
           <div className="mb-4">
             <h3 className="font-heading font-bold text-[14px] text-text-primary capitalize mb-1">{activeLang}</h3>
-            <p className="font-mono text-[10px] text-text-muted leading-relaxed">{info?.description}</p>
+            <p className="font-mono text-[11px] text-text-muted leading-relaxed">{info?.description}</p>
           </div>
 
-          <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-2">Commands</span>
+          <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Commands</span>
           <div className="space-y-1.5 flex-1">
             {info?.commands.map((cmd, i) => (
               <div key={i} className="flex items-center gap-2 bg-slime-code rounded-md px-2.5 py-1.5">
                 <span className="font-mono text-[12px] text-mint font-bold w-24">{cmd.cmd}</span>
-                <span className="font-mono text-[10px] text-text-dim">{cmd.desc}</span>
+                <span className="font-mono text-[11px] text-text-dim">{cmd.desc}</span>
               </div>
             ))}
           </div>
 
           {/* Examples */}
           <div className="mt-4 pt-3 border-t border-white/[0.04]">
-            <span className="font-mono text-[10px] font-semibold uppercase text-text-dim block mb-2">Quick Examples</span>
+            <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-2">Quick Examples</span>
             <div className="space-y-1.5">
               {activeLang === 'brainfuck' && (
                 <>
                   <div className="bg-slime-code rounded-md p-2">
-                    <span className="font-mono text-[9px] text-text-faint">Print 'A' (ASCII 65):</span>
-                    <div className="font-mono text-[10px] text-mint mt-0.5">++++++++[&gt;++++++++&lt;-]&gt;+.</div>
+                    <span className="font-mono text-[11px] text-text-faint">Print 'A' (ASCII 65):</span>
+                    <div className="font-mono text-[11px] text-mint mt-0.5">++++++++[&gt;++++++++&lt;-]&gt;+.</div>
                   </div>
                   <div className="bg-slime-code rounded-md p-2">
-                    <span className="font-mono text-[9px] text-text-faint">Cat program (echo input):</span>
-                    <div className="font-mono text-[10px] text-mint mt-0.5">,[.,]</div>
+                    <span className="font-mono text-[11px] text-text-faint">Cat program (echo input):</span>
+                    <div className="font-mono text-[11px] text-mint mt-0.5">,[.,]</div>
                   </div>
                 </>
               )}
               {activeLang !== 'brainfuck' && (
                 <div className="bg-slime-code rounded-md p-2">
-                  <span className="font-mono text-[9px] text-text-faint">Hello World is loaded as default example</span>
+                  <span className="font-mono text-[11px] text-text-faint">Hello World is loaded as default example</span>
                 </div>
               )}
             </div>
