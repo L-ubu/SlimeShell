@@ -226,60 +226,110 @@ func main() {
   },
 ]
 
+const langFilterOptions = ['ALL', 'Python', 'Bash', 'JavaScript', 'PHP', 'Ruby']
+const langShortMap = { Python: 'py', Bash: 'sh', JavaScript: 'js', PHP: 'php', Ruby: 'rb', Go: 'go', Rust: 'rs', PowerShell: 'ps1' }
+
 export default function Scripts() {
   const [selected, setSelected] = useState(sampleScripts[0])
   const [search, setSearch] = useState('')
+  const [langFilter, setLangFilter] = useState('ALL')
 
-  const filtered = sampleScripts.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
-  )
+  const filtered = sampleScripts.filter((s) => {
+    const matchSearch = s.name.toLowerCase().includes(search.toLowerCase())
+    const matchLang = langFilter === 'ALL' || s.lang === langFilter
+    return matchSearch && matchLang
+  })
 
   return (
-    <div className="flex flex-col md:flex-row gap-3.5 h-auto md:h-[calc(100vh-120px)]">
-      {/* File List Panel */}
-      <div className="w-full md:w-[350px] md:min-w-[350px] flex-shrink-0 flex flex-col gap-3">
-        <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search scripts..."
-            aria-label="Search scripts"
-            className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
-              font-mono text-[12px] text-text-primary placeholder:text-text-faint
-              focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
-          />
-        </div>
-
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] text-text-dim">{filtered.length} scripts</span>
-          <Button variant="ghost" size="small" aria-label="New script">
-            <Plus size={12} /> New
-          </Button>
-        </div>
-
-        <div className="flex-1 overflow-y-auto space-y-1">
-          {filtered.map((script) => (
-            <Card
-              key={script.id}
-              active={selected.id === script.id}
-              onClick={() => setSelected(script)}
-            >
-              <div className="flex items-center gap-2.5">
-                <FileText size={16} className="text-text-dim flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <div className="font-mono text-[12px] text-text-primary truncate">{script.name}</div>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <Badge color={langColors[script.lang]}>{script.lang}</Badge>
-                    <span className="font-mono text-[11px] text-text-faint">{script.size}</span>
-                    <span className="font-mono text-[11px] text-text-faint">{script.modified}</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          ))}
-        </div>
+    <div className="flex flex-col gap-3.5 h-[calc(100vh-120px)]">
+      {/* Language Filter Bar */}
+      <div className="flex items-center gap-2" role="group" aria-label="Language filter">
+        {langFilterOptions.map((lang) => (
+          <button
+            key={lang}
+            onClick={() => setLangFilter(lang)}
+            aria-pressed={langFilter === lang}
+            className={`px-3 py-1.5 rounded-md font-mono text-[11px] transition-colors cursor-pointer
+              focus-visible:ring-2 focus-visible:ring-mint
+              ${langFilter === lang
+                ? 'bg-mint/[0.06] border border-mint/[0.12] text-mint'
+                : 'text-text-dim hover:text-text-muted border border-transparent'
+              }`}
+          >
+            {lang}
+          </button>
+        ))}
       </div>
+
+      <div className="flex gap-3.5 flex-1 min-h-0">
+        {/* File List Panel */}
+        <div className="w-[350px] min-w-[350px] flex-shrink-0 flex flex-col gap-3">
+          <div className="relative">
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-dim" />
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search scripts..."
+              aria-label="Search scripts"
+              className="w-full bg-slime-card border border-white/[0.06] rounded-lg pl-8 pr-3 py-2.5
+                font-mono text-[12px] text-text-primary placeholder:text-text-faint
+                focus:bg-slime-code focus:border-mint/15 focus:outline-none focus-visible:ring-2 focus-visible:ring-mint transition-colors"
+            />
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-[11px] text-text-dim">{filtered.length} scripts</span>
+            <Button variant="ghost" size="small" aria-label="New script">
+              <Plus size={12} /> New
+            </Button>
+          </div>
+
+          <div className="flex-1 overflow-y-auto flex flex-col gap-1">
+            {filtered.map((script) => {
+              const shortLang = langShortMap[script.lang] || script.lang.toLowerCase().slice(0, 2)
+              const color = langColors[script.lang] || 'muted'
+              const colorClasses = {
+                lavender: 'text-lavender',
+                mint: 'text-mint',
+                gold: 'text-gold',
+                rose: 'text-rose',
+                sky: 'text-sky-accent',
+                muted: 'text-text-muted',
+              }
+              const bgClasses = {
+                lavender: 'rgba(167,139,250,0.08)',
+                mint: 'rgba(110,231,183,0.08)',
+                gold: 'rgba(251,191,36,0.08)',
+                rose: 'rgba(251,113,133,0.08)',
+                sky: 'rgba(125,211,252,0.08)',
+                muted: 'rgba(255,255,255,0.06)',
+              }
+              return (
+                <Card
+                  key={script.id}
+                  active={selected.id === script.id}
+                  onClick={() => setSelected(script)}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div
+                      className={`w-7 h-7 rounded-[6px] flex items-center justify-center flex-shrink-0 font-mono text-[10px] font-bold ${colorClasses[color]}`}
+                      style={{ background: bgClasses[color] }}
+                    >
+                      {shortLang}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-mono text-[12px] font-medium text-text-primary truncate">{script.name}</div>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <span className="font-mono text-[9px] text-text-faint">{script.size}</span>
+                        <span className="font-mono text-[9px] text-text-faint">{script.modified}</span>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+              )
+            })}
+          </div>
+        </div>
 
       {/* Code Preview Panel */}
       <Card className="flex-1 flex flex-col min-w-0">

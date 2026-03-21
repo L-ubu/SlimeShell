@@ -29,7 +29,7 @@ export default function RevShell() {
   return (
     <div className="flex flex-col md:flex-row flex-wrap gap-3.5 h-full">
       {/* Config Panel */}
-      <div className="w-full md:w-[350px] md:min-w-[350px] space-y-4">
+      <div className="w-full md:w-[350px] md:min-w-[350px] flex flex-col gap-3.5">
         <Card>
           <span className="font-mono text-[11px] font-semibold uppercase text-text-dim block mb-3">Configuration</span>
 
@@ -104,7 +104,7 @@ export default function RevShell() {
       </div>
 
       {/* Shell List */}
-      <div className="flex-1 space-y-3 overflow-y-auto pr-1">
+      <div className="flex-1 flex flex-col gap-3 overflow-y-auto pr-1">
         {shells.map((s) => {
           const cmd = encode(s.template(ip, port, shell))
           return (
