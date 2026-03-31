@@ -11,6 +11,7 @@ import {
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -782,6 +783,7 @@ export default function Phishing() {
           <Mail size={20} color={ACCENT} />
         </div>
         <h1 style={{ fontFamily: heading, fontSize: 24, fontWeight: 700, color: TEXT, margin: 0 }}>Phishing Toolkit</h1>
+        <ToolHelp title="Phishing Toolkit" description="Email template builder and landing page generator for security awareness training and phishing simulations." steps={["Choose a template or build a custom email","Customize sender, subject, and body content","Preview the email in real-time","Generate a matching landing page"]} tips={["Templates include common phishing scenarios","URL obfuscation tools help test awareness","Red flag detection shows what makes emails suspicious"]} />
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 22 }}>

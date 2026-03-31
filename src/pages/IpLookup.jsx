@@ -9,6 +9,7 @@ import {
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -303,6 +304,7 @@ export default function IpLookup() {
         >
           IP Lookup
         </h1>
+        <ToolHelp title="IP Lookup" description="Geo-locate IP addresses and detect your public IP using the ip-api service." steps={["Enter an IP address to look up","Click search to query the API","View location, ISP, and organization details","Use the public IP button to find your own IP"]} tips={["Works with both IPv4 addresses","Shows country, city, ISP, and AS number","Results include timezone and coordinates"]} />
       </header>
 
       {/* Input row */}

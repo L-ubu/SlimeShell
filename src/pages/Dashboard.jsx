@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { ProgressBar } from "../components/ui/ProgressBar.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import useCtfStore from "../store/ctfStore.js";
 import { useAppStore } from "../store/app.js";
 
@@ -386,6 +387,7 @@ export default function Dashboard() {
           }}
         >
           <div style={{ minWidth: 0, flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <h2
               style={{
                 fontFamily: heading,
@@ -397,6 +399,8 @@ export default function Dashboard() {
             >
               Welcome back, MrGreenSlime
             </h2>
+            <ToolHelp title="Dashboard" description="Your SlimeShell home base. See recent tools, favorites, and quick links to all sections." steps={["Browse your recently used tools below","Click any tool card to jump to it","Star tools from the sidebar to add them to favorites","Use Cmd+K to search for any tool"]} tips={["Cmd+1 through Cmd+9 for quick navigation","The sidebar sections are collapsible"]} />
+            </div>
             <p
               style={{
                 fontFamily: mono,

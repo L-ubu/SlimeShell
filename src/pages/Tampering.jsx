@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   Pencil,
   Send,
@@ -1270,6 +1271,7 @@ export default function Tampering() {
             Build, tamper, inject & analyze HTTP requests and responses
           </p>
         </div>
+        <ToolHelp title="Tampering" description="HTTP request builder with parameter mutation, response analysis, and code generation for cURL/Python/JS." steps={["Build an HTTP request with method, URL, headers, and body","Send the request and inspect the response","Use the tamper tab to mutate parameters for testing","Generate code snippets in cURL, Python, or JavaScript"]} tips={["Parameter mutation suggests IDOR and injection tests","Response analyzer checks security headers","Code generation makes it easy to reproduce requests"]} />
       </div>
 
       <div style={{ display: "flex", gap: 4, padding: 6, background: "rgba(17,21,30,0.6)", borderRadius: 10, border: "1px solid rgba(255,255,255,0.04)" }}>

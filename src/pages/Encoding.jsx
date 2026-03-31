@@ -4,6 +4,7 @@ import { transforms, applyTransform, getInverse, detectEncodings } from '../lib/
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Button } from '../components/ui/Button.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const STEP_COLORS = ['#6EE7B7', '#A78BFA', '#FBBF24', '#7DD3FC', '#F472B6', '#FB7185'];
 const groups = [...new Set(transforms.map(t => t.group))];
@@ -74,6 +75,7 @@ export default function Encoding() {
           <span style={{ fontFamily: heading, fontSize: 18, fontWeight: 700, color: '#E2E8F0' }}>
             Encoding Playground
           </span>
+          <ToolHelp title="Encoding" description="Multi-step encode/decode pipeline. Chain transforms together to encode or decode text through multiple steps." steps={["Paste or type your input text in the input area","Add encoding steps using the dropdown (Base64, Hex, URL, etc.)","Reorder or remove steps as needed","Copy the final output"]} tips={["Auto-detect identifies the encoding of your input","You can chain unlimited steps together","Use the inverse button to quickly decode"]} />
           <span style={{
             fontFamily: mono, fontSize: 10, color: '#6B7280',
             background: 'rgba(255,255,255,0.04)', borderRadius: 4, padding: '2px 8px',

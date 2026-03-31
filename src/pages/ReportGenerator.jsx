@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { Card } from "../components/ui/Card.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -912,6 +913,7 @@ export default function ReportGenerator() {
         >
           Report Generator
         </h1>
+        <ToolHelp title="Report Generator" description="Structured pentest report builder. Create professional reports with findings, severity ratings, and recommendations." steps={["Start a new report and fill in engagement details","Add findings with severity, description, and evidence","Add recommendations for each finding","Export the completed report"]} tips={["Findings are organized by severity","Include reproduction steps for each finding","Reports follow standard pentest reporting structure"]} />
       </header>
 
       <div

@@ -16,6 +16,7 @@ import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { useAppStore } from "../store/app.js";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -1356,6 +1357,7 @@ export default function CookieTool() {
         >
           Cookie &amp; Storage Tool
         </h1>
+        <ToolHelp title="Cookie & Storage" description="Parse, edit, and analyze browser cookies and storage. Inspect cookie attributes and security flags." steps={["Paste cookie strings to parse them","View each cookie's attributes (domain, path, flags)","Edit values and re-encode","Check for missing security flags"]} tips={["Flags to look for: Secure, HttpOnly, SameSite","Session cookies without HttpOnly are vulnerable to XSS","Use for analyzing cookies from intercepted traffic"]} />
       </header>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>

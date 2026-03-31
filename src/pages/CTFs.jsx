@@ -21,6 +21,7 @@ import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import useCtfStore from "../store/ctfStore.js";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -992,6 +993,7 @@ export default function CTFs() {
               Active session, flags, scoreboard, jeopardy board &amp; refs
             </p>
           </div>
+          <ToolHelp title="CTF Tracker" description="Track CTF competitions with timers, flag submission, challenge management, and team progress." steps={["Create a new CTF with name and duration","Add challenges with point values","Submit flags as you solve them","Track your progress and remaining time"]} tips={["Timer counts down from your set duration","Challenges can be organized by category","Flags are stored locally for your records"]} />
         </div>
         {activeCTF?.name && (
           <div

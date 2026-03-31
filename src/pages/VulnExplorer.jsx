@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   Bug, Search, AlertTriangle, Shield, ExternalLink, ChevronDown,
   ChevronRight, Zap, Globe,
@@ -758,6 +759,7 @@ export default function VulnExplorer() {
       <div style={s.headerRow}>
         <div style={s.iconBox}><Bug size={20} color={accent} /></div>
         <h1 style={s.title}>Vulnerability Explorer</h1>
+        <ToolHelp title="Vuln Explorer" description="Searchable database of 155 real-world vulnerabilities with CVSS scores, exploits, and mitigation steps." steps={["Browse vulnerabilities by category or severity","Use search to find specific CVEs or keywords","Click any vulnerability to see full details","View exploit commands, mitigation steps, and references"]} tips={["Filter by platform (Windows, Linux, Cross-platform)","Sort by CVSS score to find critical vulns first","Exploit snippets are copyable"]} />
       </div>
 
       {/* Tabs */}

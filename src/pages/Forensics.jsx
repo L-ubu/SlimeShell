@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Card } from '../components/ui/Card.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -887,6 +888,7 @@ export default function Forensics() {
         <h1 style={{ fontFamily: heading, fontSize: 22, fontWeight: 700, margin: 0, color: textPrimary }}>
           Forensics Toolkit
         </h1>
+        <ToolHelp title="Forensics" description="Digital forensics toolkit with hex viewer, string extraction, file magic detection, and EXIF analysis." steps={["Upload a file to analyze","Use the Hex tab for binary inspection","Use Strings to extract readable text","Use Magic to identify file signatures","Use EXIF to extract image metadata"]} tips={["Search within hex view to find patterns","Strings extraction supports ASCII and UTF-16","The CLI Reference tab has commands for popular forensic tools"]} />
       </header>
 
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 18 }}>

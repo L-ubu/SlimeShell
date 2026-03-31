@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { useAppStore } from '../store/app.js';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -331,6 +332,7 @@ export default function Plugins() {
           >
             Plugins
           </h1>
+          <ToolHelp title="Plugins" description="Custom cheatsheet manager with variable interpolation. Create your own reference sheets with dynamic values." steps={["Create a new plugin/cheatsheet","Add commands with variables using {{VAR}} syntax","Set default values for your variables","Use and share your custom cheatsheets"]} tips={["Variables auto-substitute when you set values","Great for team-specific command references","Import/export plugins for sharing"]} />
         </div>
         <button
           type="button"

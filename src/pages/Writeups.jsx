@@ -13,6 +13,7 @@ import {
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Button } from '../components/ui/Button.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -742,6 +743,7 @@ export default function Writeups() {
           <span style={{ fontFamily: mono, fontSize: 10, color: 'rgba(255,255,255,0.3)' }}>
             {writeups.length} writeup{writeups.length !== 1 ? 's' : ''}
           </span>
+          <ToolHelp title="Writeups" description="CTF writeup manager. Create, edit, and organize writeups with markdown support." steps={["Create a new writeup for a solved challenge","Write your solution using the editor","Tag writeups by CTF name and category","Browse and search your writeup collection"]} tips={["Writeups are saved locally and persist across sessions","Use categories to organize by challenge type","Great for building your personal knowledge base"]} />
         </div>
       </div>
 

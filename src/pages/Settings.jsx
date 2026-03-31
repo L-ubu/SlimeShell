@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import { useAppStore } from "../store/app.js";
 import useToasts from "../store/toasts.js";
 
@@ -444,6 +445,7 @@ export default function Settings() {
         >
           Settings
         </h1>
+        <ToolHelp title="Settings" description="Configure your SlimeShell preferences including network defaults, theme, and data management." steps={["Set your LHOST and LPORT for shell generators","Choose your preferred accent color","Adjust font size scaling","Use the data section to export or import your settings"]} tips={["LHOST and LPORT are used across all shell generators","You can reset all data from the danger zone","Sessions save and restore your complete workspace state"]} />
       </div>
 
       <div className="flex flex-col" style={{ gap: 18 }}>

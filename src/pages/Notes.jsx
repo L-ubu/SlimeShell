@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Card } from '../components/ui/Card.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -384,6 +385,7 @@ export default function Notes() {
         >
           Notes & Engagements
         </h1>
+        <ToolHelp title="Notes & Engagements" description="Markdown note-taking with local persistence. Organize notes by engagement, tag, and category." steps={["Create a new note or engagement","Write using the editor with formatting support","Tag and categorize notes for organization","Search across all notes to find past work"]} tips={["Notes persist in localStorage across sessions","Use engagements to group notes by project","Export notes for reporting"]} />
       </header>
 
       {activeEngagement && (

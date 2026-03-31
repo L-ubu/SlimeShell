@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { useAppStore } from '../store/app.js';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -299,6 +300,7 @@ export default function Collab() {
         >
           Collab Mode
         </h1>
+        <ToolHelp title="Collab Mode" description="Shared workspace for team collaboration. Share findings, notes, and tool outputs in real-time." steps={["Create or join a collaboration room","Share notes, commands, and findings","Use the shared scratchpad for team communication","All data stays local in this version"]} tips={["Currently runs in local mode","Useful for organizing team engagement notes","WebSocket-based real-time sync is planned"]} />
       </div>
 
       {!state.inRoom ? (

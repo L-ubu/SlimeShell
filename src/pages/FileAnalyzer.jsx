@@ -3,6 +3,7 @@ import { FileSearch, Upload } from 'lucide-react';
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { ProgressBar } from '../components/ui/ProgressBar.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -442,6 +443,7 @@ export default function FileAnalyzer() {
           >
             File Analyzer
           </h1>
+          <ToolHelp title="File Analyzer" description="Analyze files for type detection, metadata, and basic properties without uploading anywhere." steps={["Drag and drop a file or click to upload","View detected file type and MIME information","Check file size, hashes, and metadata","All analysis runs locally in your browser"]} tips={["Supports hundreds of file signatures","No data is sent to any server","Useful for identifying unknown file types in CTFs"]} />
         </div>
 
         {!file && (

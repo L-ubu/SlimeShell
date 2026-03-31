@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   Wifi, Radio, Cpu, Usb, Shield, Search, Download, Eye, EyeOff,
   AlertTriangle, ChevronRight, Signal, Lock, BarChart3,
@@ -1780,6 +1781,7 @@ export default function WifiPortal() {
               captive portals · attack reference · flipper zero · analyzer
             </span>
           </div>
+          <ToolHelp title="WiFi & Wireless" description="Captive portal template generator and wireless attack reference for WiFi security testing." steps={["Choose a portal template style","Customize branding, fields, and colors","Preview the generated HTML/CSS","Copy the portal code for deployment"]} tips={["Portals capture credentials for awareness testing","SSL certificate configuration adds realism","Test with authorized networks only"]} />
         </div>
 
         {/* Search */}

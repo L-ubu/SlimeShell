@@ -3,11 +3,14 @@ import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { builtinScripts, categories, languageColors } from '../lib/scripts-data.js';
 import { Search, FileCode } from 'lucide-react';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
+import { VariableBar } from '../components/ui/VariableBar.jsx';
+import { useVariables } from '../lib/variables.js';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
 
-function ScriptViewer({ script }) {
+function ScriptViewer({ script, sub }) {
   if (!script) {
     return (
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#4B5563' }}>
@@ -19,7 +22,8 @@ function ScriptViewer({ script }) {
     );
   }
 
-  const lines = script.content.split('\n');
+  const content = sub ? sub(script.content) : script.content;
+  const lines = content.split('\n');
 
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
@@ -42,7 +46,7 @@ function ScriptViewer({ script }) {
           </span>
         </div>
         <div style={{ display: 'flex', gap: 6 }}>
-          <CopyButton text={script.content} />
+          <CopyButton text={content} />
         </div>
       </div>
 
@@ -156,6 +160,7 @@ export default function Scripts() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(null);
   const [selectedScript, setSelectedScript] = useState(null);
+  const { vars, setVar, substitute } = useVariables();
 
   const filtered = useMemo(() => {
     return builtinScripts.filter(s => {
@@ -169,7 +174,14 @@ export default function Scripts() {
   }, [search, activeCategory]);
 
   return (
-    <div style={{ display: 'flex', gap: 16, height: 'calc(100vh - 120px)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16, height: 'calc(100vh - 120px)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <FileCode size={20} style={{ color: '#C084FC' }} />
+        <span style={{ fontFamily: heading, fontSize: 18, fontWeight: 700, color: '#E2E8F0' }}>Scripts</span>
+        <ToolHelp title="Scripts" description="Curated collection of penetration testing scripts organized by category. Browse, search, and copy scripts." steps={["Browse scripts by category in the sidebar","Click a script to view its full content","Use the search bar to find specific scripts","Copy the script content with the copy button"]} tips={["Scripts cover recon, privesc, web, network, and more","Each script has language highlighting","Filter by language using the category tabs"]} />
+      </div>
+      <VariableBar vars={vars} setVar={setVar} fields={['LHOST', 'LPORT', 'TARGET', 'IFACE', 'USER']} />
+      <div style={{ display: 'flex', gap: 16, flex: 1, minHeight: 0 }}>
       {/* Sidebar file browser */}
       <div style={{
         width: 290, flexShrink: 0, display: 'flex', flexDirection: 'column',
@@ -291,8 +303,9 @@ export default function Scripts() {
         flex: 1, padding: 0, overflow: 'hidden',
         display: 'flex', flexDirection: 'column',
       }}>
-        <ScriptViewer script={selectedScript} />
+        <ScriptViewer script={selectedScript} sub={substitute} />
       </Card>
+      </div>
     </div>
   );
 }

@@ -6,6 +6,9 @@ import {
 } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
+import { VariableBar } from '../components/ui/VariableBar.jsx';
+import { useVariables } from '../lib/variables.js';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -289,13 +292,14 @@ const RULE_FUNCTIONS = [
   { func: "E", desc: "Lowercase then title case (each word)", example: "pass word → Pass Word" },
 ];
 
-function CopyBlock({ text }) {
+function CopyBlock({ text, substitute: sub }) {
   const [copied, setCopied] = useState(false);
+  const display = sub ? sub(text) : text;
   return (
     <div style={{ position: "relative", background: "#0B0F18", borderRadius: 8, padding: "10px 40px 10px 14px", border: "1px solid rgba(255,255,255,0.04)" }}>
-      <code style={{ fontFamily: mono, fontSize: 11, color: "#CBD5E1", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>{text}</code>
+      <code style={{ fontFamily: mono, fontSize: 11, color: "#CBD5E1", wordBreak: "break-all", whiteSpace: "pre-wrap" }}>{display}</code>
       <button
-        onClick={() => { navigator.clipboard.writeText(text); setCopied(true); setTimeout(() => setCopied(false), 1200); }}
+        onClick={() => { navigator.clipboard.writeText(display); setCopied(true); setTimeout(() => setCopied(false), 1200); }}
         style={{ position: "absolute", top: 8, right: 8, background: "none", border: "none", cursor: "pointer", padding: 4 }}
       >
         {copied ? <Check size={13} style={{ color: "#6EE7B7" }} /> : <Copy size={13} style={{ color: "#4B5563" }} />}
@@ -334,7 +338,7 @@ function Badge({ children, color = "#6B7280" }) {
   );
 }
 
-function HashcatTab() {
+function HashcatTab({ substitute }) {
   const [search, setSearch] = useState("");
   const [catFilter, setCatFilter] = useState("All");
   const [expanded, setExpanded] = useState(null);
@@ -411,7 +415,7 @@ function HashcatTab() {
           <label style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", textTransform: "uppercase", fontWeight: 700 }}>Extra Flags (optional)</label>
           <input placeholder="-O -w 3 --force --potfile-disable" value={extraFlags} onChange={(e) => setExtraFlags(e.target.value)} style={{ background: "#0B0F18", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 6, padding: "8px 10px", fontFamily: mono, fontSize: 11, color: "#E2E8F0", outline: "none" }} />
         </div>
-        <CopyBlock text={buildCommand()} />
+        <CopyBlock text={buildCommand()} substitute={substitute} />
       </Card>
 
       {/* Hash modes database */}
@@ -457,9 +461,9 @@ function HashcatTab() {
                   <CopyBlock text={m.example} />
                   <div style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", marginTop: 10, marginBottom: 6, textTransform: "uppercase", fontWeight: 700 }}>Quick Commands</div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                    <CopyBlock text={`hashcat -m ${m.mode} -a 0 hash.txt rockyou.txt`} />
-                    <CopyBlock text={`hashcat -m ${m.mode} -a 3 hash.txt ?a?a?a?a?a?a?a`} />
-                    <CopyBlock text={`hashcat -m ${m.mode} -a 0 hash.txt rockyou.txt -r best64.rule`} />
+                    <CopyBlock text={`hashcat -m ${m.mode} -a 0 hash.txt rockyou.txt`} substitute={substitute} />
+                    <CopyBlock text={`hashcat -m ${m.mode} -a 3 hash.txt ?a?a?a?a?a?a?a`} substitute={substitute} />
+                    <CopyBlock text={`hashcat -m ${m.mode} -a 0 hash.txt rockyou.txt -r best64.rule`} substitute={substitute} />
                   </div>
                 </div>
               )}
@@ -500,7 +504,7 @@ function HashcatTab() {
   );
 }
 
-function JohnTab() {
+function JohnTab({ substitute }) {
   const [searchFormats, setSearchFormats] = useState("");
   const filteredFormats = useMemo(() => {
     if (!searchFormats.trim()) return JOHN_FORMATS;
@@ -519,7 +523,7 @@ function JohnTab() {
           {JOHN_COMMANDS.map((c, i) => (
             <div key={i}>
               <div style={{ fontFamily: heading, fontSize: 11, color: "#9CA3AF", marginBottom: 4 }}>{c.name}</div>
-              <CopyBlock text={c.cmd} />
+              <CopyBlock text={c.cmd} substitute={substitute} />
             </div>
           ))}
         </div>
@@ -540,7 +544,7 @@ function JohnTab() {
                 <span style={{ fontFamily: heading, fontSize: 12, fontWeight: 600, color: "#E2E8F0" }}>{t.name}</span>
                 <Badge color="#A78BFA">{t.desc}</Badge>
               </div>
-              <CopyBlock text={t.cmd} />
+              <CopyBlock text={t.cmd} substitute={substitute} />
             </div>
           ))}
         </div>
@@ -564,7 +568,7 @@ function JohnTab() {
             <div key={f.format} style={{ background: "rgba(255,255,255,0.02)", borderRadius: 6, padding: "8px 12px", border: "1px solid rgba(255,255,255,0.04)", display: "flex", alignItems: "center", gap: 8 }}>
               <code style={{ fontFamily: mono, fontSize: 10, fontWeight: 700, color: "#38BDF8" }}>{f.format}</code>
               <span style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", flex: 1 }}>{f.desc}</span>
-              <CopyButton text={f.flag} />
+              <CopyButton text={substitute(f.flag)} />
             </div>
           ))}
         </div>
@@ -573,7 +577,7 @@ function JohnTab() {
   );
 }
 
-function HashIdentifierTab() {
+function HashIdentifierTab({ substitute }) {
   const [input, setInput] = useState("");
   const matches = useMemo(() => {
     const h = input.trim();
@@ -619,13 +623,13 @@ function HashIdentifierTab() {
                   {m.hashcat !== null && (
                     <div>
                       <div style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>Hashcat</div>
-                      <CopyBlock text={`hashcat -m ${m.hashcat} -a 0 hash.txt rockyou.txt`} />
+                      <CopyBlock text={`hashcat -m ${m.hashcat} -a 0 hash.txt rockyou.txt`} substitute={substitute} />
                     </div>
                   )}
                   {m.john && (
                     <div>
                       <div style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", textTransform: "uppercase", fontWeight: 700, marginBottom: 4 }}>John the Ripper</div>
-                      <CopyBlock text={`john --format=${m.john} --wordlist=rockyou.txt hash.txt`} />
+                      <CopyBlock text={`john --format=${m.john} --wordlist=rockyou.txt hash.txt`} substitute={substitute} />
                     </div>
                   )}
                 </div>
@@ -659,7 +663,7 @@ function HashIdentifierTab() {
   );
 }
 
-function WordlistsTab() {
+function WordlistsTab({ substitute }) {
   const [search, setSearch] = useState("");
   const [catFilter, setCatFilter] = useState("All");
   const cats = useMemo(() => ["All", ...new Set(WORDLIST_DB.map((w) => w.cat))], []);
@@ -712,7 +716,7 @@ function WordlistsTab() {
                   <a href={w.source} target="_blank" rel="noopener noreferrer" style={{ fontFamily: mono, fontSize: 10, color: "#38BDF8", textDecoration: "none" }}>
                     {w.source.length > 60 ? w.source.slice(0, 60) + "..." : w.source}
                   </a>
-                  <CopyButton text={w.source} />
+                  <CopyButton text={substitute(w.source)} />
                 </div>
               </div>
             </div>
@@ -855,7 +859,7 @@ function WordlistBuilderTab() {
   );
 }
 
-function RuleEngineTab() {
+function RuleEngineTab({ substitute }) {
   const [customRule, setCustomRule] = useState("$1 $2 $3");
   const [testWord, setTestWord] = useState("password");
 
@@ -955,7 +959,7 @@ function RuleEngineTab() {
             <label style={{ fontFamily: mono, fontSize: 9, color: "#6B7280", textTransform: "uppercase", fontWeight: 700 }}>Output</label>
             <div style={{ background: "#0B0F18", border: "1px solid rgba(110,231,183,0.15)", borderRadius: 6, padding: "8px 10px", fontFamily: mono, fontSize: 12, color: "#6EE7B7", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <span>{testResult}</span>
-              <CopyButton text={testResult} />
+              <CopyButton text={substitute(testResult)} />
             </div>
           </div>
         </div>
@@ -983,7 +987,7 @@ function RuleEngineTab() {
                 <Badge color="#C084FC">{r.rules.toLocaleString()} rules</Badge>
               </div>
               <div style={{ fontFamily: mono, fontSize: 10, color: "#9CA3AF", marginBottom: 8 }}>{r.desc}</div>
-              <CopyBlock text={`hashcat -m 0 -a 0 hash.txt rockyou.txt -r ${r.path}`} />
+              <CopyBlock text={`hashcat -m 0 -a 0 hash.txt rockyou.txt -r ${r.path}`} substitute={substitute} />
             </Card>
           ))}
         </div>
@@ -1009,6 +1013,7 @@ function RuleEngineTab() {
 }
 
 export default function PasswordCracker() {
+  const { vars, setVar, substitute } = useVariables();
   const [tab, setTab] = useState(0);
 
   return (
@@ -1026,6 +1031,7 @@ export default function PasswordCracker() {
           <h1 style={{ margin: 0, fontFamily: heading, fontSize: 22, fontWeight: 700, color: "#E2E8F0" }}>Password Cracking</h1>
           <p style={{ margin: 0, fontFamily: mono, fontSize: 11, color: "#6B7280" }}>Hashcat · John the Ripper · Hash ID · Wordlists · Rules</p>
         </div>
+        <ToolHelp title="Password Cracking" description="Hash identifier, Hashcat/John command builder, wordlist generator, and rule engine for password cracking." steps={["Paste a hash in the identifier to detect its type","Use the command builder to generate Hashcat/John commands","Build custom wordlists with the wordlist tab","Test and create rules with the rule engine"]} tips={["Hash identifier matches against 100+ hash formats","Command builder includes common attack presets","The rule engine previews transforms in real-time"]} />
       </div>
 
       {/* Disclaimer */}
@@ -1045,13 +1051,15 @@ export default function PasswordCracker() {
         {TABS.map((t, i) => <TabButton key={t} label={t} active={tab === i} onClick={() => setTab(i)} />)}
       </div>
 
+      <VariableBar vars={vars} setVar={setVar} fields={['LHOST', 'TARGET', 'WORDLIST', 'USER']} />
+
       {/* Tab content */}
-      {tab === 0 && <HashcatTab />}
-      {tab === 1 && <JohnTab />}
-      {tab === 2 && <HashIdentifierTab />}
-      {tab === 3 && <WordlistsTab />}
+      {tab === 0 && <HashcatTab substitute={substitute} />}
+      {tab === 1 && <JohnTab substitute={substitute} />}
+      {tab === 2 && <HashIdentifierTab substitute={substitute} />}
+      {tab === 3 && <WordlistsTab substitute={substitute} />}
       {tab === 4 && <WordlistBuilderTab />}
-      {tab === 5 && <RuleEngineTab />}
+      {tab === 5 && <RuleEngineTab substitute={substitute} />}
     </div>
   );
 }

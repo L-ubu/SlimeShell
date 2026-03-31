@@ -5,6 +5,7 @@ import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { Tabs } from "../components/ui/Tabs.jsx";
 import { Input } from "../components/ui/Input.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const HASH_ALGOS = ["MD5", "SHA-1", "SHA-256", "SHA-384", "SHA-512"];
 const mono = "JetBrains Mono, monospace";
@@ -718,6 +719,10 @@ export default function Utilities() {
         maxWidth: 920,
       }}
     >
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <span style={{ fontFamily: heading, fontSize: 18, fontWeight: 700, color: "#E2E8F0" }}>Utilities</span>
+        <ToolHelp title="Utilities" description="Network utilities: subnet calculator, port reference, hash checker, epoch converter, and TCP flags." steps={["Select the utility tab you need","For subnets: enter CIDR notation to calculate","For ports: search by number or service name","For hashing: paste text to generate checksums"]} tips={["Subnet calculator shows network, broadcast, and host range","Port reference covers 60+ common services","Epoch converter handles Unix timestamps"]} />
+      </div>
       <Tabs tabs={tabs} defaultTab="hash" onChange={setActiveTab} />
       <Card style={{ padding: "22px 24px" }}>
         {activeTab === "hash" && <HashGenerator />}

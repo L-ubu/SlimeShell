@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   Brain,
   Search,
@@ -457,6 +458,7 @@ export default function PromptInjection() {
           <Brain size={20} color={ACCENT} />
         </div>
         <h1 style={sty.title}>AI Prompt Injection</h1>
+        <ToolHelp title="AI Injection" description="LLM prompt injection payload library. Browse, search, and customize prompts for testing AI systems." steps={["Browse payloads by category and severity","Use the search to find specific techniques","Click any payload to expand details and copy","Filter by target model or attack type"]} tips={["Categories: Direct, Jailbreak, Indirect, Extraction","Severity levels indicate potential impact","Test only on systems you have permission to test"]} />
       </div>
 
       {/* Disclaimer */}

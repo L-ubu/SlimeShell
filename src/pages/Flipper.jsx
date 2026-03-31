@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   Radio, CreditCard, Tv, Usb, Cpu, Search, Zap, Wifi,
   ShieldAlert, Lock, Key, Cable, ChevronRight, Terminal, Package,
@@ -949,6 +950,7 @@ export default function Flipper() {
               reference & payload manager
             </span>
           </div>
+          <ToolHelp title="Flipper Zero" description="Flipper Zero reference guide covering Sub-GHz, RFID/NFC, infrared, BadUSB, GPIO, and firmware." steps={["Select a tab for the Flipper module you need","Browse frequency tables, protocol specs, and file formats","Copy DuckyScript payloads from the BadUSB tab","Reference GPIO pinouts and module connections"]} tips={["Sub-GHz tab has frequency bands and .sub file format","RFID tab includes MIFARE default keys","BadUSB payloads are in DuckyScript format"]} />
         </div>
 
         {/* Search */}

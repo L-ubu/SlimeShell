@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Scan, ShieldCheck, Check, X, AlertTriangle } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -550,6 +551,7 @@ export default function HeaderAnalyzer() {
           >
             <Scan size={22} style={{ color: ACCENT, opacity: 0.9 }} />
             Header Analyzer
+            <ToolHelp title="Header Analyzer" description="Analyze HTTP response headers for security issues. Checks for CSP, HSTS, X-Frame-Options, and more." steps={["Paste raw HTTP response headers in the input","Click analyze to run the security checks","Review findings organized by severity","Check recommendations for missing headers"]} tips={["Green headers are properly configured","Missing security headers are flagged as warnings","Common headers: CSP, HSTS, X-Frame-Options, X-Content-Type-Options"]} />
           </h1>
           <p
             style={{

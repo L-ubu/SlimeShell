@@ -4,6 +4,7 @@ import { Terminal as TerminalIcon } from 'lucide-react';
 import { md5, sha256 } from '../lib/hashing.js';
 import { calcSubnet } from '../lib/network.js';
 import { useAppStore } from '../store/app.js';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -298,6 +299,7 @@ export default function TerminalEmulator() {
         >
           Terminal
         </h1>
+        <ToolHelp title="Terminal" description="In-app terminal emulator powered by Tauri shell plugin. Run system commands directly from SlimeShell." steps={["Type a command in the input field","Press Enter to execute","View output in the terminal area","Use arrow keys for command history"]} tips={["Requires Tauri desktop mode (not available in browser)","Supports common shell commands","Output is scrollable and copyable"]} />
       </header>
 
       <Card

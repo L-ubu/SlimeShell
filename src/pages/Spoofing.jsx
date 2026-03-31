@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from "react";
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import {
   VenetianMask,
   RefreshCw,
@@ -1587,6 +1588,7 @@ export default function Spoofing() {
             MAC, User-Agent, IP, Referer & DNS spoofing reference
           </p>
         </div>
+        <ToolHelp title="Spoofing" description="Identity spoofing tools: MAC address generator, User-Agent library, IP header builder, and DNS spoofing reference." steps={["Use MAC Generator to create random or vendor-specific MACs","Browse and copy User-Agent strings by browser/OS","Build custom IP spoofing headers","Reference DNS spoofing techniques"]} tips={["MAC generator includes vendor OUI lookup","User-Agent parser breaks down any UA string","IP headers are useful for bypassing IP-based access controls"]} />
       </div>
 
       <div

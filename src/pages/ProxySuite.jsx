@@ -17,6 +17,7 @@ import {
 import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -1263,6 +1264,7 @@ export default function ProxySuite() {
         <span style={{ fontFamily: heading, fontSize: 20, fontWeight: 700, color: '#F3F4F6' }}>
           Proxy Suite
         </span>
+        <ToolHelp title="Proxy Suite" description="Burp-like HTTP proxy tools: repeater for manual requests, intruder for fuzzing, decoder chain, and sequencer." steps={["Use Repeater to craft and send HTTP requests","Use Intruder to fuzz parameters with payloads","Use Decoder to chain encode/decode operations","Use Sequencer to analyze token randomness"]} tips={["Mark injection points with section signs in Intruder","The decoder chain supports multiple transform steps","Sequencer helps identify weak session tokens"]} />
       </div>
 
       {/* Tab Bar */}

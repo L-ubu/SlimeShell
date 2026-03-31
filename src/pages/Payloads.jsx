@@ -17,6 +17,9 @@ import {
   Unlock,
   ShieldOff,
 } from "lucide-react";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
+import { VariableBar } from '../components/ui/VariableBar.jsx';
+import { useVariables } from '../lib/variables.js';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -2286,6 +2289,7 @@ export default function Payloads() {
   const [activeCat, setActiveCat] = useState(null);
   const [activeTag, setActiveTag] = useState(null);
   const counts = useMemo(getCategoryCounts, []);
+  const { vars, setVar, substitute } = useVariables();
 
   const filtered = useMemo(() => {
     return PAYLOADS.filter((p) => {
@@ -2347,7 +2351,10 @@ export default function Payloads() {
         >
           <Shield size={15} style={{ color: "#6EE7B7" }} />
           Payload Library
+          <ToolHelp title="Payloads" description="Library of 300+ curated payloads for XSS, SQL injection, command injection, SSTI, and more." steps={["Select a category from the sidebar","Browse payloads with severity indicators","Use the search bar to find specific payloads","Click copy to grab any payload"]} tips={["Payloads are tagged by severity (Critical, High, Medium, Low)","Filter by tags for specific techniques","Great for testing web application security"]} />
         </div>
+
+        <VariableBar vars={vars} setVar={setVar} fields={['LHOST', 'LPORT', 'TARGET', 'DOMAIN']} />
 
         <div style={{ height: 1, background: "rgba(255,255,255,0.04)" }} />
 
@@ -2626,7 +2633,7 @@ export default function Payloads() {
                       </span>
                     ))}
                   </div>
-                  <CopyButton text={p.payload} />
+                  <CopyButton text={substitute(p.payload)} />
                 </div>
 
                 {/* Payload code block */}
@@ -2649,7 +2656,7 @@ export default function Payloads() {
                       wordBreak: "break-all",
                     }}
                   >
-                    {p.payload}
+                    {substitute(p.payload)}
                   </code>
                 </div>
 

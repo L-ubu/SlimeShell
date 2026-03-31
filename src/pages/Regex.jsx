@@ -3,6 +3,7 @@ import { AlertTriangle, Hash, Bookmark } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { Input } from "../components/ui/Input.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -143,6 +144,11 @@ export default function Regex() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <Hash size={20} style={{ color: "#38BDF8" }} />
+        <span style={{ fontFamily: heading, fontSize: 18, fontWeight: 700, color: "#E2E8F0" }}>Regex Tester</span>
+        <ToolHelp title="Regex Tester" description="Live regular expression tester with match highlighting, group extraction, and common patterns." steps={["Enter your regex pattern in the pattern field","Paste test text in the input area","Matches are highlighted in real-time","View captured groups in the results"]} tips={["Use the flags toggles for case-insensitive, multiline, etc.","Common patterns are available as presets","The cheatsheet has regex syntax reference"]} />
+      </div>
       {/* Match count badge */}
       {matches.length > 0 && (
         <div style={{ display: "flex", alignItems: "center" }}>

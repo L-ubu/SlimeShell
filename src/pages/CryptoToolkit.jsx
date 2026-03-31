@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 import { hashAll, md5 } from '../lib/hashing.js';
 
 const mono = 'JetBrains Mono, monospace';
@@ -1203,6 +1204,7 @@ export default function CryptoToolkit() {
             <Lock size={20} color={warn} strokeWidth={2.2} />
           </div>
           <h1 style={{ fontFamily: heading, fontSize: 22, fontWeight: 700, color: textPri, margin: 0 }}>Crypto Toolkit</h1>
+          <ToolHelp title="Crypto Toolkit" description="Cryptographic tools: hashing, XOR cipher, frequency analysis, classical ciphers, and CTF-oriented crypto challenges." steps={["Select a tab for the crypto tool you need","For hashing: paste text and see all hash outputs instantly","For XOR: enter data and key, view result and brute-force","For frequency analysis: paste ciphertext to see letter distributions"]} tips={["XOR brute-force tests all single-byte keys","Known-plaintext attack recovers keys from plaintext+ciphertext pairs","The CTF tab has common crypto challenge approaches"]} />
         </div>
 
         <div style={{

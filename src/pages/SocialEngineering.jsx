@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
 import { Card } from "../components/ui/Card.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -909,6 +910,7 @@ export default function SocialEngineering() {
         <h1 style={{ margin: 0, fontFamily: heading, fontSize: 22, fontWeight: 700, color: TEXT }}>
           Social Engineering
         </h1>
+        <ToolHelp title="Social Engineering" description="Social engineering reference with phishing templates, pretexting scenarios, attack vectors, and payload delivery methods." steps={["Browse phishing email templates with customizable variables","Explore pretexting scenarios for different targets","Review attack vector methodologies","Check payload delivery techniques"]} tips={["Templates have replaceable variables (name, company, URL)","Pretexting scenarios are expandable for full details","Payload section covers HTA, macros, USB, and more"]} />
       </header>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 22 }}>

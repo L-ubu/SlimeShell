@@ -12,6 +12,7 @@ import {
 import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -1122,6 +1123,7 @@ export default function ApiTester() {
           >
             API Tester
           </h1>
+          <ToolHelp title="API Tester" description="HTTP client for testing APIs. Send requests with custom headers, body, and auth. Save to collections." steps={["Enter the URL and select HTTP method","Add headers, query params, or body as needed","Click Send to execute the request","Save requests to collections for reuse"]} tips={["Supports GET, POST, PUT, DELETE, PATCH, and more","Environment variables let you switch between targets","History tracks your recent requests"]} />
 
           <div style={{ marginLeft: 'auto', display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'flex-end' }}>
             <div style={{ minWidth: 160 }}>

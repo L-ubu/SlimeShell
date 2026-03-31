@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -524,7 +525,7 @@ export default function JWT() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       {/* Mode toggle */}
-      <div style={{ display: "flex", gap: 0 }}>
+      <div style={{ display: "flex", gap: 0, alignItems: "center" }}>
         <button
           onClick={() => setMode("decode")}
           style={{
@@ -544,6 +545,7 @@ export default function JWT() {
         >
           <Hammer size={13} /> Build
         </button>
+        <ToolHelp title="JWT Debugger" description="Decode, inspect, and forge JSON Web Tokens. Validate expiry, edit claims, and test alg:none attacks." steps={["Paste a JWT token in the input field","View decoded header, payload, and signature","Edit claims in the forge tab to build custom tokens","Test for alg:none vulnerability"]} tips={["Expired tokens are highlighted in red","The forge tab lets you sign with HMAC-SHA256","Useful for CTF challenges involving JWT manipulation"]} />
       </div>
 
       {mode === "build" ? (

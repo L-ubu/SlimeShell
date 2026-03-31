@@ -14,6 +14,9 @@ import {
 } from 'lucide-react';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Card } from '../components/ui/Card.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
+import { VariableBar } from '../components/ui/VariableBar.jsx';
+import { useVariables } from '../lib/variables.js';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -104,6 +107,7 @@ const NET_TOOLS = [{"title": "Netcat", "items": [["TCP listener", "Bind listener
 const QUICK_SCANS = [["Quick TCP", "Default scripts + versions to file.", "nmap -sC -sV -oN scan.txt TARGET"], ["Full TCP", "All TCP ports with scripts + versions.", "nmap -p- -sC -sV -oN full.txt TARGET"], ["UDP Top 100", "Top 100 UDP ports.", "nmap -sU --top-ports 100 -oN udp.txt TARGET"], ["Stealth", "SYN slow + frag + data padding.", "nmap -sS -T2 -f --data-length 24 TARGET"], ["Vuln Scan", "NSE vuln category.", "nmap --script=vuln TARGET"], ["All-in-One", "Aggressive full-feature all TCP.", "nmap -sC -sV -O -A -p- TARGET"], ["Web Enum", "Web ports + http-enum.", "nmap -sV -p 80,443,8080,8443 --script=http-enum TARGET"], ["SMB Enum", "SMB scripts wildcard.", "nmap -p 445 --script=smb-enum* TARGET"], ["Script Scan", "Default + safe scripts.", "nmap -sC -sV --script=default,safe TARGET"], ["Aggressive", "OS + traceroute + fast all ports.", "nmap -A -T4 -p- TARGET"]];
 
 export default function NetworkScanner() {
+  const { vars, setVar, substitute } = useVariables();
   const [tab, setTab] = useState('scanner');
   const [target, setTarget] = useState('');
   const [customRange, setCustomRange] = useState('1-1024');
@@ -170,6 +174,7 @@ export default function NetworkScanner() {
           >
             Network Scanner
           </h1>
+          <ToolHelp title="Network Scanner" description="Nmap command builder and network reconnaissance reference. Build scan commands with presets." steps={["Enter the target IP or range","Select scan type and options","Copy the generated nmap command","Use the port reference to look up services"]} tips={["Presets cover common scan scenarios","The cheatsheet has advanced nmap techniques","Port reference includes 60+ well-known services"]} />
         </div>
         <nav
           style={{
@@ -208,6 +213,7 @@ export default function NetworkScanner() {
             </button>
           ))}
         </nav>
+        <VariableBar vars={vars} setVar={setVar} fields={['LHOST', 'TARGET', 'LPORT', 'IFACE']} />
       </header>
 
       <main style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 20 }}>
@@ -306,8 +312,8 @@ export default function NetworkScanner() {
               </div>
               {generated && (
                 <div style={{ marginTop: 16, padding: 14, borderRadius: 10, background: '#0f1419', border: `1px solid ${border}`, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-                  <code style={{ flex: 1, fontFamily: mono, fontSize: 12, wordBreak: 'break-all', lineHeight: 1.5 }}>{generated}</code>
-                  <CopyButton text={generated} />
+                  <code style={{ flex: 1, fontFamily: mono, fontSize: 12, wordBreak: 'break-all', lineHeight: 1.5 }}>{substitute(generated)}</code>
+                  <CopyButton text={substitute(generated)} />
                 </div>
               )}
             </Card>
@@ -361,9 +367,9 @@ export default function NetworkScanner() {
                       <code style={{ fontFamily: mono, fontSize: 11, color: accent, wordBreak: 'break-all' }}>{item.cmd}</code>
                       <div>
                         <p style={{ margin: 0, fontSize: 13, lineHeight: 1.45 }}>{item.desc}</p>
-                        <code style={{ display: 'block', marginTop: 8, fontFamily: mono, fontSize: 11, color: textDim, wordBreak: 'break-all', lineHeight: 1.45 }}>{item.ex}</code>
+                        <code style={{ display: 'block', marginTop: 8, fontFamily: mono, fontSize: 11, color: textDim, wordBreak: 'break-all', lineHeight: 1.45 }}>{substitute(item.ex)}</code>
                       </div>
-                      <CopyButton text={item.ex} />
+                      <CopyButton text={substitute(item.ex)} />
                     </div>
                   ))}
                 </div>
@@ -385,8 +391,8 @@ export default function NetworkScanner() {
                         <div style={{ fontFamily: heading, fontSize: 12, fontWeight: 600 }}>{title}</div>
                         <div style={{ fontSize: 12, color: textDim, marginTop: 4, lineHeight: 1.4 }}>{desc}</div>
                       </div>
-                      <code style={{ fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.45 }}>{cmd}</code>
-                      <CopyButton text={cmd} />
+                      <code style={{ fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.45 }}>{substitute(cmd)}</code>
+                      <CopyButton text={substitute(cmd)} />
                     </div>
                   );
                 })}
@@ -408,8 +414,8 @@ export default function NetworkScanner() {
                         <div style={{ fontFamily: heading, fontSize: 12, fontWeight: 600 }}>{title}</div>
                         <div style={{ fontSize: 12, color: textDim, marginTop: 4 }}>{desc}</div>
                       </div>
-                      <code style={{ fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.45 }}>{cmd}</code>
-                      <CopyButton text={cmd} />
+                      <code style={{ fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.45 }}>{substitute(cmd)}</code>
+                      <CopyButton text={substitute(cmd)} />
                     </div>
                   );
                 })}
@@ -432,8 +438,8 @@ export default function NetworkScanner() {
                     <h3 style={{ margin: 0, fontSize: 16, color: accent, fontFamily: heading }}>{name}</h3>
                     <p style={{ margin: 0, fontSize: 13, color: textDim, lineHeight: 1.45 }}>{desc}</p>
                     <div style={{ padding: 12, borderRadius: 8, background: '#0f1419', border: `1px solid ${border}`, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-                      <code style={{ flex: 1, fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.5 }}>{filled}</code>
-                      <CopyButton text={filled} />
+                      <code style={{ flex: 1, fontFamily: mono, fontSize: 11, wordBreak: 'break-all', lineHeight: 1.5 }}>{substitute(filled)}</code>
+                      <CopyButton text={substitute(filled)} />
                     </div>
                   </Card>
                 );

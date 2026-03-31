@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -1028,6 +1029,7 @@ export default function Deobfuscator() {
         <span style={{ fontFamily: heading, fontSize: 22, fontWeight: 700, color: '#E2E8F0' }}>
           Deobfuscator
         </span>
+        <ToolHelp title="Deobfuscator" description="JavaScript and HTML deobfuscation tools. Beautify, decode, and analyze obfuscated code." steps={["Paste obfuscated code in the input area","Select the deobfuscation method","View the cleaned output","Copy the result"]} tips={["Try multiple methods if one doesn't fully decode","The beautifier fixes formatting and indentation","Works with common JS obfuscation patterns"]} />
       </div>
 
       {/* Tabs */}

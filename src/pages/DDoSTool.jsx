@@ -3,6 +3,7 @@ import { Zap, Wrench, Calculator, BookOpen, Search, Cpu, ChevronDown, ChevronRig
 import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -631,6 +632,7 @@ def api_data():
           <Zap size={20} style={{ color: rose }} />
         </div>
         <h1 style={{ fontFamily: heading, fontSize: 22, fontWeight: 700, color: text, margin: 0 }}>DoS & Stress Testing</h1>
+        <ToolHelp title="DoS & Stress Testing" description="Stress testing reference with attack vectors, detection methods, rate limiter config generator, and protocol analysis." steps={["Browse attack vectors by layer (L3/L4/L7)","Use the Tools tab for stress testing commands","Generate rate limiter configs for nginx, Apache, etc.","Study detection indicators and mitigation techniques"]} tips={["The rate limiter generator creates copy-paste configs","Amplification calculator shows bandwidth multipliers","Always test with authorization only"]} />
       </div>
 
       {/* Disclaimer */}

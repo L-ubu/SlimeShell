@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -2444,6 +2445,19 @@ export default function Stego() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{
+          width: 36, height: 36, borderRadius: 8,
+          background: 'rgba(110,231,183,0.1)', border: `1px solid ${accentBorderSoft}`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <Eye size={18} style={{ color: accent }} />
+        </div>
+        <span style={{ fontFamily: heading, fontSize: 22, fontWeight: 700, color: textPrimary }}>
+          Steganography
+        </span>
+        <ToolHelp title="Steganography" description="Image and text steganography tools. Hide and extract data using LSB, zero-width characters, and more." steps={["Choose Image or Text stego tab","For images: upload a file and use the analysis tools","For text: paste text to encode/decode hidden messages","Use the tools reference for command-line stego tools"]} tips={["LSB extraction works on PNG files","Zero-width chars are invisible in normal text","The bit plane viewer reveals hidden patterns in images"]} />
+      </div>
       <div
         style={{
           display: "flex",

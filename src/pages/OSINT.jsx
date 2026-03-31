@@ -37,6 +37,7 @@ import {
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Input } from '../components/ui/Input.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -951,6 +952,7 @@ export default function OSINT() {
         >
           OSINT & Recon
         </h1>
+        <ToolHelp title="OSINT & Recon" description="Open-source intelligence tool directory with live API lookups for domains, emails, and usernames." steps={["Browse OSINT tools by category","Use the lookup tabs for live searches","Enter a domain, email, or username to query","View results from multiple data sources"]} tips={["Live lookups query real APIs (internet required)","Tool directory links to external OSINT platforms","Categories cover people, domains, social media, and more"]} />
         <span
           style={{
             fontFamily: mono,

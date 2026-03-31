@@ -3,6 +3,7 @@ import { Download, List } from "lucide-react";
 import { Card } from "../components/ui/Card.jsx";
 import { Input } from "../components/ui/Input.jsx";
 import { CopyButton } from "../components/ui/CopyButton.jsx";
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = "JetBrains Mono, monospace";
 const heading = "Space Grotesk, sans-serif";
@@ -235,6 +236,7 @@ export default function Wordlist() {
         >
           Wordlist Generator
         </h1>
+        <ToolHelp title="Wordlist Generator" description="Build custom wordlists with rules, masks, and combinators for password cracking and fuzzing." steps={["Enter base words or patterns","Apply transformation rules (capitalize, leet, append numbers)","Set length and character requirements","Copy or download the generated wordlist"]} tips={["Combine multiple rule types for comprehensive lists","Use mask mode for systematic generation","Great for targeted password attacks"]} />
       </header>
 
       <div

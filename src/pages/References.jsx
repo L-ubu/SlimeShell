@@ -4,6 +4,9 @@ import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { Tabs } from '../components/ui/Tabs.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
+import { VariableBar } from '../components/ui/VariableBar.jsx';
+import { useVariables } from '../lib/variables.js';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -559,8 +562,7 @@ const dataMap = {
   web: webData,
 };
 
-function ReferenceItem({ cmd, desc, example }) {
-  const exampleLines = example.split('\n');
+function ReferenceItem({ cmd, desc, example, sub }) {
   return (
     <div
       style={{
@@ -575,10 +577,10 @@ function ReferenceItem({ cmd, desc, example }) {
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1, minWidth: 0 }}>
-          <span style={{ fontFamily: mono, fontSize: 13, fontWeight: 600, color: '#6EE7B7' }}>{cmd}</span>
+          <span style={{ fontFamily: mono, fontSize: 13, fontWeight: 600, color: '#6EE7B7' }}>{sub(cmd)}</span>
           <span style={{ fontFamily: mono, fontSize: 11, color: '#9CA3AF', lineHeight: '18px' }}>{desc}</span>
         </div>
-        <CopyButton text={cmd} />
+        <CopyButton text={sub(cmd)} />
       </div>
       <div
         style={{
@@ -603,15 +605,15 @@ function ReferenceItem({ cmd, desc, example }) {
             lineHeight: '18px',
           }}
         >
-          {example}
+          {sub(example)}
         </pre>
-        <CopyButton text={example} />
+        <CopyButton text={sub(example)} />
       </div>
     </div>
   );
 }
 
-function SectionBlock({ title, items }) {
+function SectionBlock({ title, items, sub }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
       <div
@@ -630,7 +632,7 @@ function SectionBlock({ title, items }) {
         {title}
       </div>
       {items.map((item, idx) => (
-        <ReferenceItem key={`${title}-${idx}-${item.cmd}`} {...item} />
+        <ReferenceItem key={`${title}-${idx}-${item.cmd}`} {...item} sub={sub} />
       ))}
     </div>
   );
@@ -639,6 +641,7 @@ function SectionBlock({ title, items }) {
 export default function References() {
   const [activeTab, setActiveTab] = useState('linux');
   const [search, setSearch] = useState('');
+  const { vars, setVar, substitute } = useVariables();
 
   const filteredSections = useMemo(() => {
     const data = dataMap[activeTab] || {};
@@ -679,6 +682,7 @@ export default function References() {
             <span style={{ fontFamily: heading, fontSize: 20, fontWeight: 700, color: '#E2E8F0' }}>
               References
             </span>
+            <ToolHelp title="References" description="Command cheatsheets for Linux, Windows, Active Directory, pivoting, file transfer, Nmap, Metasploit, and web testing." steps={["Select a category tab at the top","Search within commands using the search bar","Click copy on any command to grab it","Commands are organized by purpose within each category"]} tips={["Covers 500+ commands across 8 categories","Search works across command names and descriptions","Great for quick reference during engagements"]} />
             <span
               style={{
                 fontFamily: mono,
@@ -697,6 +701,8 @@ export default function References() {
         </div>
 
         <Tabs tabs={tabs} defaultTab="linux" onChange={(v) => { setActiveTab(v); setSearch(''); }} />
+
+        <VariableBar vars={vars} setVar={setVar} fields={['LHOST', 'LPORT', 'TARGET', 'DOMAIN', 'WORDLIST', 'USER']} />
 
         <div style={{ position: 'relative' }}>
           <Search
@@ -752,7 +758,7 @@ export default function References() {
           </Card>
         ) : (
           Object.entries(filteredSections).map(([section, items]) => (
-            <SectionBlock key={section} title={section} items={items} />
+            <SectionBlock key={section} title={section} items={items} sub={substitute} />
           ))
         )}
       </div>

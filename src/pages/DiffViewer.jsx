@@ -2,6 +2,7 @@ import { useMemo, useState, useCallback } from 'react';
 import { GitCompare, ArrowLeftRight, Trash2, LayoutGrid, Columns2 } from 'lucide-react';
 import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -175,6 +176,7 @@ export default function DiffViewer() {
         >
           Diff Viewer
         </h1>
+        <ToolHelp title="Diff Viewer" description="Side-by-side text comparison tool. Paste two texts and see the differences highlighted." steps={["Paste original text on the left","Paste modified text on the right","Differences are highlighted automatically","Use for comparing configs, code, or outputs"]} tips={["Added lines show in green, removed in red","Useful for spotting changes in CTF challenges","Works with any plain text content"]} />
       </header>
 
       {/* Text inputs */}

@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { shells, osShells, encodings, encodePayload } from '../lib/revshells.js';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const osOptions = Object.keys(osShells);
 const mono = 'JetBrains Mono, monospace';
@@ -87,6 +88,7 @@ export default function RevShell() {
           <span style={{ fontFamily: heading, fontSize: 18, fontWeight: 700, color: '#E2E8F0' }}>
             Reverse Shell Gen
           </span>
+          <ToolHelp title="Rev Shell Generator" description="Generate reverse shell one-liners for any language and platform. Set your IP and port, pick shells, and copy." steps={["Set your LHOST (attacker IP) and LPORT","Select target OS and shell type using the chips","Browse generated shells on the right","Click copy on any shell to grab it"]} tips={["Shells update in real-time as you change settings","Use encoding options for evasion","LHOST/LPORT sync with your global settings"]} />
         </div>
 
         <Card>

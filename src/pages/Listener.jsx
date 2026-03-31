@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { CopyButton } from '../components/ui/CopyButton.jsx';
 import { useAppStore } from '../store/app.js';
+import { ToolHelp } from '../components/ui/ToolHelp.jsx';
 
 const mono = 'JetBrains Mono, monospace';
 const heading = 'Space Grotesk, sans-serif';
@@ -209,6 +210,7 @@ export default function Listener() {
         >
           Listener Manager
         </h1>
+        <ToolHelp title="Listener" description="Generate netcat, socat, and other listener commands for catching reverse shells." steps={["Set your listening port","Choose the listener type (netcat, socat, etc.)","Copy the generated command","Run it in your terminal before triggering the shell"]} tips={["Start the listener before executing the reverse shell","Use socat for encrypted connections","rlwrap gives you a better interactive shell"]} />
       </div>
 
       {/* Create form */}
